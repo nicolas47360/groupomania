@@ -12,6 +12,13 @@ const modelComment = mongoose.Schema(
       required: true,
       maxlenght: 370,
     },
+
+    likes: {
+      type: Number,
+      required: true
+    },
+    
+    usersLiked: { type: [String], required: true },
   },
   {
     timesstamp: true,

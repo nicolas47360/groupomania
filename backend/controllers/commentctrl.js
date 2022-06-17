@@ -41,10 +41,10 @@ exports.updateComment = (res, req, next) => {
     .ctach((error) => res.status(400).json({ error }));
 };
 
-exports.likeDislike = (req, res, next) => {
-  Sauce.findOne({ _id: req.params.id })
+exports.likeComment = (req, res, next) => {
+  Comment.findOne({ _id: req.params.id })
     .then((comment) => {
-      if (req.body.like === 1 && !sauce.usersLiked.includes(req.body.userId)) {
+      if (req.body.like === 1 && !comment.usersLiked.includes(req.body.userId)) {
         Comment.updateOne({ _id: req.params.id },
           {
             $inc: { likes: 1 },
@@ -54,7 +54,7 @@ exports.likeDislike = (req, res, next) => {
           .catch(error => res.status(400).json({ error }))
       }
 
-      else if (req.body.like === 0 && sauce.usersLiked.includes(req.body.userId)) {
+      else if (req.body.like === 0 && comment.usersLiked.includes(req.body.userId)) {
         Comment.updateOne({ _id: req.params.id },
           {
             $inc: { likes: -1 },

@@ -51,3 +51,30 @@ exports.createPost = (req, res, next) => {
     .then(() => res.status(201).json({ message: "le post a été enregistrée" }))
     .catch((error) => res.status(400).json({ error }));
 };
+
+exports.likePost = (req, res, next) => {
+  Post.findOne({ _id: req.params.id })
+    .then((post) => {
+      if (req.body.like === 1 && !post.usersLiked.includes(req.body.userId)) {
+        Comment.updateOne({ _id: req.params.id },
+          {
+            $inc: { likes: 1 },
+            $push: { usersLiked: req.body.userId }
+          })
+          .then(() => res.status(201).json({ message: " comment like" }))
+          .catch(error => res.status(400).json({ error }))
+      }
+
+      else if (req.body.like === 0 && post.usersLiked.includes(req.body.userId)) {
+        Post.updateOne({ _id: req.params.id },
+          {
+            $inc: { likes: -1 },
+            $pull: { usersLiked: req.body.userId }
+          })
+          .then(() => res.status(201).json({ message: " comment dislike" }))
+          .catch(error => res.status(400).json({ error }))
+      }
+    })
+    .catch(error => res.status(400).json({ error }));
+};
+

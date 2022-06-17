@@ -16,6 +16,12 @@ const modelPost = mongoose.Schema(
     picture: {
       type: String,
     },
+    likes: {
+      type: Number,
+      required: true
+    },
+    
+    usersLiked: { type: [String], required: true },
   },
   {
     timestamps: true,
