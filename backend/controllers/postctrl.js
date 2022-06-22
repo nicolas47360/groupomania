@@ -9,13 +9,12 @@ exports.readPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-  const postObject = req.file
-    ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
+  const postObject = req.file ?
+    {
+      ...JSON.parse(req.body.post),
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename
         }`,
-      }
+    }
     : { ...req.body };
   Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: "le post a été modifiée" }))
@@ -42,9 +41,9 @@ exports.createPost = (req, res, next) => {
   delete postObject._id;
   const post = new Post({
     ...sauceObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    likes: 0,
+    usersLiked: [],
   });
   post
     .save()

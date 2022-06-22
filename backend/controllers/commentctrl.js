@@ -11,6 +11,8 @@ exports.createComment = (res, req, next) => {
   delete commentObject._id;
   const comment = new Comment({
     ...commentObject,
+    likes: 0,
+    usersLiked: [],
   });
   comment
     .save()
@@ -26,19 +28,14 @@ exports.deleteComment = (res, req, next) => {
 };
 
 exports.updateComment = (res, req, next) => {
-  const commentObject = req.file
-    ? {
+  const commentObject = req.file ?
+    {
       ...JSON.parse(req.body.comment),
     }
     : { ...req.body };
-  Comment.updateOne(
-    { _id: req.params.id },
-    { ...commentObject, _id: req.params.id }
-  )
-    .then(() =>
-      res.status(200).json({ message: "le commentaire a été mis à jour" })
-    )
-    .ctach((error) => res.status(400).json({ error }));
+  Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
+    .then(() => res.status(200).json({ message: "le commentaire a été mis à jour" }))
+    .catch((error) => res.status(400).json({ error }));
 };
 
 exports.likeComment = (req, res, next) => {

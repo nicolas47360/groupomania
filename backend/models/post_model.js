@@ -13,16 +13,14 @@ const modelPost = mongoose.Schema(
       maxlenght: 370,
     },
 
-    picture: {
-      type: String,
-    },
     likes: {
       type: Number,
       required: true
     },
-    
+
     usersLiked: { type: [String], required: true },
   },
+
   {
     timestamps: true,
   }

@@ -18,11 +18,13 @@ const modelComment = mongoose.Schema(
       required: true
     },
     
-    usersLiked: { type: [String], required: true },
+    usersLiked: 
+    { type: [String], required: true },
   },
+
   {
-    timesstamp: true,
-  }
+    timestamps: true,
+  },
 );
 
 module.exports = mongoose.model("comment", modelComment);
