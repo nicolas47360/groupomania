@@ -1,5 +1,4 @@
 const Post = require("../models/post_model");
-const User = require("../models/user_model");
 const fs = require("fs");
 
 exports.readPost = (req, res, next) => {
@@ -12,8 +11,7 @@ exports.updatePost = (req, res, next) => {
   const postObject = req.file ?
     {
       ...JSON.parse(req.body.post),
-      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename
-        }`,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     }
     : { ...req.body };
   Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
@@ -27,9 +25,7 @@ exports.deletePost = (req, res, next) => {
       const filename = post.imageUrl.split("/images")[1];
       fs.unlink(`images/${filename}`, () => {
         Post.deleteOne({ _id: req.params.id })
-          .then(() =>
-            res.status(200).json({ message: "le post a été suprrimée" })
-          )
+          .then(() => res.status(200).json({ message: "le post a été suprrimée" }))
           .catch((error) => res.status(400).json({ error }));
       });
     })
@@ -40,7 +36,7 @@ exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
   const post = new Post({
-    ...sauceObject,
+    ...postObject,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     likes: 0,
     usersLiked: [],

@@ -11,6 +11,11 @@ const modelPost = mongoose.Schema(
       type: String,
       required: true,
       maxlenght: 370,
+      trim: true,
+    },
+
+    imageUrl: {
+      type: String,
     },
 
     likes: {
