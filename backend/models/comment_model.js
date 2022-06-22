@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const modelComment = mongoose.Schema(
   {
-    commentId: {
+    commentID: {
       type: String,
       required: true,
     },
@@ -17,9 +17,9 @@ const modelComment = mongoose.Schema(
       type: Number,
       required: true
     },
-    
-    usersLiked: 
-    { type: [String], required: true },
+
+    usersLiked:
+      { type: [String], required: true },
   },
 
   {

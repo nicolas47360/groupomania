@@ -22,20 +22,20 @@ exports.createUser = (req, res, next) => {
   });
   user
     .save()
-    .then(() => res.status(201).json({ message: "l'utilisateur a été enregistrée" }))
+    .then(() => res.status(201).json({ message: "l'utilisateur a été enregistré" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.updateUser = (req, res, next) => {
-  const userObject = req.file ? 
-  {
+  const userObject = req.file ?
+    {
       ...JSON.parse(req.body.user),
       imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename
         }`,
     }
     : { ...req.body };
   User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "les données de l'utilisatuer ont été modifiées" }))
+    .then(() => res.status(200).json({ message: "les données de l'utilisateur ont été modifiées" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -46,7 +46,7 @@ exports.deleteUser = (req, res, next) => {
       fs.unlink(`images/${filename}`, () => {
         User.deleteOne({ _id: req.params.id })
           .then(() =>
-            res.status(200).json({ message: "le user a été suprrimée" })
+            res.status(200).json({ message: "le user a été supprimée" })
           )
           .catch((error) => res.status(400).json({ error }));
       });
