@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-function SignInForm(user) {
+function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: { email: "", password: "" } });
 
     const handleLogin = (data) => {
@@ -25,9 +25,9 @@ function SignInForm(user) {
     return (
         <form onSubmit={handleSubmit(handleLogin)} id="sign-up-form">
             <label htmlFor="email">Email</label>
-            <input type="email"{...register("email", { required: "Ce champ est requis" })} placeholder='exemple@exemple.fr' />
+            <input  type="email"{...register("email", { required: "Ce champ est requis" })} placeholder='exemple@exemple.fr'  className="input_password"/>
             <p>{errors.email?.message}</p>
-            <label htmlFor="password">mot de passe</label>
+            <label htmlFor="password">Mot de passe</label>
             <input type="password"{...register("password", {
                 required: "Ce champ est requis",
                 minLenght: { value: 8, message: "Le mot de passe doit contenir 8 caractéres et une majuscule" },
@@ -38,4 +38,4 @@ function SignInForm(user) {
     )
 };
 
-export default SignInForm;
+export default LoginForm;

@@ -3,11 +3,12 @@ import Log from '../components/Log';
 
 function Auth() {
     return (
-        <div className='auth-page'>
+        <main className='auth'>
+            <img className='logo' src='./image/icon.png' alt='logo groupomania' />
             <div className='log-container'>
                 <Log />
             </div>
-        </div>
+        </main>
     );
 };
 
