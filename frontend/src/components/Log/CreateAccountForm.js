@@ -20,7 +20,7 @@ function CreateAccountForm() {
                 res.json(data);
                 console.log(res.data);
             })
-            .catch((err) => { console.log(err); })
+            .catch((err) => { console.log(err) })
     }
     return (
         <form onSubmit={handleSubmit(handleAccount)} id="sign-up-form">

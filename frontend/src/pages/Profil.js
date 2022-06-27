@@ -1,11 +1,14 @@
 import React from 'react';
+import Profil from '../components/Profil';
+import Banner from '../components/utils/Banner';
 
-function Profil() {
+function User() {
     return (
-        <div>
-            profil de mr
-        </div>
+        <main className='profil'>
+            <Banner />
+            <Profil />
+        </main>
     );
 };
 
-export default Profil;
+export default User;

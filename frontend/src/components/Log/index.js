@@ -5,12 +5,12 @@ import SignUpFomr from "./CreateAccountForm";
 function Log() {
     const [createAccountModal, setCreateAccountModal] = useState(true);
     const [logInModal, setLoginInModal] = useState(false);
-    const handleModals = (e) => {
-        if (e.target.id === "signup") {
+    function handleModals(event) {
+        if (event.target.id === "signup") {
             setLoginInModal(false);
             setCreateAccountModal(true);
         }
-        else if (e.target.id === "login") {
+        else if (event.target.id === "login") {
             setCreateAccountModal(false);
             setLoginInModal(true);
         }

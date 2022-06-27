@@ -4,17 +4,13 @@ header{
     height: 200px;
     .logo{
         object-fit: contain;        
-        width: 380px;
-        
+        width: 380px;       
     }
-    span{
-        cursor: pointer;
-        
+    .banner-link{
+        cursor: pointer;         
         .icon-header{
             font-size: 40px;
-            margin: 50px 40px 0 0;
-           
+            margin: 50px 40px 0 0           
         }      
-    }
-    
+    }    
 }

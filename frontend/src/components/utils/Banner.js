@@ -1,17 +1,16 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function Banner() {
-    const logout = () => {
-        window.location = "/";
-    }
+
     return (
         <header>
             <img className='logo' src='./image/icon.png' alt='logo groupomania' />
-            <span onAuxClick={logout}>
+            <Link className='banner-link' to="/" style={{ textDecoration: 'none' }}>
                 <FontAwesomeIcon className='icon-header' icon={faSignOut} ></FontAwesomeIcon>
-            </span>
+            </Link>
         </header>
     )
 }
