@@ -2,22 +2,14 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function CreateAccountForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: { email: "", password: "" } });
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleAccount = (data) => {
         axios.post(
             `http://localhost:5000/api/auth/signup/`,
             data,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer {token}`
-                }
-            }
         )
             .then((res) => {
-                window.location = "/";
-                res.json(data);
                 console.log(res.data);
             })
             .catch((err) => { console.log(err) })

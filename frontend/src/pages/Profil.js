@@ -6,7 +6,9 @@ function User() {
     return (
         <main className='profil'>
             <Banner />
-            <Profil />
+            <section className='form-profil'>
+                <Profil />
+            </section>
         </main>
     );
 };

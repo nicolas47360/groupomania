@@ -8,24 +8,19 @@ function LoginForm() {
         axios.post(
             `http://localhost:5000/api/auth/login`,
             data,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer {token}`
-                }
-            }
         )
             .then((res) => {
-                window.location = "/Home";
-                res.json(data);
-                console.log(res.data);
+                console.log(res.data.token);
+                localStorage.token = res.data.token;
+                axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token;
+                window.location = "/home"
             })
             .catch((err) => { console.log(err); })
     }
     return (
         <form onSubmit={handleSubmit(handleLogin)} id="sign-up-form">
             <label htmlFor="email">Email</label>
-            <input  type="email"{...register("email", { required: "Ce champ est requis" })} placeholder='exemple@exemple.fr'  className="input_password"/>
+            <input type="email"{...register("email", { required: "Ce champ est requis" })} placeholder='exemple@exemple.fr' className="input_password" />
             <p>{errors.email?.message}</p>
             <label htmlFor="password">Mot de passe</label>
             <input type="password"{...register("password", {

@@ -14,7 +14,10 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.createUser = (req, res, next) => {
+  console.log(req.body);
+  console.log(req.body.user);
   const userObject = JSON.parse(req.body.user);
+  console.log(userObject);
   delete userObject._id;
   const user = new User({
     ...userObject,
