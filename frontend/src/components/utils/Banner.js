@@ -4,11 +4,10 @@ import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 function Banner() {
-
     return (
         <header>
             <img className='logo' src='./image/icon.png' alt='logo groupomania' />
-            <Link className='banner-link' to="/" style={{ textDecoration: 'none' }}>
+            <Link className='banner-link' to="/" >
                 <FontAwesomeIcon className='icon-header' icon={faSignOut} ></FontAwesomeIcon>
             </Link>
         </header>

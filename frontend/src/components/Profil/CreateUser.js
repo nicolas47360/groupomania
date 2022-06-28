@@ -12,7 +12,6 @@ function CreateProfil() {
             `http://localhost:5000/api/user`,
             data,
         )
-
             .then(res => {
                 console.log(res.data)
             })
@@ -28,13 +27,13 @@ function CreateProfil() {
             <p>{errors.firstname?.message}</p>
             <label htmlFor="lastname">Nom</label>
             <input type="lastname"{...register("lastname", { required: "Ce champ est requis" })} placeholder="Votre nom"></input>
-            <p>{errors.firstname?.message}</p>
+            <p>{errors.lastname?.message}</p>
             <label htmlFor="email">Email</label>
             <input type="email"{...register("email")} placeholder="test@test.fr"></input>
-            <p>{errors.firstname?.message}</p>
-            {/* <div className="img-container">
+            <p>{errors.email?.message}</p>
+            <div className="img-container">
                 <FontAwesomeIcon className='icon-profil' icon={faCamera} ></FontAwesomeIcon>
-            </div> */}
+            </div>
             <button type="submit" className="user-button">Créer votre profil</button>
         </form>
     )

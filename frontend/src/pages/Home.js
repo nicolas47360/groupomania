@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from '../components/utils/Banner'
 import Nav from "../components/utils/Nav";
+import GetComments from "../components/comment/GetComments"
 
 function Home() {
     return (
@@ -9,7 +10,7 @@ function Home() {
             <Banner />
             <Nav />
             <div>
-                Salut la compagnie
+                < GetComments />
             </div>
 
         </main>

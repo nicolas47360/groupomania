@@ -30,7 +30,6 @@ const modeluser = mongoose.Schema({
 
   imageUrl: {
     type: String,
-
   },
 });
 
