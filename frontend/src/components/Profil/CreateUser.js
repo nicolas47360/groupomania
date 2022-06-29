@@ -7,12 +7,12 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 function CreateProfil() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    function handleProfil(data) {
+    const handleProfil = (data) => {
         axios.post(
             `http://localhost:5000/api/user`,
             data,
         )
-            .then(res => {
+            .then((res) => {
                 console.log(res.data)
             })
             .catch((err) => { console.log(err) })

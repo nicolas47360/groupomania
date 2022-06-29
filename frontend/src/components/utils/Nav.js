@@ -5,9 +5,12 @@ function Nav() {
     return (
         <ul className='nav-container'>
             <Link to="/profil">
-                <li className='nav-link'>Votre profil</li>
+                <li className='nav-link'>Créer et gérer Votre profil</li>
             </Link>
-            <li className='nav-link'>Poster un commentaire</li>
+            <Link to="/post">
+                <li className='nav-link'>Rédiger et gérer vos posts</li>
+            </Link>
+
         </ul>
     )
 }

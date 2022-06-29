@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-function CreateAccountForm() {
+function CreateAccount() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleAccount = (data) => {
@@ -11,6 +11,7 @@ function CreateAccountForm() {
         )
             .then((res) => {
                 console.log(res.data);
+                window.location = "/"
             })
             .catch((err) => { console.log(err) })
     }
@@ -25,9 +26,12 @@ function CreateAccountForm() {
                 minLenght: { value: 8, message: "Le mot de passe doit contenir 8 caractéres et une majuscule" },
             })} placeholder='Votre mot de passse' />
             <p>{errors.password?.message}</p>
-            <button type="submit" className="button">S'inscrire</button>
+            <div className="auth-button">
+                <button type="submit" className="button">S'inscrire</button>
+            </div>
+
         </form>
     )
 };
 
-export default CreateAccountForm;
+export default CreateAccount;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from '../components/utils/Banner'
 import Nav from "../components/utils/Nav";
-import GetPosts from "../components/Posts/GetPosts"
+import GetPosts from "../components/Posts/GetPosts";
 
 function Home() {
     return (

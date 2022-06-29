@@ -28,7 +28,10 @@ function LoginForm() {
                 minLenght: { value: 8, message: "Le mot de passe doit contenir 8 caractéres et une majuscule" },
             })} placeholder='Votre mot de passse' />
             <p>{errors.password?.message}</p>
-            <button type="submit" className="button">Se connecter</button>
+            <div className="auth-button">
+                <button type="submit" className="button">Se connecter</button>
+            </div>
+
         </form>
     )
 };

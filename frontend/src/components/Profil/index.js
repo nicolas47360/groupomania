@@ -3,7 +3,7 @@ import CreateProfil from "./CreateUser";
 import UpdateProfil from "./UpdateUser"
 import DeleteProfil from "./DeleteUser";
 
-function Profil() {
+function Posts() {
     const [createUserModal, setCreateUserModal] = useState(true);
     const [updateUserModal, setupdateUserModal] = useState(false);
     const [deleteUserModal, setDeleteUserModal] = useState(false);
@@ -18,7 +18,7 @@ function Profil() {
             setupdateUserModal(true);
             setDeleteUserModal(false);
         }
-        else if (event.target.id === "deleteUser") {
+        else if (event.target.id === "deleteuser") {
             setCreateUserModal(false);
             setupdateUserModal(false);
             setDeleteUserModal(true);
@@ -27,10 +27,10 @@ function Profil() {
     return (
         <div className="user-form">
             <div className="user-container">
-                <ul>
-                    <li onClick={handleModals} id="createuser">Créer un profil</li>
-                    <li onClick={handleModals} id="updateuser">Modifier votre profil</li>
-                    <li onClick={handleModals} id="deleteuser">Supprimer votre profil</li>
+                <ul className="user-list">
+                    <li className="user-li" onClick={handleModals} id="createuser">Créer un profil</li>
+                    <li className="user-li" onClick={handleModals} id="updateuser">Modifier votre profil</li>
+                    <li className="user-li" onClick={handleModals} id="deleteuser">Supprimer votre profil</li>
                 </ul>
                 {createUserModal && <CreateProfil />}
                 {updateUserModal && <UpdateProfil />}
@@ -40,4 +40,4 @@ function Profil() {
     )
 }
 
-export default Profil;
+export default Posts;

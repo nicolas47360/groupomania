@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SignInFomr from "./LoginForm";
-import SignUpFomr from "./CreateAccountForm";
+import SignInFomr from "./Login";
+import SignUpFomr from "./CreateAccount";
 
 function Log() {
     const [createAccountModal, setCreateAccountModal] = useState(true);
@@ -16,16 +16,15 @@ function Log() {
         }
     }
     return (
-        <div className="connection-form">
-            <div className="form-container">
-                <ul>
-                    <li onClick={handleModals} id="signup">S'inscrire</li>
-                    <li onClick={handleModals} id="login">Se connecter</li>
-                </ul>
-                {createAccountModal && <SignUpFomr />}
-                {logInModal && <SignInFomr />}
-            </div>
+        <div className="form-container">
+            <ul>
+                <li onClick={handleModals} id="signup">S'inscrire</li>
+                <li onClick={handleModals} id="login">Se connecter</li>
+            </ul>
+            {createAccountModal && <SignUpFomr />}
+            {logInModal && <SignInFomr />}
         </div>
+
     );
 };
 
