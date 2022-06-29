@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from '../components/utils/Banner'
 import Nav from "../components/utils/Nav";
-import GetComments from "../components/comment/GetComments"
+import GetPosts from "../components/Posts/GetPosts"
 
 function Home() {
     return (
@@ -9,10 +9,9 @@ function Home() {
         <main className='home'>
             <Banner />
             <Nav />
-            <div>
-                < GetComments />
-            </div>
-
+            <article className='home-container'>
+                < GetPosts />
+            </article>
         </main>
     );
 };

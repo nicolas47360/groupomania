@@ -20,7 +20,7 @@ function CreateProfil() {
     return (
         <form onSubmit={handleSubmit(handleProfil)}>
             <label htmlFor="pseudo">Pseudo</label>
-            <input type="pseudo"{...register("pseudo", { required: "Ce champ est requis" })} placeholder="Superman47"></input>
+            <input type="pseudo"{...register("pseudo")} placeholder="Superman47"></input>
             <p>{errors.pseudo?.message}</p>
             <label htmlFor="firstname">Prénom</label>
             <input type="firstname"{...register("firstname", { required: "Ce champ est requis" })} placeholder="Votre prénom"></input>
