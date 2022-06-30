@@ -1,49 +1,45 @@
-@import "../utils/_variables";
-@import "../utils/_mixin";
-body{
-    margin: 0;
-    .auth{    
-        width: 100%;
-        @include flcecol;
-        .logo-container{
-            @include flce;
-            height:auto;
-            img{
-                max-width: 350px;
-                object-fit: contain;
-                margin: 80px 0 60px 0;
-            }             
-        }
-        .log-container{        
-            @include flce;        
-            .form-container{            
-                width:450px;
-               @include border(4px, 18px, 20px);
-                ul{
-                    padding: 10px;
-                    @include flspa;           
+.auth{    
+    width: 100%;
+    @include flcecol;
+    .logo-container{
+        @include flce;
+        height:auto;
+        img{
+            max-width: 350px;
+            object-fit: contain;
+            margin: 80px 0 60px 0;
+        }             
+    }
+    .log-container{        
+        @include flce;        
+        .form-container{            
+            width:450px;
+            @include border(4px, 18px, 20px);
+            ul{
+                padding: 10px;
+                @include flspa;           
+                
+                li{
+                    background-color: $primary-color;
+                    @include border(1px, 15px, 0);
+                    cursor: pointer;
+                    font-size: 20px;
+                    color: $text-color;
+                    width: 120px;
+                    @include flce;
+                    transition: 0.3s;
+                    @include box-shadow; 
                     
-                    li{
-                        background-color: $primary-color;
-                        @include border(1px, 15px, 0);
-                        cursor: pointer;
-                        font-size: 20px;
-                        color: $text-color;
-                        width: 120px;
-                        @include flce;
-                        transition: 0.3s;
-                        @include box-shadow; 
-                        
-                        &:hover{
-                            background-color: $secondary-color;
-                            color: $text-hover;
-                        }                        
-                    }
+                    &:hover{
+                        background-color: $secondary-color;
+                        color: $text-hover;
+                    }                        
                 }
-            }         
-        }
-    }    
-}
+            }
+        }         
+    }
+}    
+
 
 form{
     @include flcecol;

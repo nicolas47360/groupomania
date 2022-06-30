@@ -1,35 +1,80 @@
-@import "../utils/_variables";
 .profil{
-    display: flex;
-    flex-direction: column;
+    @include flcol;
     .form-profil{
-        display: flex;
-        justify-content: center;       
+        @include flce;       
         .user-form{
-            width:750px;
-            border: 4px solid;
-            border-radius: 18px;
-            padding: 20px 0 20px 0;
+            width:80vw;
+            @include border(4px, 18px, 20px 0 20px 0);              
             .user-container{
-                display: flex;
-                justify-content: space-around;
-                flex-direction: row;
+                @include flspbro;
+                @media (max-width:650px){
+                    @include flcecol;
+                }
                 .user-list{
                     list-style: none;
-                    justify-content: space-around;
-                    display: flex;
-                    flex-direction: column;
+                    @include flspacol;                
+                    @media (max-width:650px){
+                        @include flcecol;
+                        padding: 0;
+                        align-items: center;
+                    }
                     .user-li{
-                        border: 2px solid;
-                        border-radius: 18px;
-                        justify-content: center;
-                        display: flex;
-                        width: 200px;
+                       @include border(2px, 18px, 0);
+                        @include flce;
+                        @include box-shadow;
+                        width: 25vw;                        
                         background-color:$primary-color;
-                        color:azure;
+                        color: $text-color;
+                        font-size: 20px;
+                        margin-bottom: 20px;                       
+                        @media (max-width:650px){
+                            width: 40vw;
+                        }
                     }
                 }               
             }
         } 
     }
+}
+
+.submit-form{
+    width:40vw;
+    margin: 0 20px 0 20px;
+    @media (max-width:650px){
+        width:65vw
+    }
+    label{
+        font-size: 20px;
+        margin:10px;
+    }
+    .input-user{
+        border-radius: 15px;
+        padding-left: 15px;
+        font-size: 18px;
+        }    
+    p{
+        color: $text-alert;
+        font-size: 20px;
+    }
+    .img-user-container{
+        .icon-profil{
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+    }
+    .b-user{
+        @include flce;
+        .user-button{        
+            font-size: 20px;
+            width: 200px;
+            border-radius: 15px;            
+            background-color: $primary-color;
+            color: $text-color;
+            transition: 0.3s;
+            &:hover{
+                background-color: $secondary-color;
+                color: $text-hover;
+            }
+        }
+    }  
 }

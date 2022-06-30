@@ -1,34 +1,41 @@
 .home{
-    
+    @include flcol;    
     .home-container{
-        display: flex;
-        justify-content: center;
+         @media (max-width:900px){        
+                    @include flce;                            
+                }          
+        .post-container{
+            @include flcol;                   
+            h1{
+                @include flce;
+                margin: 60px 0 60px 0;
+                font-size: 35px;
+            }
+            .posts{
+                @include flspa;
+                @media (max-width:900px){        
+                    @include flcecol;                            
+                }   
+                .post{
+                    @include flspb;                    
+                    font-size: 18px;
+                    @include border(2px, 18px, 0 20px 0 20px);
+                    width: 30vw;                    
+                    @media (max-width:900px){        
+                        margin-bottom: 25px;
+                        width: 60vw;                                               
+                    }   
+                    .post-picture{
+                        object-fit: contain;                    
+                        max-width: 100px;                   
+                        align-items: center;
+                        margin: 20px 0 20px 0;
+                        @include border(1px, 18px, 0);
+                        color:$tertiary-color;
+                    }
+                }            
+            }
+        }              
     }
-    .post-container{
-        width: 100%;
-        h1{
-            display: flex;
-            justify-content: center;
-            margin: 60px 0 60px 0;
-            font-size: 35px;
-        }
-        .posts{
-            display: flex;
-            justify-content: space-around;
-            .post{
-                font-size: 18px;
-                border: 2px solid;
-                border-radius: 18px;
-                padding: 0 20px 10px 20px;
-                width: 400px;
-                .post-picture{
-                    object-fit: contain;                    
-                    max-width: 250px;                   
-                    margin-left: 75px;
-                }
-            }            
-        }
-    }
-    
-
+   
 }
