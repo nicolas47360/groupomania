@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 function Banner() {
     return (
         <header>
-            <img className='logo' src='./image/icon.png' alt='logo groupomania' />
-            <Link className='banner-link' to="/" >
-                <FontAwesomeIcon className='icon-header' icon={faSignOut} ></FontAwesomeIcon>
-            </Link>
+            <img className='logo' src='./image/icon2.png' alt='logo groupomania' />
+            <div className='logout'>
+                <Link className='banner-link' to="/" >
+                    <FontAwesomeIcon className='icon-header' icon={faSignOut} ></FontAwesomeIcon>
+                </Link>
+            </div>
         </header>
     )
 }

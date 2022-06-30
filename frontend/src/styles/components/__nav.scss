@@ -1,13 +1,12 @@
+@import "../utils/_mixin";
 .nav-container{
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    .nav-link{
-        text-decoration: none;
-        border-radius: 15px;
-        border: 2px solid;
-        padding: 0 40px 0 40px;
-        font-size: 18px;
-        box-shadow: 3px 3px 1px rgba(51, 51, 51, 0.418);
+    @include flspa;
+    list-style: none;    
+    .nav-link{        
+        @include border(1px, 15px, 0 40px 0 40px);
+        font-size: 22px;
+        @include box-shadow;
+        color: $text-color;
+        background-color: $primary-color;
     }
 }

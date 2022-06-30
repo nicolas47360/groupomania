@@ -5,7 +5,7 @@ function Auth() {
     return (
         <main className='auth'>
             <div className='logo-container'>
-                <img className='logo' src='./image/icon.png' alt='logo groupomania' />
+                <img className='logo' src='./image/icon2.png' alt='logo groupomania' />
             </div>
             <div className='log-container'>
                 <Log />

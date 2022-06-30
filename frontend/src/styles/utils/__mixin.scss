@@ -1,0 +1,25 @@
+@mixin flcecol{
+    display: flex;    
+    justify-content: center;
+    flex-direction: column;
+}
+
+@mixin flce {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flspa {
+    display: flex;
+    justify-content: space-around;  
+}
+
+@mixin border($size, $radius, $pad) {
+    border: $size solid;
+    border-radius: $radius;
+    padding: $pad;    
+}
+
+@mixin box-shadow {
+    box-shadow: 3px 3px 1px $tertiary-color;
+}

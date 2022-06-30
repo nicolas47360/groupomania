@@ -1,16 +1,22 @@
 header{
     display: flex;
     justify-content: space-between;    
-    height: 200px;
+    margin: 40px 0 80px 0;
     .logo{
         object-fit: contain;        
-        width: 380px;       
+        width: 350px;     
     }
-    .banner-link{
-        cursor: pointer;         
-        .icon-header{
-            font-size: 40px;
-            margin: 50px 40px 0 0           
-        }      
-    }    
+    .logout{
+        align-items: center;
+        display: flex;
+        margin-right: 40px;
+        .banner-link{            
+            cursor: pointer;         
+            .icon-header{
+                font-size: 40px;
+                color: $primary-color;                           
+            }      
+        }   
+    }
+    
 }
