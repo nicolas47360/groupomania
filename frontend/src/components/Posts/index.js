@@ -25,12 +25,12 @@ function Posts() {
         }
     }
     return (
-        <div className="post-form">
+        <div className="pots-form">
             <div className="post-container">
-                <ul>
-                    <li onClick={handleModals} id="createpost">Créer un Post</li>
-                    <li onClick={handleModals} id="updatepost">Modifier votre Post</li>
-                    <li onClick={handleModals} id="deletepost">Supprimer votre Post</li>
+                <ul className="post-list">
+                    <li className="post-li" onClick={handleModals} id="createpost">Créer un Post</li>
+                    <li className="post-li" onClick={handleModals} id="updatepost">Modifier votre Post</li>
+                    <li className="post-li" onClick={handleModals} id="deletepost">Supprimer votre Post</li>
                 </ul>
                 {createPostModal && <CreatePost />}
                 {updatePostModal && <UpdatePost />}

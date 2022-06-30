@@ -1,16 +1,16 @@
-.profil{
+.post-page{
     @include flcol;
-    .form-profil{
+    .form-post{
         @include flce;       
-        .user-form{
+        .pots-form{
             width:80vw;
             @include border(4px, 18px, 20px 0 20px 0);              
-            .user-container{
+            .post-container{
                 @include flspbro;
                 @media (max-width:650px){
                     @include flcecol;
                 }
-                .user-list{
+                .post-list{
                     list-style: none;
                     @include flspacol;                
                     @media (max-width:650px){
@@ -18,7 +18,7 @@
                         padding: 0;
                         align-items: center;
                     }
-                    .user-li{
+                    .post-li{
                        @include border(2px, 18px, 0);
                         @include flce;
                         @include box-shadow;
@@ -37,7 +37,7 @@
     }
 }
 
-.submit-form{
+.post-form{
     width:40vw;
     margin: 0 20px 0 20px;
     @media (max-width:650px){
@@ -47,30 +47,31 @@
         font-size: 20px;
         margin:10px;
     }
-    .input-user{
+    .post-text{
         border-radius: 15px;
         padding-left: 15px;
         font-size: 18px;
+        height: 35vh;;
         }    
     p{
         color: $text-alert;
         font-size: 20px;
     }
-    .img-user-container{
+    .img-post-container{
         @include flalc;
         margin-bottom: 20px;
-        .icon-profil{
+        .icon-post{
             font-size: 45px;
-            margin-bottom: 20px;
+                        
         }
         span{
             font-size: 20px;
             padding-left: 20px
         }
     }
-    .b-user{
+    .b-post{
         @include flce;
-        .user-button{        
+        .post-button{        
             font-size: 20px;
             width: 200px;
             border-radius: 15px;            

@@ -33,6 +33,7 @@ function CreateProfil() {
             <p>{errors.email?.message}</p>
             <div className="img-user-container">
                 <FontAwesomeIcon className="icon-profil" icon={faCamera} ></FontAwesomeIcon>
+                <span>Ajouter une photo</span>
             </div>
             <div className="b-user">
                 <button type="submit" className="user-button">Créer votre profil</button>

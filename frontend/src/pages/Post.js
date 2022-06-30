@@ -4,7 +4,7 @@ import Posts from "../components/Posts";
 
 function Post() {
     return (
-        <main className="post">
+        <main className="post-page">
             <Banner />
             <section className="form-post">
                 <Posts />
