@@ -6,25 +6,21 @@ const modeluser = mongoose.Schema({
     minLenght: 3,
     maxLenght: 30,
     unique: true,
-    trim: true,
   },
 
   firstname: {
     type: String,
     required: true,
-    trim: true,
   },
 
   lastname: {
     type: String,
     required: true,
-    trim: true,
   },
 
   email: {
     type: String,
     required: true,
-    unique: true,
   },
 
   imageUrl: {

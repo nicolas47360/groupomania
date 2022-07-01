@@ -16,15 +16,14 @@ exports.getUser = (req, res, next) => {
 exports.createUser = (req, res, next) => {
   console.log(req.body);
   console.log(req.body.user);
-  const userObject = JSON.parse(req.body.user);
+  const userObject = JSON.parse(req.body.user)
   console.log(userObject);
-  delete userObject._id;
+  delete profilObject._id;
   const user = new User({
     ...userObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
   });
-  user
-    .save()
+  user.save()
     .then(() => res.status(201).json({ message: "l'utilisateur a été enregistré" }))
     .catch((error) => res.status(400).json({ error }));
 };

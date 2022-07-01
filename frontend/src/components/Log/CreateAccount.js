@@ -5,12 +5,15 @@ function CreateAccount() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleAccount = (data) => {
+
         axios.post(
             `http://localhost:5000/api/auth/signup/`,
             data,
         )
+        console.log(data)
+
             .then((res) => {
-                console.log(res.data);
+                console.log(res.postdata);
                 window.location = "/"
             })
             .catch((err) => { console.log(err) })
