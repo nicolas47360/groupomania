@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const modelComment = mongoose.Schema(
   {
+    userId: {
+      type: String,
+      reruired: true,
+    },
+
     commentID: {
       type: String,
       required: true,

@@ -5,18 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 function CreateProfil() {
-
     const { register, handleSubmit, formState: { errors } } = useForm();
-
     const handleProfil = (data) => {
-
         axios.post(
             `http://localhost:5000/api/user`,
-
-            JSON.stringify(data)
+            data
 
         )
-        console.log(data)
             .then((res) => {
                 console.log(res.data);
                 window.location = "/home";
@@ -24,7 +19,7 @@ function CreateProfil() {
             .catch((err) => { console.log(err) })
     }
     return (
-        <form className="submit-form" onSubmit={handleSubmit(handleProfil)}>
+        <form className="submit-form" onSubmit={handleSubmit(handleProfil)} enctype="multipart/form-data">
             <label htmlFor="pseudo">Pseudo</label>
             <input className="input-user" type="text"{...register("pseudo")} placeholder="Superman47"></input>
             <p>{errors.pseudo?.message}</p>
@@ -38,6 +33,7 @@ function CreateProfil() {
             <input className="input-user" type="text"{...register("email")} placeholder="test@test.fr"></input>
             <p>{errors.email?.message}</p>
             <div className="img-user-container">
+                <input type="file"{...register("imageUrl")} ></input>
                 <FontAwesomeIcon className="icon-profil" icon={faCamera} ></FontAwesomeIcon>
                 <span>Ajouter une photo</span>
             </div>

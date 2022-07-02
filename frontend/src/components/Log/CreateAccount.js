@@ -26,7 +26,7 @@ function CreateAccount() {
             <label htmlFor="password">Mot de passe</label>
             <input type="password"{...register("password", {
                 required: "Ce champ est requis",
-                minLenght: { value: 8, message: "Le mot de passe doit contenir 8 caractéres et une majuscule" },
+                minLength: { value: 8, message: "Le mot de passe doit contenir 8 caractéres et une majuscule" },
             })} placeholder='Votre mot de passse' />
             <p>{errors.password?.message}</p>
             <div className="auth-button">

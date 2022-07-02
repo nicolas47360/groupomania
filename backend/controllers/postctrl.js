@@ -33,11 +33,12 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
+  const postObject = req.body;
+  console.log(postObject);
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file}`,
     likes: 0,
     usersLiked: [],
   });

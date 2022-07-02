@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const modelPost = mongoose.Schema(
   {
+    userId: {
+      type: String,
+      reruired: true,
+    },
+
     postID: {
       type: String,
       required: true,
@@ -10,6 +15,7 @@ const modelPost = mongoose.Schema(
     message: {
       type: String,
       required: true,
+
       maxlenght: 370,
     },
 
@@ -19,7 +25,6 @@ const modelPost = mongoose.Schema(
 
     likes: {
       type: Number,
-      required: true
     },
 
     usersLiked: { type: [String], required: true },
