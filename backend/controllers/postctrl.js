@@ -33,7 +33,7 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const postObject = req.body;
+  const postObject = JSON.parse(req.body.post);
   console.log(postObject);
   delete postObject._id;
   const post = new Post({

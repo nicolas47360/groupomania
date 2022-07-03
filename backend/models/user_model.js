@@ -23,11 +23,6 @@ const modeluser = mongoose.Schema({
     required: true,
   },
 
-  email: {
-    type: String,
-    required: true,
-  },
-
   imageUrl: {
     type: String,
   },
