@@ -38,7 +38,7 @@ exports.createPost = (req, res, next) => {
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     likes: 0,
     usersLiked: [],
   });
