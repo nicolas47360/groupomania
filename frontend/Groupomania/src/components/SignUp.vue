@@ -7,12 +7,15 @@
     <br />
     <div class="login-switch" v-if="mode == 'login'">
       Vous n'avez pas encore de compte
-      <button class="switch-button" @click="SwitchtoCreateAccount()">Créer un compte
+      <button class="switch-button" @click="SwitchtoCreateAccount()">
+        Créer un compte
       </button>
     </div>
     <div class="login-switch" v-else>
       Vous avez déja un compte
-      <button class="switch-button" @click="SwitchToLogin()">Se connecter</button>
+      <button class="switch-button" @click="SwitchToLogin()">
+        Se connecter
+      </button>
     </div>
     <div id="form-home">
       <div v-if="mode == 'login'">
