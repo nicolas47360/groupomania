@@ -1,15 +1,21 @@
 <template>
-    <div>
-        <p>bonjour</p>
-    </div>
+  <div>
+    <NavBar />
+    <PostsView />
+    <p>bonjour</p>
+  </div>
 </template>
 
 <script>
-    export default {
-      name: "HomeView",  
-    }
+import NavBar from "../components/NavBar.vue";
+import PostsView from "../components/PostsView.vue";
+export default {
+  name: "HomeView",
+  components: {
+    NavBar,
+    PostsView,
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

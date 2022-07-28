@@ -1,25 +1,68 @@
 <template>
-  <div id="form-home">
-    <form class="signin-form">
-      <label for="email">Email</label>
-      <input
-        v-model="email"
-        id="signin-email"
-        type="email"
-        placeholder="Email"
-        required
-      />
-      <label for="password">Mot de passe</label>
-      <input
-        v-model="password"
-        id="signin-password"
-        type="password"
-        placeholder="Mot de passe"
-        required
-      />
-      <button id="button-form" @click="login()">Se connecter</button>
-    </form>
-  </div>
+  <article class="global-form">
+    <div class="title-form">
+      <h1 v-if="mode == 'login'">connexion</h1>
+      <h1 v-else>Inscription</h1>
+    </div>
+    <br />
+    <div class="login-switch" v-if="mode == 'login'">
+      Vous n'avez pas encore de compte
+      <button class="switch-button" @click="SwitchtoCreateAccount()">Créer un compte
+      </button>
+    </div>
+    <div class="login-switch" v-else>
+      Vous avez déja un compte
+      <button class="switch-button" @click="SwitchToLogin()">Se connecter</button>
+    </div>
+    <div id="form-home">
+      <div v-if="mode == 'login'">
+        <form class="signin-form">
+          <label class="label-form" for="email">Email</label>
+          <input
+            v-model="email"
+            id="signin-email"
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <label class="label-form" for="password">Mot de passe</label>
+          <input
+            v-model="password"
+            id="signin-password"
+            type="password"
+            placeholder="Mot de passe"
+            required
+          />
+          <button id="button-form" @click.prevent="login()">
+            Se connecter
+          </button>
+        </form>
+      </div>
+      <div v-else>
+        <form class="signin-form">
+          <label class="label-form" for="email">Email</label>
+          <input
+            v-model="email"
+            id="signin-email"
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <label class="label-form" for="password">Mot de passe</label>
+          <input
+            v-model="password"
+            id="signin-password"
+            type="password"
+            placeholder="Mot de passe"
+            required
+          />
+          <button id="button-form" @click.prevent="createAccount()">
+            S'inscrire
+          </button>
+        </form>
+      </div>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -27,61 +70,119 @@
 import axios from "axios";
 
 export default {
-    name: "signin",
-    data(){
-        return {            
-            email: "",
-            password: "",
-        }
-    },
-    methods: {
-    login(){      
-      console.log(this.email);
-      console.log(this.password);
+  name: "signin",
+  data() {
+    return {
+      mode: "login",
+      email: "",
+      password: "",
+      account: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+
+  methods: {
+    login() {      
       const userInfo = {
         email: this.email,
         password: this.password,
-      }
-       
-            axios.post('http://localhost:5000/api/auth/login', this.userInfo)
-            .then(response =>{
-                localStorage.setItem("token", response.data.token);
-                localStorage.setItem("userId", response.data.userId);
-                localStorage.setItem("isAdmin", response.data.isAdmin)
-                this.$router.push("/home");
-                })
-            .catch((err) => console.log(err));            
-        
-    }
+      };
+      axios
+        .post("http://localhost:5000/api/auth/login", userInfo)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
+          localStorage.setItem("isAdmin", response.data.isAdmin);
+          this.$router.push("/home");
+          console.log(response.data.error);
+        })
+        .catch((err) => console.log(err));
     },
-}
+
+    createAccount() {
+      const userInfo = {
+        email: this.email,
+        password: this.password,
+      };
+
+      axios
+        .post("http://localhost:5000/api/auth/signup", userInfo)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
+          localStorage.setItem("isAdmin", response.data.isAdmin);
+          this.$router.push("/profil");
+        })
+        .catch((err) => console.log(err));
+    },
+
+    SwitchtoCreateAccount() {
+      this.mode = "account";
+    },
+
+    SwitchToLogin() {
+      this.mode = "login";
+    },
+  },
+};
 </script>
 
-<style>
-#form-home{
-  border: 2px solid;
-  display: flex;
-  justify-content: center;
-  width: 500px;  
-}
-.signin-form{
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-}
-#signin-email{
-  margin: 10px;
-  border-radius: 15px;
-  padding-left: 15px;
-}
-#signin-password{
-  margin:10px;
-  border-radius: 15px;
-  padding-left: 15px;
-}
-
-#button-form{
-  border-radius: 15px;
-  margin-top: 10px;
+<style lang="scss" scoped>
+@import "../styles/utils/__mixin.scss";
+@import "../styles/utils/__variables.scss";
+.global-form {
+  @include flcecol;
+  .title-form {
+    @include flce;   
+  }
+  .login-switch {
+    @include flcecol;
+    margin: 20px;
+    align-items: center;
+     .switch-button{
+      background-color: $primary-color;
+       @include border(2px, 15px, 0 0 0 15px);
+       margin-top: 20px;
+       padding: 20px;
+       color: $text-color;
+       @include box-shadow;
+       font-size: 18px;
+       cursor: pointer;
+    }
+  }
+  #form-home {
+    @include flce;
+    border: none;
+    width: 500px;
+    .signin-form {
+      @include flcol;
+      margin: 20px;
+      .label-form{
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      #signin-email {
+        margin: 10px;
+        @include border(2px, 15px, 0 0 0 15px);
+        font-size: 18px;
+      }
+      #signin-password {
+        margin: 10px;
+        @include border(2px, 15px, 0 0 0 15px);
+        font-size: 18px;
+      }
+      #button-form {
+        @include border(2px, 15px, 0 0 0 15px);
+        background-color: $primary-color;
+        color: $text-color;
+        font-size: 18px;
+        @include box-shadow;
+        margin-top: 20px;
+        cursor: pointer;        
+      }
+    }
+  }
 }
 </style>

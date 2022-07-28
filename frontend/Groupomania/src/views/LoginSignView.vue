@@ -1,8 +1,12 @@
 <template>
-  <div class="home">
-    <p>salut le monde</p>
-    <SignUp />
-  </div>
+  <section id="home-all">
+    <div id="logo-groupo">
+      <img src="../assets/icon.png" alt="logo groupomania" />
+    </div>
+    <div class="home">
+      <SignUp />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -16,9 +20,24 @@ export default {
 };
 </script>
 
-<style>
-.home{
-  display: flex;
-  justify-content: center;  
+<style lang="scss">
+@import "../styles/utils/_mixin";
+#home-all {
+  @include flcecol;
+  align-items: center;
+  #logo-groupo {
+    @include flce;
+    margin-bottom: 25px;
+    img {
+      object-fit: cover;
+      display: flex;
+      max-width: 70%;
+    }
+  }
+  .home {
+    @include flce;
+    @include border(2px, 15px, 0 0 0 0);
+    max-width: 70vh;
+  }
 }
 </style>
