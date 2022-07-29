@@ -140,6 +140,8 @@ export default {
       lastname: "",
       image:"",      
       imageUrl: "",
+      token: localStorage.getItem("token"),
+      userId: localStorage.getItem("userId"),
     };
 }, 
 
@@ -151,13 +153,13 @@ export default {
             lastname: this.lastname,
             imageUrl: this.imageUrl,
         }        
-        let token = localStorage.getItem("token")
+        // let token = localStorage.getItem("token")
 
         axios
           .post("http://localhost:5000/api/user", userProfil ,
           {
             headers: {
-              Authorization: "bearer " + token
+              Authorization: "bearer " + this.token
             }
             
           })

@@ -2,15 +2,12 @@
   <section>
     <article id="container">
       <div v-for="item in allPosts" :key="item.id" class="container-post">
+        <div v-for="user in allUsers" :key="user.id">
+          <p v-if="this.userId == user.id">{{ user.pseudo }} {{ user.lastname }}</p>
+        </div>
         <div>{{ item.message }}</div>
         <img :src="item.imageUrl" alt="photo" class="post-picture" />
         <span>{{ item.createdAt }}</span>
-      </div>
-    </article>
-    <article>
-      <p>c est quoi ce bordel</p>
-      <div v-for="user in allUsers" :key="user.id">
-        {{ user.pseudo }} {{ user.lastname }}
       </div>
     </article>
   </section>
@@ -72,7 +69,7 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include flspa;
+  @include flcecol;
   margin: 10px;
   .container-post {
     max-width: 33%;
