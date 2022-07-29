@@ -20,7 +20,7 @@ exports.createUser = (req, res, next) => {
   delete userObject._id;
   const user = new User({
     ...userObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.filename}`,
   });
   user.save()
     .then(() => res.status(201).json({ message: "l'utilisateur a été enregistré" }))

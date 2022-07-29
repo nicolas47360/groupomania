@@ -8,8 +8,9 @@
       </div>
     </article>
     <article>
+      <p>c est quoi ce bordel</p>
       <div v-for="user in allUsers" :key="user.id">
-        {{ user.pseudo }}
+        {{ user.pseudo }} {{ user.lastname }}
       </div>
     </article>
   </section>
@@ -18,7 +19,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "HomeView",  
+  name: "HomeView",
   data() {
     return {
       allPosts: [],
@@ -57,7 +58,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.allUers = response.data;
+          this.allUsers = response.data;
         })
         .catch((error) => {
           console.log(error);
