@@ -17,7 +17,7 @@
       >
         Modifier votre profil
       </button>
-      <button 
+      <button
         class="switch-button"
         v-if="mode == 'create'"
         @click="switchtoDeleteProfil()"
@@ -150,10 +150,7 @@ export default {
             firstname: this.firstname,
             lastname: this.lastname,
             imageUrl: this.imageUrl,
-        }
-        // let token = this.token;
-        // let userId = this.userId;
-        
+        }        
         let token = localStorage.getItem("token")
 
         axios
@@ -191,8 +188,8 @@ export default {
     },
 
     modifyProfil () {
-      let token = this.token;
-      let userId = this.userId;
+      let id = localStorage.getItem("userId")
+      let token = localStorage.getItem("token")
       axios
       .put("http://localhost:5000/api/user/" + userId,{
          headers: {
@@ -207,18 +204,18 @@ export default {
     },
 
     getUserProfil() {
-       let token = this.token;
-      let userId = this.userId;
+      let id = localStorage.getItem("userId")
+      let token = localStorage.getItem("token")
       axios
-      .get("http://localhost:5000/api/user/" + userId,{
+      .get("http://localhost:5000/api/user" + userId,{
          headers: {
               Authorization: "bearer " + token
             }
       })
       .then((response) => {
-        let users = respone.data.user;
+        let users = response.data.user;
 
-        console.log(response);
+        console.log(users);
       })
       .catch((error) => {
         console.log(error);
