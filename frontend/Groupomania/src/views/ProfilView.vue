@@ -164,7 +164,7 @@ export default {
             
           })
           .then((response) => {
-              console.log(response.imageUrl);
+              console.log(response.data);
               this.$router.push("/home");
             })
           .catch((err) => console.log(err)) 

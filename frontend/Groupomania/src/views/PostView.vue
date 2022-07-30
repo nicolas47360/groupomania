@@ -30,6 +30,7 @@
 
 <script>
 // import axios from "axios";
+import axios from "axios";
 import NavBar from "../components/NavBar.vue";
 export default {
   name: "postsView",
@@ -41,6 +42,11 @@ export default {
     return {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      post: {
+        message: "",
+        imageUrl: "",
+        likes: 0,
+      },
     };
   },
   methods: {
@@ -54,6 +60,24 @@ export default {
 
     switchtoDeletePost() {
       this.mode = "delete";
+    },
+
+    createPost() {
+      let post = {
+        message: this.message,
+        imageUrl: this.imageUrl,
+        likes: this.likes,
+      };
+      axios
+        .post("http://localhost:5000/api/post", post, {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          this.$router.push("/home");
+          console.log(response.data);
+        });
     },
   },
 };

@@ -9,7 +9,7 @@ const modelPost = mongoose.Schema(
 
     postID: {
       type: String,
-
+      required: true,
     },
 
     message: {
