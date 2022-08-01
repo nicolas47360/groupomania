@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <img src="../assets/icon.png" alt="logo groupomania" id="logo" />
-    <router-link to="/">
+    <router-link to="/" @click="clearStorage()">
       <div id="back-login">
         <p id="nav-text">Se Déconnecter</p>
         <fa icon="right-to-bracket" id="bracket" />
@@ -11,7 +11,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    clearStorage() {
+      localStorage.clear();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
