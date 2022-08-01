@@ -99,7 +99,7 @@ export default {
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
           this.$router.push("/home");
-          console.log(response.data.error);
+          console.log(response.data);
         })
         .catch((err) => console.log(err));
     },

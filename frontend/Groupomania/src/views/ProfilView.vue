@@ -170,14 +170,11 @@ export default {
           .catch((err) => console.log(err)) 
     },
 
-    deleteProfil() {
-      let id = localStorage.getItem("userId")
-      let token = localStorage.getItem("token")
-      console.log(id);
+    deleteProfil() {     
       axios
-      .delete("http://localhost:5000/api/user/" + id,{
+      .delete("http://localhost:5000/api/user/" + this.userId,{
          headers: {
-              Authorization: "bearer " + token
+              Authorization: "bearer " + this.token
             }
       })
       .then((response) => {
@@ -189,13 +186,11 @@ export default {
       })
     },
 
-    modifyProfil () {
-      let id = localStorage.getItem("userId")
-      let token = localStorage.getItem("token")
+    modifyProfil () {      
       axios
-      .put("http://localhost:5000/api/user/" + userId,{
+      .put("http://localhost:5000/api/user/" + this.userId,{
          headers: {
-              Authorization: "bearer " + token
+              Authorization: "bearer " + this.token
             }
       })
       .then((response) => {
@@ -205,13 +200,11 @@ export default {
 
     },
 
-    getUserProfil() {
-      let id = localStorage.getItem("userId")
-      let token = localStorage.getItem("token")
+    getUserProfil() {     
       axios
-      .get("http://localhost:5000/api/user" + userId,{
+      .get("http://localhost:5000/api/user" + this.userId,{
          headers: {
-              Authorization: "bearer " + token
+              Authorization: "bearer " + this.token
             }
       })
       .then((response) => {
@@ -237,7 +230,8 @@ export default {
     },
     filePictureToUpload() {
       this.image = this.$refs.image.files[0];
-      this.imageUrl = URL.createObjectURL(this.image);
+      console.log(this.image);
+      this.imageUrl = this.image.name;
     },   
   },
 }

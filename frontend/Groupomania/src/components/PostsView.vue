@@ -3,7 +3,7 @@
     <article id="container">
       <div v-for="item in allPosts" :key="item.id" class="container-post">
         <div v-for="user in allUsers" :key="user.id">
-          <p v-if="this.userId == user.id">{{ user.pseudo }} {{ user.lastname }}</p>
+          <p>{{ user.pseudo }} {{ user.lastname }}</p>
         </div>
         <div>{{ item.message }}</div>
         <img :src="item.imageUrl" alt="photo" class="post-picture" />

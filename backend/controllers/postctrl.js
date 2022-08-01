@@ -1,5 +1,6 @@
 const Post = require("../models/post_model");
 const fs = require("fs");
+const { Console } = require("console");
 
 exports.readPost = (req, res, next) => {
   Post.find()
@@ -33,15 +34,17 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
+  console.log(req.body);
+  const postObject = req.body;
   console.log(postObject);
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.filename}`,
     likes: 0,
     usersLiked: [],
   });
+
   post
     .save()
     .then(() => res.status(201).json({ message: "le post a été enregistrée" }))
