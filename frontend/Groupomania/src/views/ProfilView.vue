@@ -27,13 +27,14 @@
     </div>
     <section id="profil">
       <div class="create-profil" v-if="mode == 'create'">
-        <form action="" class="profil-form">
+        <form @submit.prevent="createProfil" class="profil-form">
           <label for="pseudo">Pseudo</label>
           <input
             class="input-profil"
             v-model="pseudo"
             type="text"
             placeholder="Pseudo"
+            id="pseudo"
           />
           <label for="firstname">Nom</label>
           <input
@@ -42,6 +43,7 @@
             type="text"
             placeholder="Nom de Famille"
             required
+            id="firstname"
           />
           <label for="lastname">Prénom</label>
           <input
@@ -50,6 +52,7 @@
             type="text"
             placeholder="Prénom"
             required
+            id="lastname"
           />
           <label for="image">Image de profil</label>
           <input
@@ -58,15 +61,10 @@
             name="image"
             accept="image/*"
             ref="image"
-            @change="filePictureToUpload()"
+            @change="filePictureToUpload"
+            id="image"
           />
-          <button
-            id="profil-button"
-            type="submit"
-            @click.prevent="createProfil()"
-          >
-            Créer votre profil
-          </button>
+          <button id="profil-button" type="submit">Créer votre profil</button>
         </form>
       </div>
       <div class="modify-profil" v-if="mode == 'modify'">
@@ -134,11 +132,12 @@ export default {
   },
   data() {
     return {
-      mode: "create",      
+      mode: "create",
+      FILE: null,
+      name:"",      
       pseudo: "",
       firstname: "",
-      lastname: "",
-      image:"",      
+      lastname: "",            
       imageUrl: "",
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
@@ -147,16 +146,15 @@ export default {
 
   methods: {
     createProfil() {
-        const userProfil = {
-            pseudo: this.pseudo,
-            firstname: this.firstname,
-            lastname: this.lastname,
-            imageUrl: this.imageUrl,
-        }        
+      const formData = new FormData();
+      formData.append("image", this.FILE, this.FILE.name);
+      formData.append('pseudo', this.pseudo);
+      formData.append('firstname', this.firstname);
+      formData.append('lastname', this.lastname);
         // let token = localStorage.getItem("token")
 
         axios
-          .post("http://localhost:5000/api/user", userProfil ,
+          .post("http://localhost:5000/api/user", formData ,
           {
             headers: {
               Authorization: "bearer " + this.token
@@ -228,10 +226,9 @@ export default {
     switchtoDeleteProfil(){
       this.mode = "delete"
     },
-    filePictureToUpload() {
-      this.image = this.$refs.image.files[0];
-      console.log(this.image);
-      this.imageUrl = this.image.name;
+    filePictureToUpload(e) {
+      this.FILE = e.target.files[0];
+      
     },   
   },
 }

@@ -29,7 +29,7 @@
     </section>
     <section>
       <div class="create-post" v-if="mode == 'create'">
-        <form action="" class="post-form">
+        <form @submit.prevent="createPost" class="post-form">
           <label for="pseudo">Pseudo</label>
           <input
             type="text"
@@ -46,18 +46,17 @@
             v-model="message"
           >
           </textarea>
-          <label for="image">Image de profil</label>
+          <label for="image">Image</label>
           <input
             class="input-post"
             type="file"
             name="image"
             accept="image/*"
             ref="image"
-            @change="filePictureToUpload()"
+            @change="filePictureToUpload"
+            id="image"
           />
-          <button id="post-button" type="submit" @click.prevent="createPost()">
-            Publier votre post
-          </button>
+          <button id="post-button" type="submit">Publier votre post</button>
         </form>
       </div>
       <div class="modify-post" v-if="mode == 'modify'">
@@ -87,7 +86,11 @@
             ref="image"
             @change="filePictureToUpload()"
           />
-          <button id="profil-button" type="submit" @click.prevent="modifyPost()">
+          <button
+            id="profil-button"
+            type="submit"
+            @click.prevent="modifyPost()"
+          >
             Modifier voter post
           </button>
         </form>
@@ -125,12 +128,12 @@ export default {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       mode: "create",
-      post: {
-        pseudo: "",
-        message: "",
-        imageUrl: "",
-        likes: 0,
-      },
+      FILE: null,
+      name: "",
+      pseudo: "",
+      message: "",
+      imageUrl: "",
+      likes: 0,
     };
   },
   methods: {
@@ -147,13 +150,13 @@ export default {
     },
 
     createPost() {
-      let post = {
-        message: this.message,
-        imageUrl: this.imageUrl,
-        likes: this.likes,
-      };
+      const formData = new FormData();
+      formData.append("image", this.FILE, this.FILE.name);
+      formData.append("pseudo", this.pseudo);
+      formData.append("message", this.message);
+      formData.append("likes", this.likes);
       axios
-        .post("http://localhost:5000/api/post", post, {
+        .post("http://localhost:5000/api/post", formData, {
           headers: {
             Authorization: "bearer " + this.token,
           },
@@ -196,10 +199,8 @@ export default {
         });
     },
 
-    filePictureToUpload() {
-      this.image = this.$refs.image.files[0];
-      console.log(this.image);
-      this.imageUrl = this.image.name;
+    filePictureToUpload(e) {
+      this.FILE = e.target.files[0];
     },
   },
 };
