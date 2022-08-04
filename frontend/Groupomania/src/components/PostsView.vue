@@ -18,6 +18,7 @@
           <img :src="post.imageUrl" alt="photo" class="post-picture" />
           <span>{{ post.createdAt }}</span>
         </div>
+        <CommentView />
       </div>
     </article>
   </section>
@@ -25,8 +26,13 @@
 
 <script>
 import axios from "axios";
+
+import CommentView from "./CommentView.vue";
 export default {
   name: "HomeView",
+  components: {
+    CommentView,
+  },
   data() {
     return {
       allPosts: [],

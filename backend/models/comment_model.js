@@ -7,11 +7,6 @@ const modelComment = mongoose.Schema(
       reruired: true,
     },
 
-    commentID: {
-      type: String,
-      required: true,
-    },
-
     message: {
       type: String,
       required: true,
