@@ -154,6 +154,7 @@ export default {
       formData.append("image", this.FILE, this.FILE.name);
       formData.append("pseudo", this.pseudo);
       formData.append("message", this.message);
+      formData.append("userId", this.userId);
       formData.append("likes", this.likes);
       axios
         .post("http://localhost:5000/api/post", formData, {

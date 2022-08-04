@@ -1,7 +1,7 @@
 <template>
   <article class="global-form">
     <div class="title-form">
-      <h1 v-if="mode == 'login'">connexion</h1>
+      <h1 v-if="mode == 'login'">Connexion</h1>
       <h1 v-else>Inscription</h1>
     </div>
     <br />
@@ -98,8 +98,7 @@ export default {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
-          this.$router.push("/home");
-          console.log(response.data);
+          this.$router.push("/home");          
         })
         .catch((err) => console.log(err));
     },
@@ -138,16 +137,24 @@ export default {
 .global-form {
   @include flcecol;
   .title-form {
-    @include flce;   
+    @include flce;
+    margin: 10px;
+    h1 {
+      font-size: 35px;      
+      color: $tertiary-color;
+    }   
   }
   .login-switch {
     @include flcecol;
-    margin: 20px;
+    margin: 0 20px 0 20px ;
     align-items: center;
+    font-size: 20px;
+    color: $tertiary-color;
+    font-weight: bold;
      .switch-button{
       background-color: $primary-color;
        @include border(2px, 15px, 0 0 0 15px);
-       margin-top: 20px;
+       margin: 20px;
        padding: 20px;
        color: $text-color;
        @include box-shadow;
@@ -164,12 +171,12 @@ export default {
       margin: 20px;
       .label-form{
         font-size: 18px;
-        margin-bottom: 10px;
+        margin: 10px;
       }
       #signin-email {
         margin: 10px;
         @include border(2px, 15px, 0 0 0 15px);
-        font-size: 18px;
+        font-size: 20px;
       }
       #signin-password {
         margin: 10px;
@@ -180,10 +187,11 @@ export default {
         @include border(2px, 15px, 0 0 0 15px);
         background-color: $primary-color;
         color: $text-color;
-        font-size: 18px;
+        font-size: 22px;
         @include box-shadow;
-        margin-top: 20px;
-        cursor: pointer;        
+        margin: 20px;
+        cursor: pointer;
+        padding: 5px;        
       }
     }
   }

@@ -3,7 +3,15 @@
     <article id="container">
       <div v-for="item in allPosts" :key="item.id" class="container-post">
         <div v-for="user in allUsers" :key="user.id">
-          <p v-if="userId == this.userId">{{ user.pseudo }} {{ user.lastname }}</p>
+          <p v-if="item.userId == user.userId">
+            {{ user.pseudo }}
+            {{ user.lastname }}
+          </p>
+          <img 
+            :src="user.imageUrl"
+            alt="photo de profil"
+            class="post-picture"
+          />
         </div>
         <div>{{ item.message }}</div>
         <img :src="item.imageUrl" alt="photo" class="post-picture" />
@@ -75,6 +83,7 @@ export default {
     max-width: 33%;
     @include border(2px, 15px, 15px);
     @include flspb;
+    margin: 15px 0 15px 0;
     .post-picture {
       max-width: 33%;
     }

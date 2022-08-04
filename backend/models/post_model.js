@@ -7,11 +7,6 @@ const modelPost = mongoose.Schema(
       reruired: true,
     },
 
-    postID: {
-      type: String,
-
-    },
-
     message: {
       type: String,
       required: true,

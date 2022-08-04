@@ -2,7 +2,12 @@
   <NavBar />
   <section id="container">
     <div class="switch">
-      <div class="title-profil">
+      <div class="title-profil" v-if="this.user == this.userId">
+        <!-- <h1 v-if="mode == 'create'">Créer votre profil</h1> -->
+        <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
+        <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
+      </div>
+       <div class="title-profil" v-else>
         <h1 v-if="mode == 'create'">Créer votre profil</h1>
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
@@ -68,7 +73,7 @@
         </form>
       </div>
       <div class="modify-profil" v-if="mode == 'modify'">
-        <form action="" class="profil-form">
+        <form @submit.prevent="modifyProfil" class="profil-form">
           <label for="pseudo">Pseudo</label>
           <input
             class="input-profil"
@@ -93,12 +98,16 @@
             required
           />
           <label for="image">Image de profil</label>
-          <input class="input-profil" type="file" name="image" id="" />
-          <button
-            id="profil-button"
-            type="submit"
-            @click.prevent="modifyProfil()"
-          >
+          <input
+            class="input-profil"
+            type="file"
+            name="image"
+            accept="image/*"
+            ref="image"
+            @change="filePictureToUpload"
+            id="image"
+          />
+          <button id="profil-button" type="submit">
             Modifier votre profil
           </button>
         </form>
@@ -143,7 +152,26 @@ export default {
       userId: localStorage.getItem("userId"),
     };
 }, 
-
+  mounted() {          
+      axios
+      .get("http://localhost:5000/api/user/" + this.userId,{
+         headers: {
+              Authorization: "bearer " + this.token
+            }
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.nickname = response.data.pseudo;
+        this.user = response.data.userId;
+        this.prenom = response.data.lastname;
+        this.nom = response.data.firstname;
+        console.log(this.user)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+  
   methods: {
     createProfil() {
       const formData = new FormData();
@@ -151,7 +179,7 @@ export default {
       formData.append('pseudo', this.pseudo);
       formData.append('firstname', this.firstname);
       formData.append('lastname', this.lastname);
-        // let token = localStorage.getItem("token")
+      formData.append('userId', this.userId)
 
         axios
           .post("http://localhost:5000/api/user", formData ,
@@ -184,9 +212,15 @@ export default {
       })
     },
 
-    modifyProfil () {      
+    modifyProfil () { 
+      const formData = new FormData();
+      formData.append("image", this.FILE, this.FILE.name);
+      formData.append('pseudo', this.pseudo);
+      formData.append('firstname', this.firstname);
+      formData.append('lastname', this.lastname);
+      formData.append('userId', this.userId)     
       axios
-      .put("http://localhost:5000/api/user/" + this.userId,{
+      .put("http://localhost:5000/api/user/" + this.userId, formData, {
          headers: {
               Authorization: "bearer " + this.token
             }
@@ -195,26 +229,8 @@ export default {
         console.log(response);
         this.$router.push("/home")
       })
-
     },
-
-    getUserProfil() {     
-      axios
-      .get("http://localhost:5000/api/user" + this.userId,{
-         headers: {
-              Authorization: "bearer " + this.token
-            }
-      })
-      .then((response) => {
-        let users = response.data.user;
-
-        console.log(users);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    },
-
+      
     switchtoModifyProfil(){
       this.mode = "modify"
     },
@@ -227,8 +243,7 @@ export default {
       this.mode = "delete"
     },
     filePictureToUpload(e) {
-      this.FILE = e.target.files[0];
-      
+      this.FILE = e.target.files[0];      
     },   
   },
 }
@@ -244,12 +259,25 @@ export default {
   @include flcecol;
   @include border(2px, 15px, 0);
   align-items: center;
+  margin: 35px;
+  flex-wrap: wrap;
   .switch{
     @include flcecol;
+    align-items: center;
+    .title-profil{
+      color: $tertiary-color;
+      font-size: 19px;
+    }
+    .profil-switch{
+      color: $tertiary-color;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px;
+    }
     .switch-button{
-    margin: 20px 0 0 0;
+    margin: 20px 0 10px 0;
     @include border(2px, 15px, 5px 15px 5px 15px);
-    font-size: 18px;
+    font-size: 20px;
     background-color: $primary-color;
     color: $text-color;
     @include box-shadow;
@@ -260,10 +288,12 @@ export default {
   .profil-form{
     @include flcecol;
     margin: 20px;
+    flex-wrap: wrap;
     .input-profil{
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
-      font-size: 18px;
+      font-size: 20px;
+      max-width: 80%;
     }
     #profil-button{
       @include border(2px, 15px, 0 0 0 15px);
@@ -271,7 +301,7 @@ export default {
       color: $text-color;
       font-size: 18px;
       @include box-shadow;
-      margin-top: 20px;
+      margin: 20px 0 20px 0;
       padding: 8px 0 8px 0;
       cursor: pointer;    
     }    

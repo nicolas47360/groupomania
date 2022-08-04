@@ -25,8 +25,8 @@ export default {};
     list-style-type: none;
     .nav-component {
       margin: 30px 80px 30px 80px;
-      font-size: 18px;
-      a{
+      font-size: 20px;
+      a {
         text-decoration: none;
         color: $primary-color;
       }

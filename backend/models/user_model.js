@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const modeluser = mongoose.Schema({
+  userId: {
+    type: String,
+  },
 
   pseudo: {
     type: String,
