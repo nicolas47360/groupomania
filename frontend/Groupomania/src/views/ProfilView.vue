@@ -143,7 +143,7 @@ export default {
     return {
       mode: "create",
       FILE: null,
-      name:"",      
+      name: "",      
       pseudo: "",
       firstname: "",
       lastname: "",            

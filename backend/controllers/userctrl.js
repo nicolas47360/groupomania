@@ -1,6 +1,7 @@
 const User = require("../models/user_model");
 const fs = require("fs");
 
+
 exports.getAllUser = (req, res, next) => {
   User.find()
     .then((users) => res.status(200).json(users))
