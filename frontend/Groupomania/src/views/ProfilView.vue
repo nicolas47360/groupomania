@@ -7,7 +7,7 @@
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
       </div>
-       <div class="title-profil" v-else>
+      <div class="title-profil" v-else>
         <h1 v-if="mode == 'create'">Créer votre profil</h1>
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
@@ -259,8 +259,8 @@ export default {
   @include flcecol;
   @include border(2px, 15px, 0);
   align-items: center;
-  margin: 35px;
-  flex-wrap: wrap;
+  margin: 35px 0 35px 0;
+  flex-wrap: wrap;  
   .switch{
     @include flcecol;
     align-items: center;

@@ -18,7 +18,7 @@
       </button>
     </div>
     <div id="form-home">
-      <div v-if="mode == 'login'">
+      <div v-if="mode == 'login'" class="form-content">
         <form class="signin-form">
           <label class="label-form" for="email">Email</label>
           <input
@@ -36,12 +36,15 @@
             placeholder="Mot de passe"
             required
           />
+          <span v-if="this.error" class="error-auth">
+            {{ this.error.error }}
+          </span>
           <button id="button-form" @click.prevent="login()">
             Se connecter
           </button>
         </form>
       </div>
-      <div v-else>
+      <div v-else class="form-content">
         <form class="signin-form">
           <label class="label-form" for="email">Email</label>
           <input
@@ -59,6 +62,9 @@
             placeholder="Mot de passe"
             required
           />
+          <span v-if="this.error" class="error-auth">
+            {{ this.error.error }}
+          </span>
           <button id="button-form" @click.prevent="createAccount()">
             S'inscrire
           </button>
@@ -77,6 +83,7 @@ export default {
   data() {
     return {
       mode: "login",
+      error: "",
       email: "",
       password: "",
       account: {
@@ -87,7 +94,7 @@ export default {
   },
 
   methods: {
-    login() {      
+    login() {
       const userInfo = {
         email: this.email,
         password: this.password,
@@ -98,9 +105,12 @@ export default {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
-          this.$router.push("/home");          
+          this.$router.push("/home");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err.response.data);
+          this.error = err.response.data;
+        });
     },
 
     createAccount() {
@@ -117,7 +127,10 @@ export default {
           localStorage.setItem("isAdmin", response.data.isAdmin);
           this.$router.push("/profil");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err.response.data);
+          this.error = err.response.data;
+        });
     },
 
     SwitchtoCreateAccount() {
@@ -140,28 +153,30 @@ export default {
     @include flce;
     margin: 10px;
     h1 {
-      font-size: 35px;      
+      font-size: 35px;
       color: $tertiary-color;
-    }   
+    }
   }
   .login-switch {
     @include flcecol;
-    margin: 0 20px 0 20px ;
+    margin: 0 20px 0 20px;
     align-items: center;
     font-size: 20px;
     color: $tertiary-color;
     font-weight: bold;
-     .switch-button{
+    .switch-button {
       background-color: $primary-color;
-       @include border(2px, 15px, 0 0 0 15px);
-       margin: 20px;
-       padding: 20px;
-       color: $text-color;
-       @include box-shadow;
-       font-size: 18px;
-       cursor: pointer;
+      @include border(2px, 15px, 0 0 0 15px);
+      margin: 20px;
+      padding: 20px;
+      color: $text-color;
+      @include box-shadow;
+      font-size: 18px;
+      cursor: pointer;
+      width: 220px;
     }
   }
+
   #form-home {
     @include flce;
     border: none;
@@ -169,14 +184,23 @@ export default {
     .signin-form {
       @include flcol;
       margin: 20px;
-      .label-form{
+      align-items: center;
+      .label-form {
         font-size: 18px;
-        margin: 10px;
+        margin: 15px;
+        color: $tertiary-color;
+        font-weight: bold;
       }
       #signin-email {
         margin: 10px;
         @include border(2px, 15px, 0 0 0 15px);
         font-size: 20px;
+      }
+      .error-auth {
+        color: $text-alert;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 15px;
       }
       #signin-password {
         margin: 10px;
@@ -191,7 +215,8 @@ export default {
         @include box-shadow;
         margin: 20px;
         cursor: pointer;
-        padding: 5px;        
+        padding: 5px;
+        width: 220px;
       }
     }
   }

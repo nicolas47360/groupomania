@@ -10,13 +10,17 @@ exports.getAllUser = (req, res, next) => {
 exports.getUser = (req, res, next) => {
   console.log(req.params.id)
   User.findOne({ id: req.params.id })
-    .then((user) => res.status(200).json(user))
+    .then((user) => {
+      res.status(200).json(user)
+      console.log(user);
+    })
     .catch((error) => res.status(400).json({ error }));
-};
+}
 
 exports.createUser = (req, res, next) => {
   console.log(req.body);
   const userObject = req.body;
+  delete userObject._id;
   const user = new User({
     ...userObject,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,

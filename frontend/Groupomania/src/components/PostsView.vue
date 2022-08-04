@@ -1,21 +1,23 @@
 <template>
   <section>
     <article id="container">
-      <div v-for="item in allPosts" :key="item.id" class="container-post">
-        <div v-for="user in allUsers" :key="user.id">
-          <p v-if="item.userId == user.userId">
+      <div v-for="post in allPosts" :key="post.id" class="container-post">
+        <div v-for="user in allUsers" :key="user.id" id="user-info">
+          <p v-if="post.userId == user.userId">
             {{ user.pseudo }}
             {{ user.lastname }}
           </p>
-          <img 
+          <img
             :src="user.imageUrl"
             alt="photo de profil"
             class="post-picture"
           />
         </div>
-        <div>{{ item.message }}</div>
-        <img :src="item.imageUrl" alt="photo" class="post-picture" />
-        <span>{{ item.createdAt }}</span>
+        <div>
+          {{ post.message }}
+          <img :src="post.imageUrl" alt="photo" class="post-picture" />
+          <span>{{ post.createdAt }}</span>
+        </div>
       </div>
     </article>
   </section>
@@ -77,13 +79,19 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include flcecol;
+  @include flspa;
   margin: 10px;
+  flex-wrap: wrap;
   .container-post {
     max-width: 33%;
-    @include border(2px, 15px, 15px);
-    @include flspb;
+    @include border(2px, 15px, 0);
+    @include flcol;
     margin: 15px 0 15px 0;
+    #user-info {
+      @include flspa;
+      @include border(2px, 15px 15px 0 0, 8px);
+      margin-bottom: 20px;
+    }
     .post-picture {
       max-width: 33%;
     }

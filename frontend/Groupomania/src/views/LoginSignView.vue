@@ -25,6 +25,7 @@ export default {
 #home-all {
   @include flcecol;
   align-items: center;
+  flex-wrap: wrap;
   #logo-groupo {
     @include flce;
     margin-bottom: 25px;
