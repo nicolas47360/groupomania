@@ -36,7 +36,7 @@ exports.login = (req, res, next) => {
     .findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({ error: "utilisateur non trouvé" });
+        return res.status(401).json({ error: "utilisateur non trouvé veuillez vous créer un compte" });
       }
       bcrypt
         .compare(req.body.password, user.password)
@@ -55,3 +55,7 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+exports.deleteAccount = (req, res, next) => {
+
+}

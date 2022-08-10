@@ -3,12 +3,7 @@
   <section id="container">
     <div class="switch">
       <div class="title-profil">
-        <!-- <h1 v-if="mode == 'create'">Créer votre profil</h1> -->
-        <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
-        <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
-      </div>
-      <div class="title-profil">
-        <h1 v-if="mode == 'create'">Créer votre profil</h1>
+        <h1 v-if="mode == 'create' && this.user != this.userId">Créer votre profil</h1>
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
       </div>
@@ -31,100 +26,17 @@
       </button>
     </div>
     <section id="profil">
-      <div class="create-profil" v-if="mode == 'create'">
-        <form @submit.prevent="createProfil" class="profil-form">
-          <label for="pseudo">Pseudo</label>
-          <input
-            class="input-profil"
-            v-model="pseudo"
-            type="text"
-            placeholder="Pseudo"
-            id="pseudo"
-          />
-          <label for="firstname">Nom</label>
-          <input
-            class="input-profil"
-            v-model="firstname"
-            type="text"
-            placeholder="Nom de Famille"
-            required
-            id="firstname"
-          />
-          <label for="lastname">Prénom</label>
-          <input
-            class="input-profil"
-            v-model="lastname"
-            type="text"
-            placeholder="Prénom"
-            required
-            id="lastname"
-          />
-          <label for="image">Image de profil</label>
-          <input
-            class="input-profil"
-            type="file"
-            name="image"
-            accept="image/*"
-            ref="image"
-            id="image"
-            @change="filePictureToUpload"
-          />
-          <button id="profil-button" type="submit">Créer votre profil</button>
-        </form>
+      <div
+        class="create-profil"
+        v-if="mode == 'create' && this.user != this.userId"
+      >
+        <CreateProfil />
       </div>
       <div class="modify-profil" v-if="mode == 'modify'">
-        <form @submit.prevent="modifyProfil" class="profil-form">
-          <label for="pseudo">Pseudo</label>
-          <input
-            class="input-profil"
-            v-model="pseudo"
-            type="text"
-            placeholder="Pseudo"
-          />
-          <label for="firstname">Nom</label>
-          <input
-            class="input-profil"
-            v-model="firstname"
-            type="text"
-            placeholder="Nom de Famille"
-            required
-          />
-          <label for="lastname">Prénom</label>
-          <input
-            class="input-profil"
-            v-model="data"
-            type="text"
-            placeholder="Prénom"
-            required
-          />
-          <label for="image">Image de profil</label>
-          <input
-            class="input-profil"
-            type="file"
-            name="image"
-            accept="image/*"
-            ref="image"
-            @change="filePictureToUpload"
-            id="image"
-          />
-          <button id="profil-button" type="submit">
-            Modifier votre profil
-          </button>
-        </form>
+        <ModifyProfil />
       </div>
       <div class="delte-profil" v-if="mode == 'delete'">
-        <p id="delete-text">
-          Attention vous êtes sur le point de supprimer votre profil,vous ne
-          pourrez plus accéder au service du Réseau Social de Groupomania.<br>
-          Si vous voulez de nouveau nous rejoindre réinscrivez-vous
-        </p>
-        <button
-          class="delete-button"
-          type="reset"
-          @click.prevent="deleteProfil()"
-        >
-          SUPPRIMER
-        </button>
+        <DeleteProfil />
       </div>
     </section>
   </section>
@@ -134,10 +46,16 @@
 /* eslint-disable */
 import axios from "axios";
 import NavBar from "../components/NavBar.vue";
+import CreateProfil from "../components/CreateProfil.vue";
+import ModifyProfil from "../components/ModifyProfil.vue";
+import DeleteProfil from "../components/DeleteProfil.vue";
 export default {
   name: "profil",
   components:{
     NavBar,
+    CreateProfil,
+    ModifyProfil,
+    DeleteProfil,
   },
   data() {
     return {
@@ -176,69 +94,7 @@ export default {
 
  
   
-  methods: {
-    createProfil() {
-      const formData = new FormData();
-      if (this.FILE != null) {
-        formData.append("image", this.FILE, this.FILE.name);
-      }
-      formData.append('pseudo', this.pseudo);
-      formData.append('firstname', this.firstname);
-      formData.append('lastname', this.lastname);
-      formData.append('userId', this.userId)
-
-        axios
-          .post("http://localhost:5000/api/user", formData ,
-          {
-            headers: {
-              Authorization: "bearer " + this.token
-            }
-            
-          })
-          .then((response) => {
-              console.log(response.data);
-              this.$router.push("/home");
-            })
-          .catch((err) => console.log(err)) 
-    },
-
-    deleteProfil() {     
-      axios
-      .delete("http://localhost:5000/api/user/" + this.userId,{
-         headers: {
-              Authorization: "bearer " + this.token
-            }
-      })
-      .then((response) => {
-        console.log(response);
-        this.$router.push("/")
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    },
-
-    modifyProfil () { 
-      const formData = new FormData();
-      if (this.FILE != null) {
-        formData.append("image", this.FILE, this.FILE.name);
-      }
-      formData.append('pseudo', this.pseudo);
-      formData.append('firstname', this.firstname);
-      formData.append('lastname', this.lastname);
-      formData.append('userId', this.userId)     
-      axios
-      .put("http://localhost:5000/api/user/" + this.userId, formData, {
-         headers: {
-              Authorization: "bearer " + this.token
-            }
-      })
-      .then((response) => {
-        console.log(response);
-        this.$router.push("/home")
-      })
-    },
-      
+  methods: {      
     switchtoModifyProfil(){
       this.mode = "modify"
     },
@@ -249,11 +105,6 @@ export default {
 
     switchtoDeleteProfil(){
       this.mode = "delete"
-    },
-    filePictureToUpload(e) {
-      if (e.target.files[0]) {
-        this.FILE = e.target.files[0];      
-      }
     },    
   },
 }

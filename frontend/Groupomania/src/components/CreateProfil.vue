@@ -1,32 +1,42 @@
 <template>
-  <form @submit.prevent="createPost" class="post-form">
+  <form @submit.prevent="createProfil" class="profil-form">
     <label for="pseudo">Pseudo</label>
     <input
-      type="text"
-      class="input-post"
+      class="input-profil"
       v-model="pseudo"
+      type="text"
       placeholder="Pseudo"
+      id="pseudo"
     />
-    <label for="message">Message</label>
-    <textarea
-      class="input-post"
-      cols="30"
-      rows="10"
-      placeholder="Votre texte"
-      v-model="message"
-    >
-    </textarea>
-    <label for="image">Image</label>
+    <label for="firstname">Nom</label>
     <input
-      class="input-post"
+      class="input-profil"
+      v-model="firstname"
+      type="text"
+      placeholder="Nom de Famille"
+      required
+      id="firstname"
+    />
+    <label for="lastname">Prénom</label>
+    <input
+      class="input-profil"
+      v-model="lastname"
+      type="text"
+      placeholder="Prénom"
+      required
+      id="lastname"
+    />
+    <label for="image">Image de profil</label>
+    <input
+      class="input-profil"
       type="file"
       name="image"
       accept="image/*"
       ref="image"
-      @change="filePictureToUpload"
       id="image"
+      @change="filePictureToUpload"
     />
-    <button id="post-button" type="submit">Publier votre post</button>
+    <button id="profil-button" type="submit">Créer votre profil</button>
   </form>
 </template>
 
@@ -49,26 +59,27 @@ export default {
     };
   },
   methods: {
-    createPost() {
+    createProfil() {
       const formData = new FormData();
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
       }
-      formData.append("pseudo", this.pseudo);
-      formData.append("message", this.message);
-      formData.append("userId", this.userId);
-      formData.append("likes", this.likes);
-      // formData.append("postId", this.postId);
+      formData.append('pseudo', this.pseudo);
+      formData.append('firstname', this.firstname);
+      formData.append('lastname', this.lastname);
+      formData.append('userId', this.userId)
+
       axios
-        .post("http://localhost:5000/api/post", formData, {
+        .post("http://localhost:5000/api/user", formData, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
-          this.$router.push("/home");
           console.log(response.data);
-        });
+          this.$router.push("/home");
+        })
+        .catch((err) => console.log(err));
     },
     filePictureToUpload(e) {
       if (e.target.files[0]) {
@@ -82,21 +93,23 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-.post-form {
+.profil-form {
   @include flcecol;
   margin: 20px;
-  .input-post {
+  flex-wrap: wrap;
+  .input-profil {
     margin: 15px 0 15px 0;
     @include border(2px, 15px, 0 0 0 15px);
-    font-size: 18px;
+    font-size: 20px;
+    max-width: 80%;
   }
-  #post-button {
+  #profil-button {
     @include border(2px, 15px, 0 0 0 15px);
     background-color: $primary-color;
     color: $text-color;
     font-size: 18px;
     @include box-shadow;
-    margin-top: 20px;
+    margin: 20px 0 20px 0;
     padding: 8px 0 8px 0;
     cursor: pointer;
   }

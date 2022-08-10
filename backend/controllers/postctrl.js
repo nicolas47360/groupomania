@@ -33,11 +33,11 @@ exports.updatePost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   console.log(req.params)
-  Post.findOne({ userId: req.params.id })
+  Post.findOne({ _id: req.params.id })
     .then((post) => {
       const filename = post.imageUrl.split("/images")[1];
       fs.unlink(`images/${filename}`, () => {
-        Post.deleteOne({ id: req.params.id })
+        Post.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: "le post a été suprrimée" }))
           .catch((error) => res.status(400).json({ error }));
       });

@@ -15,7 +15,12 @@
         </div>
         <div id="post-info">
           {{ post.message }}
-          <img v-if="post.imageUrl != null" :src="post.imageUrl" alt="photo" id="post-picture" />
+          <img
+            v-if="post.imageUrl != null"
+            :src="post.imageUrl"
+            alt="photo"
+            id="post-picture"
+          />
           <span>{{ format_date(post.createdAt) }}</span>
         </div>
         <div id="link-comment">
@@ -40,7 +45,7 @@
 
 <script>
 import axios from "axios";
-import moment from 'moment';
+import moment from "moment";
 export default {
   name: "HomeView",
   data() {
@@ -96,7 +101,7 @@ export default {
 
     getPostId() {
       this.allPosts.forEach((post) => {
-        console.log(post);
+        console.log(post._id);
         this.allUsers.forEach((user) => {
           if (post.userId == user.userId) {
             console.log(post._id);

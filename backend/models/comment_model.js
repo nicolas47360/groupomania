@@ -4,7 +4,7 @@ const modelComment = mongoose.Schema(
   {
     userId: {
       type: String,
-      reruired: true,
+      required: true,
     },
 
     message: {
@@ -15,11 +15,11 @@ const modelComment = mongoose.Schema(
 
     likes: {
       type: Number,
-      required: true
+      required: true,
     },
 
     usersLiked:
-      { type: [String], required: true },
+      { type: [String], required: true, },
   },
 
   {

@@ -1,14 +1,17 @@
 <template>
-  <p id="delete-text">Voulez vous suprimer ce post?</p>
- 
-  <div v-for="post in allPosts" :key="post.id">
-    <div v-if="post.userId == this.userId">
-      {{ post._id }} {{post.userId}} {{post.message}}
-       <button class="delete-button" type="reset" @click.prevent="deletePost()">
-    SUPPRIMER
-  </button>
+  <article id="delete">
+    <p id="delete-text">Voulez vous suprimer ce post?</p>
+    <div id="delte-container" v-for="post in allPosts" :key="post.id">
+      <div id="delete-message" v-if="post.userId == this.userId">
+        {{ post._id }}
+        {{ post.userId }}
+        {{ post.message }}
+        <button id="delete-button" type="reset" @click.prevent="deletePost()">
+          SUPPRIMER
+        </button>
+      </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -19,6 +22,7 @@ export default {
       allPosts: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      id: localStorage.getItem("id"),
     };
   },
   created() {
@@ -27,7 +31,7 @@ export default {
   methods: {
     deletePost() {
       axios
-        .delete("http://localhost:5000/api/post/" + this.userId, {
+        .delete("http://localhost:5000/api/post/" + this.id, {
           headers: {
             Authorization: "bearer " + this.token,
           },
@@ -62,23 +66,29 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-.post-form {
+#delete {
   @include flcecol;
-  margin: 20px;
-  .input-post {
-    margin: 15px 0 15px 0;
-    @include border(2px, 15px, 0 0 0 15px);
-    font-size: 18px;
-  }
-  #delete-button {
-    @include border(2px, 15px, 0 0 0 15px);
-    background-color: $primary-color;
-    color: $text-color;
-    font-size: 18px;
-    @include box-shadow;
-    margin-top: 20px;
-    padding: 8px 0 8px 0;
-    cursor: pointer;
+  align-items: center;
+  #delete-text {
+    color: $text-alert;
+    font-weight: bold;
+    font-size: 22px;
+    #delete-container {
+      @include flcecol;
+      #delete-message {
+        @include flspa;
+        #delete-button {
+          @include border(2px, 15px, 0 0 0 15px);
+          background-color: $primary-color;
+          color: $text-color;
+          font-size: 18px;
+          @include box-shadow;
+          margin-top: 20px;
+          padding: 8px 0 8px 0;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>

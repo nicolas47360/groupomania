@@ -29,7 +29,7 @@
     </section>
     <section>
       <div class="create-post" v-if="mode == 'create'">
-        <form class="post-form">
+        <form class="post-form" action="">
           <label for="message">Message</label>
           <textarea
             class="input-post"
@@ -39,7 +39,11 @@
             v-model="message"
           >
           </textarea>
-          <button id="post-button" type="submit" @click.prevent="createComment()">
+          <button
+            id="post-button"
+            type="submit"
+            @click.prevent="createComment()"
+          >
             Publier votre commentaire
           </button>
         </form>
@@ -60,7 +64,7 @@
             type="submit"
             @click.prevent="modifyComment()"
           >
-            Modifier voter post
+            Modifier voter commentaire
           </button>
         </form>
       </div>
