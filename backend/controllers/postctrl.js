@@ -1,6 +1,5 @@
 const Post = require("../models/post_model");
 const fs = require("fs");
-const { Console } = require("console");
 
 exports.readPost = (req, res, next) => {
   Post.find()
@@ -8,24 +7,37 @@ exports.readPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+exports.getPost = (req, res, next) => {
+  console.log(req.params._id)
+  console.log(req.body)
+  Post.findOne({ id: req.params.id })
+    .then((user) => {
+      res.status(200).json(user)
+      console.log(user);
+    })
+    .catch((error) => res.status(400).json({ error }));
+}
+
 exports.updatePost = (req, res, next) => {
+  console.log(req.body)
   const postObject = req.file ?
     {
-      ...JSON.parse(req.body.post),
+      ...req.body,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     }
     : { ...req.body };
-  Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+  Post.updateOne({ userId: req.params.id }, { ...postObject, userId: req.params.id })
     .then(() => res.status(200).json({ message: "le post a été modifiée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
+  console.log(req.params)
+  Post.findOne({ userId: req.params.id })
     .then((post) => {
       const filename = post.imageUrl.split("/images")[1];
       fs.unlink(`images/${filename}`, () => {
-        Post.deleteOne({ _id: req.params.id })
+        Post.deleteOne({ id: req.params.id })
           .then(() => res.status(200).json({ message: "le post a été suprrimée" }))
           .catch((error) => res.status(400).json({ error }));
       });
@@ -34,19 +46,22 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  console.log(req.body);
   const postObject = req.body;
-  console.log(postObject);
   delete postObject._id;
-  const post = new Post({
-    ...postObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    likes: 0,
-    usersLiked: [],
-  });
-
-  post
-    .save()
+  let post = '';
+  if (req.file) {
+    post = new Post({
+      ...postObject,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      likes: 0,
+      usersLiked: [],
+    });
+  } else {
+    post = new Post({
+      ...postObject,
+    });
+  }
+  post.save()
     .then(() => res.status(201).json({ message: "le post a été enregistrée" }))
     .catch((error) => res.status(400).json({ error }));
 };

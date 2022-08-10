@@ -3,6 +3,7 @@ import LoginSign from "../views/LoginSignView.vue";
 import Home from "../views/HomeView.vue";
 import Profil from "../views/ProfilView.vue";
 import Post from "../views/PostView.vue";
+import CommentPost from "../components/CommentView.vue";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: "/post",
         name: "Post",
         component: Post,
+    },
+    {
+        path: "/comment",
+        name: "comment",
+        component: CommentPost,
     }
 ];
 

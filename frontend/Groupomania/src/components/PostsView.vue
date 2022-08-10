@@ -1,24 +1,38 @@
 <template>
-  <section>
-    <article id="container">
-      <div v-for="post in allPosts" :key="post.id" class="container-post">
-        <div v-for="user in allUsers" :key="user.id" id="user-info">
-          <p v-if="post.userId == user.userId">
-            {{ user.pseudo }}
-            {{ user.lastname }}
+  <section id="all-container">
+    <article v-for="post in allPosts" :key="post.id" id="container">
+      <div class="container-post">
+        <div id="user-info">
+          <p>
+            {{ post.pseudo }}
+            {{ post.lastname }}
           </p>
           <img
-            :src="user.imageUrl"
+            :src="post.userImageUrl"
             alt="photo de profil"
-            class="post-picture"
+            id="profil-picture"
           />
         </div>
-        <div>
+        <div id="post-info">
           {{ post.message }}
-          <img :src="post.imageUrl" alt="photo" class="post-picture" />
-          <span>{{ post.createdAt }}</span>
+          <img v-if="post.imageUrl != null" :src="post.imageUrl" alt="photo" id="post-picture" />
+          <span>{{ format_date(post.createdAt) }}</span>
         </div>
-        <CommentView />
+        <div id="link-comment">
+          <router-link to="/comment">
+            <div id="link-icon">
+              <p>commenter</p>
+              <fa icon="comment" />
+            </div>
+          </router-link>
+          <button
+            to="/post"
+            v-if="post.userId == this.userId"
+            @click="getPostId()"
+          >
+            <fa icon="trash" />
+          </button>
+        </div>
       </div>
     </article>
   </section>
@@ -26,13 +40,9 @@
 
 <script>
 import axios from "axios";
-
-import CommentView from "./CommentView.vue";
+import moment from 'moment';
 export default {
   name: "HomeView",
-  components: {
-    CommentView,
-  },
   data() {
     return {
       allPosts: [],
@@ -46,6 +56,11 @@ export default {
     this.getPosts();
   },
   methods: {
+    format_date(value) {
+      if (value) {
+        return moment(String(value)).format("MM/DD/YYYY hh:mm");
+      }
+    },
     getPosts() {
       axios
         .get("http://localhost:5000/api/post", {
@@ -56,6 +71,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allPosts = response.data;
+          this.mergeUsersAndPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -77,6 +93,31 @@ export default {
           console.log(error);
         });
     },
+
+    getPostId() {
+      this.allPosts.forEach((post) => {
+        console.log(post);
+        this.allUsers.forEach((user) => {
+          if (post.userId == user.userId) {
+            console.log(post._id);
+            localStorage.setItem("id", post._id);
+            // this.$router.push("/post");
+          }
+        });
+      });
+    },
+
+    mergeUsersAndPosts() {
+      this.allPosts.forEach((post) => {
+        this.allUsers.forEach((user) => {
+          if (post.userId == user.userId) {
+            post.pseudo = user.pseudo;
+            post.lastname = user.lastname;
+            post.userImageUrl = user.imageUrl;
+          }
+        });
+      });
+    },
   },
 };
 </script>
@@ -84,22 +125,50 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#container {
+#all-container {
   @include flspa;
-  margin: 10px;
   flex-wrap: wrap;
-  .container-post {
-    max-width: 33%;
-    @include border(2px, 15px, 0);
-    @include flcol;
-    margin: 15px 0 15px 0;
-    #user-info {
-      @include flspa;
-      @include border(2px, 15px 15px 0 0, 8px);
-      margin-bottom: 20px;
-    }
-    .post-picture {
-      max-width: 33%;
+  #container {
+    @include flspa;
+    margin: 10px;
+    width: 30%;
+    .container-post {
+      @include border(2px, 15px, 0);
+      @include flcol;
+      margin: 15px 0 15px 0;
+      #user-info {
+        @include flspa;
+        align-items: center;
+        margin-bottom: 20px;
+        #profil-picture {
+          max-width: 20%;
+          object-fit: cover;
+        }
+      }
+      #post-info {
+        @include flcol;
+        @include border(1px, 0, 8px);
+        height: 80%;
+        #post-picture {
+          max-width: 25%;
+          object-fit: cover;
+        }
+      }
+      #link-comment {
+        @include flsparo;
+        align-items: center;
+        #link-icon {
+          @include flspb;
+          align-items: center;
+          p {
+            padding-right: 5px;
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+        color: $tertiary-color;
+      }
     }
   }
 }

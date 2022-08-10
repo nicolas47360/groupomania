@@ -7,7 +7,9 @@ exports.readComment = (req, res, next) => {
 };
 
 exports.createComment = (req, res, next) => {
-  const commentObject = req.body.comment;
+  console.log(req.body)
+  const commentObject = req.body;
+  console.log(commentObject)
   delete commentObject._id;
   const comment = new Comment({
     ...commentObject,

@@ -9,8 +9,7 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  console.log(req.params.id)
-  User.findOne({ id: req.params.id })
+  User.findOne({ userId: req.params.id })
     .then((user) => {
       res.status(200).json(user)
       console.log(user);
@@ -19,13 +18,19 @@ exports.getUser = (req, res, next) => {
 }
 
 exports.createUser = (req, res, next) => {
-  console.log(req.body);
   const userObject = req.body;
   delete userObject._id;
-  const user = new User({
-    ...userObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-  });
+  let user = '';
+  if (req.file) {
+    user = new User({
+      ...userObject,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    });
+  } else {
+    user = new User({
+      ...userObject,
+    });
+  }
   user.save()
     .then(() => {
       res.status(201).json({ message: "l'utilisateur a été enregistré" });
@@ -42,13 +47,13 @@ exports.updateUser = (req, res, next) => {
         }`,
     }
     : { ...req.body };
-  User.updateOne({ id: req.params.id }, { ...userObject, id: req.params.id })
+  User.updateOne({ userId: req.params.id }, { ...userObject, userId: req.params.id })
     .then(() => res.status(200).json({ message: "les données de l'utilisateur ont été modifiées" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.deleteUser = (req, res, next) => {
-  User.findOne({ id: req.params.id })
+  User.findOne({ userId: req.params.id })
     .then((user) => {
       const filename = user.imageUrl.split("/images")[1];
       fs.unlink(`images/${filename}`, () => {

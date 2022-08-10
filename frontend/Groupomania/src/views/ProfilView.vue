@@ -2,12 +2,12 @@
   <NavBar />
   <section id="container">
     <div class="switch">
-      <div class="title-profil" v-if="this.user == this.userId">
+      <div class="title-profil">
         <!-- <h1 v-if="mode == 'create'">Créer votre profil</h1> -->
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
       </div>
-      <div class="title-profil" v-else>
+      <div class="title-profil">
         <h1 v-if="mode == 'create'">Créer votre profil</h1>
         <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
         <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
@@ -66,8 +66,8 @@
             name="image"
             accept="image/*"
             ref="image"
-            @change="filePictureToUpload"
             id="image"
+            @change="filePictureToUpload"
           />
           <button id="profil-button" type="submit">Créer votre profil</button>
         </form>
@@ -150,6 +150,8 @@ export default {
       imageUrl: "",
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      user: "",
+      nickname : "",      
     };
 }, 
   mounted() {          
@@ -171,11 +173,15 @@ export default {
         console.log(error);
       })
     },
+
+ 
   
   methods: {
     createProfil() {
       const formData = new FormData();
-      formData.append("image", this.FILE, this.FILE.name);
+      if (this.FILE != null) {
+        formData.append("image", this.FILE, this.FILE.name);
+      }
       formData.append('pseudo', this.pseudo);
       formData.append('firstname', this.firstname);
       formData.append('lastname', this.lastname);
@@ -214,7 +220,9 @@ export default {
 
     modifyProfil () { 
       const formData = new FormData();
-      formData.append("image", this.FILE, this.FILE.name);
+      if (this.FILE != null) {
+        formData.append("image", this.FILE, this.FILE.name);
+      }
       formData.append('pseudo', this.pseudo);
       formData.append('firstname', this.firstname);
       formData.append('lastname', this.lastname);
@@ -243,8 +251,10 @@ export default {
       this.mode = "delete"
     },
     filePictureToUpload(e) {
-      this.FILE = e.target.files[0];      
-    },   
+      if (e.target.files[0]) {
+        this.FILE = e.target.files[0];      
+      }
+    },    
   },
 }
 

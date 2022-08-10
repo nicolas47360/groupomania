@@ -7,15 +7,20 @@ const modelPost = mongoose.Schema(
       reruired: true,
     },
 
+    // postId: {
+    //   type: String,
+    //   required: true,
+    // },
+
     message: {
       type: String,
       required: true,
-
       maxlenght: 370,
     },
 
     imageUrl: {
       type: String,
+      default: null,
     },
 
     likes: {
