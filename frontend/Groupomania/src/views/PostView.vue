@@ -42,8 +42,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-import axios from "axios";
 import NavBar from "../components/NavBar.vue";
 import DeletePost from "../components/DeletePost.vue";
 import CreatePost from "../components/CreatePost.vue";
@@ -64,20 +62,6 @@ export default {
       id: localStorage.getItem("id"),
       mode: "create",
     };
-  },
-  mounted() {
-    axios
-      .get("http://localhost:5000/api/user/" + this.userId, {
-        headers: {
-          Authorization: "bearer " + this.token,
-        },
-      })
-      .then((response) => {
-        this.postId = response.data._id;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   },
   methods: {
     switchtoModifyPost() {

@@ -6,6 +6,7 @@
         {{ post._id }}
         {{ post.userId }}
         {{ post.message }}
+        {{ this.postId }}
         <button id="delete-button" type="reset" @click.prevent="deletePost()">
           SUPPRIMER
         </button>
@@ -22,16 +23,17 @@ export default {
       allPosts: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      id: localStorage.getItem("id"),
+      postId: "",
     };
   },
+
   created() {
     this.getAllPost();
   },
   methods: {
     deletePost() {
       axios
-        .delete("http://localhost:5000/api/post/" + this.id, {
+        .delete("http://localhost:5000/api/post/" + this.postId, {
           headers: {
             Authorization: "bearer " + this.token,
           },
