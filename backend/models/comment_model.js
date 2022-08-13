@@ -19,7 +19,7 @@ const modelComment = mongoose.Schema(
     },
 
     usersLiked:
-      { type: [String], required: true, },
+      { type: [String], required: false, },
   },
 
   {

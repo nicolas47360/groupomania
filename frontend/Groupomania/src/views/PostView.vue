@@ -66,6 +66,7 @@ export default {
   methods: {
     switchtoModifyPost() {
       this.mode = "modify";
+      this.$router.push("post/modify");
     },
 
     switchtoCreatePost() {
@@ -74,6 +75,7 @@ export default {
 
     switchtoDeletePost() {
       this.mode = "delete";
+      this.$router.push("post/delete");
     },
   },
 };

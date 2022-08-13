@@ -1,6 +1,6 @@
 <template>
   <section id="all-container">
-    <article v-for="post in allPosts" :key="post.id" id="container">
+    <article v-for="post in allPosts.reverse()" :key="post.id" id="container">
       <div class="container-post">
         <div id="user-info">
           <p>
@@ -31,12 +31,22 @@
             </div>
           </router-link>
           <button
-            to="/post"
+            id="delete-button"
             v-if="post.userId == this.userId"
-            @click="getPostId()"
+            @click.prevent="goToTrash(post._id)"
           >
             <fa icon="trash" />
+            supprimer
           </button>
+          <button
+            id="delete-button"
+            v-if="post.userId == this.userId"
+            @click.prevent="goToModify(post._id)"
+          >
+            <fa icon="circle" />
+             Modifier
+          </button>
+
         </div>
       </div>
     </article>
@@ -54,6 +64,7 @@ export default {
       allUsers: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      postId: "",
     };
   },
   created() {
@@ -99,19 +110,6 @@ export default {
         });
     },
 
-    getPostId() {
-      this.allPosts.forEach((post) => {
-        console.log(post._id);
-        this.allUsers.forEach((user) => {
-          if (post.userId == user.userId) {
-            console.log(post._id);
-            localStorage.setItem("id", post._id);
-            // this.$router.push("/post");
-          }
-        });
-      });
-    },
-
     mergeUsersAndPosts() {
       this.allPosts.forEach((post) => {
         this.allUsers.forEach((user) => {
@@ -122,6 +120,16 @@ export default {
           }
         });
       });
+    },
+
+    goToTrash(postId) {
+      localStorage.setItem("postId", postId);
+      this.$router.push("/post/delete");
+    },
+
+    goToModify(postId) {
+      localStorage.setItem("postId", postId);
+      this.$router.push("/post/modify");
     },
   },
 };

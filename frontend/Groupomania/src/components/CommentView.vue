@@ -96,7 +96,7 @@ export default {
       mode: "create",
       message: "",
       likes: 0,
-    };
+    }
   },
 
   components: {
@@ -117,34 +117,46 @@ export default {
     },
 
     createComment() {
-      const formData = new FormData();
-      formData.append("message", this.message);
-      formData.append("userId", this.userId);
-      formData.append("likes", this.likes);
+      // const formData = new FormData();
+      // formData.append("message", "je sais pas ");
+      // formData.append("userId", this.userId);
+      // formData.append("likes", this.likes);
       axios
-        .post("http://localhost:5000/api/comment", formData, {
-          headers: {
-            Authorization: "bearer " + this.token,
+        .post(
+          "http://localhost:5000/api/comment",
+          {
+            message: this.message,
+            userId: this.userId,
+            likes: this.likes,
           },
-        })
+          {
+            headers: {
+              Authorization: "bearer " + this.token,
+            },
+          }
+        )
         .then((response) => {
           console.log(response);
           this.$router.push("/home");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
     },
 
     modifyComment() {
-      const comment = {
-        message: this.message,
-        likes: this.likes,
-      };
       axios
-        .put("http://localhost:5000/api/comment/" + this.userId, comment, {
-          headers: {
-            Authorization: "bearer " + this.token,
+        .put(
+          "http://localhost:5000/api/comment/" + this.userId,
+          {
+            message: this.message,
+            userId: this.userId,
+            likes: this.likes,
           },
-        })
+          {
+            headers: {
+              Authorization: "bearer " + this.token,
+            },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           this.$router.push("/home");

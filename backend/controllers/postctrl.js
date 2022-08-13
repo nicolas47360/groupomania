@@ -19,30 +19,44 @@ exports.getPost = (req, res, next) => {
 }
 
 exports.updatePost = (req, res, next) => {
-  console.log(req.body)
+  console.log(req)
   const postObject = req.file ?
     {
       ...req.body,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     }
     : { ...req.body };
-  Post.updateOne({ userId: req.params.id }, { ...postObject, userId: req.params.id })
+  Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: "le post a été modifiée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.deletePost = (req, res, next) => {
-  console.log(req.params)
+  console.log(req.params.id)
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      const filename = post.imageUrl.split("/images")[1];
-      fs.unlink(`images/${filename}`, () => {
+      console.log(post);
+      if (post.imageUrl !== null) {
+        const filename = post.imageUrl.split("/images")[1];
+        fs.unlink(`images/${filename}`, () => {
+          Post.deleteOne({ _id: req.params.id })
+            .then((del) => {
+              console.log(del)
+              res.status(200).json({ message: "le post a été suprrimée" })
+            })
+            .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
+        });
+      }
+      else {
         Post.deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: "le post a été suprrimée" }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+          .then((del) => {
+            console.log(del)
+            res.status(200).json({ message: "le post a été suprrimée" })
+          })
+          .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
+      }
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ message: "c ets ici la merde " }));
 };
 
 exports.createPost = (req, res, next) => {

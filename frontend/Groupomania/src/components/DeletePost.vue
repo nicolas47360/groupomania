@@ -1,13 +1,39 @@
 <template>
-  <article id="delete">
-    <p id="delete-text">Voulez vous suprimer ce post?</p>
-    <div id="delte-container" v-for="post in allPosts" :key="post.id">
-      <div id="delete-message" v-if="post.userId == this.userId">
-        {{ post._id }}
-        {{ post.userId }}
-        {{ post.message }}
-        {{ this.postId }}
-        <button id="delete-button" type="reset" @click.prevent="deletePost()">
+  <NavBar />
+  <article class="delete" v-if="this.postId != null">
+    <p class="delete-text">Voulez vous suprimer ce post?</p>
+    <div class="delete-container" v-for="post in allPosts" :key="post.id">
+      <div
+        class="delete-message"
+        v-if="post.userId == this.userId && post._id == this.postId"
+      >
+        <p>{{ post.message }}</p>
+        <img :src="post.imageUrl" alt="photo" v-if="post.imageUrl != null" />
+        <button
+          id="delete-button"
+          type="reset"
+          @click.prevent="deletePost(post._id)"
+        >
+          SUPPRIMER
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="delete" v-else>
+    <p class="delete-text">Voulez vous suprimer ce post?</p>
+    <div
+      class="delete-container"
+      v-for="post in allPosts.reverse()"
+      :key="post.id"
+    >
+      <div class="delete-message" v-if="post.userId == this.userId">
+        <p>{{ post.message }}</p>
+        <img :src="post.imageUrl" alt="photo" v-if="post.imageUrl != null" />
+        <button
+          id="delete-button"
+          type="reset"
+          @click.prevent="deletePost(post._id)"
+        >
           SUPPRIMER
         </button>
       </div>
@@ -17,13 +43,18 @@
 
 <script>
 import axios from "axios";
+import NavBar from "./NavBar.vue";
 export default {
+  name: "deletePost",
+  components: {
+    NavBar,
+  },
   data() {
     return {
       allPosts: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      postId: "",
+      postId: localStorage.getItem("postId"),
     };
   },
 
@@ -31,15 +62,18 @@ export default {
     this.getAllPost();
   },
   methods: {
-    deletePost() {
+    deletePost(id) {
       axios
-        .delete("http://localhost:5000/api/post/" + this.postId, {
+        .delete("http://localhost:5000/api/post/" + id, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
           console.log(response);
+          if (this.postId != null) {
+            localStorage.removeItem("postId");
+          }
           this.$router.push("/home");
         })
         .catch((error) => {
@@ -68,27 +102,32 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#delete {
+.delete {
   @include flcecol;
   align-items: center;
-  #delete-text {
+  .delete-text {
     color: $text-alert;
     font-weight: bold;
     font-size: 22px;
-    #delete-container {
+  }
+  .delete-container {
+    @include flcecol;
+    .delete-message {
       @include flcecol;
-      #delete-message {
-        @include flspa;
-        #delete-button {
-          @include border(2px, 15px, 0 0 0 15px);
-          background-color: $primary-color;
-          color: $text-color;
-          font-size: 18px;
-          @include box-shadow;
-          margin-top: 20px;
-          padding: 8px 0 8px 0;
-          cursor: pointer;
-        }
+      @include border(2px, 15px, 15px);
+      padding: 15px;
+      margin: 20px 0 20px 0;
+      align-items: center;
+      #delete-button {
+        @include border(2px, 15px, 0 0 0 15px);
+        background-color: $primary-color;
+        color: $text-color;
+        font-size: 18px;
+        @include box-shadow;
+        margin-top: 20px;
+        padding: 8px 0 8px 0;
+        cursor: pointer;
+        width: 320px;
       }
     }
   }

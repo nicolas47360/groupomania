@@ -1,46 +1,108 @@
 <template>
-  <div>
-    <form action="" class="post-form">
-      <label for="pseudo">Pseudo</label>
-      <input
-        type="text"
-        class="input-post"
-        v-model="pseudo"
-        placeholder="Pseudo"
-      />
-      <label for="message">Message</label>
-      <textarea
-        class="input-post"
-        cols="30"
-        rows="10"
-        placeholder="Votre texte"
-        v-model="message"
+  <NavBarVue />
+  <article v-if="this.postId != null">
+    <div v-for="post in allPosts" :key="post.id">
+      <P v-if="post.userId == this.userId && post._id == this.postId">
+        {{ post.message }}
+        <img v-if="post.imageUrl != null" :src="post.imageUrl" alt="photo" />
+      </P>
+      <form
+        class="post-form"
+        v-if="post.userId == this.userId && post._id == this.postId"
       >
-      </textarea>
-      <label for="image">Image de profil</label>
-      <input
-        class="input-post"
-        type="file"
-        name="image"
-        accept="image/*"
-        ref="image"
-        @change="filePictureToUpload()"
-      />
-      <button id="modify-button" type="submit" @click.prevent="modifyPost()">
-        Modifier voter post
-      </button>
-    </form>
-  </div>
+        <label for="pseudo">Pseudo</label>
+        <input
+          type="text"
+          class="input-post"
+          v-model="pseudo"
+          placeholder="Pseudo"
+        />
+        <label for="message">Message</label>
+        <textarea
+          class="input-post"
+          cols="30"
+          rows="10"
+          :placeholder="post.message"
+          v-model="message"
+        >
+        </textarea>
+        <label for="image">Image de profil</label>
+        <input
+          class="input-post"
+          type="file"
+          name="image"
+          accept="image/*"
+          ref="image"
+          @change="filePictureToUpload()"
+          :placeholder="post.imageUrl"
+        />
+        <button
+          id="modify-button"
+          type="submit"
+          @click.prevent="modifyPost(post._id)"
+        >
+          Modifier voter post
+        </button>
+      </form>
+    </div>
+  </article>
+  <article v-else>
+    <div v-for="post in allPosts.reverse()" :key="post.id">
+      <P v-if="post.userId == this.userId">
+        {{ post.message }}
+        <img v-if="post.imageUrl != null" :src="post.imageUrl" alt="photo" />
+      </P>
+      <form action="" class="post-form" v-if="post.userId == this.userId">
+        <label for="pseudo">Pseudo</label>
+        <input
+          type="text"
+          class="input-post"
+          v-model="pseudo"
+          placeholder="Pseudo"
+        />
+        <label for="message">Message</label>
+        <textarea
+          class="input-post"
+          cols="30"
+          rows="10"
+          :placeholder="post.message"
+          v-model="message"
+        >
+        </textarea>
+        <label for="image">Image de profil</label>
+        <input
+          class="input-post"
+          type="file"
+          name="image"
+          accept="image/*"
+          ref="image"
+          @change="filePictureToUpload()"
+        />
+        <button
+          id="modify-button"
+          type="submit"
+          @click.prevent="modifyPost(post._id)"
+        >
+          Modifier voter post
+        </button>
+      </form>
+    </div>
+  </article>
 </template>
 
 <script>
 import axios from "axios";
+import NavBarVue from "./NavBar.vue";
 export default {
+  name: "modifyPost",
+  components: {
+    NavBarVue,
+  },
   data() {
     return {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      id: localStorage.getItem("id"),
+      postId: localStorage.getItem("postId"),
       mode: "create",
       FILE: null,
       name: "",
@@ -48,10 +110,14 @@ export default {
       message: "",
       imageUrl: "",
       likes: 0,
+      allPosts: [],
     };
   },
+  created() {
+    this.getAllPost();
+  },
   methods: {
-    modifyPost() {
+    modifyPost(postId) {
       const formData = new FormData();
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
@@ -61,12 +127,15 @@ export default {
       formData.append("userId", this.userId);
       formData.append("likes", this.likes);
       axios
-        .put("http://localhost:5000/api/post/" + this.userId, {
+        .put("http://localhost:5000/api/post/" + postId, formData, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
+          if (this.postId != null) {
+            localStorage.removeItem("postId");
+          }
           console.log(response);
           this.$router.push("/home");
         })
@@ -78,6 +147,21 @@ export default {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
+    },
+    getAllPost() {
+      axios
+        .get("http://localhost:5000/api/post", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allPosts = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
