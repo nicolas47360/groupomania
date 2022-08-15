@@ -29,11 +29,7 @@
       </section>
     </article>
     <article id="delete-all" v-else>
-      <section
-        id="all-container"
-        v-for="post in allPosts.reverse()"
-        :key="post.id"
-      >
+      <section id="all-container" v-for="post in allPosts" :key="post.id">
         <div class="delete-container" v-if="post.userId == this.userId">
           <div class="delete-message">
             <span id="title-message"> {{ post.title }}</span>
@@ -106,7 +102,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.allPosts = response.data;
+          this.allPosts = response.data.reverse();
         })
         .catch((error) => {
           console.log(error);
@@ -191,18 +187,16 @@ export default {
     }
     #all-container {
       @include flspa;
-      flex-wrap: wrap;
+      width: 45vw;
       @media (max-width: 900px) {
         @include flcecol;
         align-items: center;
       }
       .delete-container {
-        // @include flspa;
-        flex-wrap: wrap;
         margin: 20px;
         .delete-message {
           @include flcecol;
-          @include border(2px, 15px, 15px);
+          @include border(2px, 15px, 0);
           padding: 15px;
           margin: 20px 0 20px 0;
           align-items: center;

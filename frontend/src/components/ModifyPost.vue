@@ -1,114 +1,115 @@
 <template>
   <NavBarVue />
-  <article class="container" v-if="this.postId != null">
-    <span>Modifier vos Posts</span>
-    <div id="modify-one" v-for="post in allPosts" :key="post.id">
-      <div
-        class="container-modify"
-        v-if="post.userId == this.userId && post._id == this.postId"
-      >
-        <div class="container-info">
-          <span id="title"> {{ post.title }}</span>
-          <P> {{ post.message }} </P>
-          <img
-            class="modify-picture"
-            v-if="post.imageUrl != null"
-            :src="post.imageUrl"
-            alt="photo"
-          />
-        </div>
-        <form
-          class="post-form"
+  <section id="modify">
+    <span class="delete-text">Modifier vos Posts</span>
+    <article class="container" v-if="this.postId != null">
+      <div id="modify-one" v-for="post in allPosts" :key="post.id">
+        <div
+          class="container-modify"
           v-if="post.userId == this.userId && post._id == this.postId"
         >
-          <label for="title">Titre</label>
-          <input
-            type="text"
-            class="input-post"
-            v-model="pseudo"
-            placeholder="votre titre"
-          />
-          <label for="message">Message</label>
-          <textarea
-            class="input-post"
-            cols="30"
-            rows="10"
-            :placeholder="post.message"
-            v-model="message"
+          <div class="container-info">
+            <span id="title"> {{ post.title }}</span>
+            <span id="text"> {{ post.message }} </span>
+            <img
+              class="modify-picture"
+              v-if="post.imageUrl != null"
+              :src="post.imageUrl"
+              alt="photo"
+            />
+          </div>
+          <form
+            class="post-form"
+            v-if="post.userId == this.userId && post._id == this.postId"
           >
-          </textarea>
-          <label for="image">Image du Post</label>
-          <input
-            class="input-post"
-            type="file"
-            name="image"
-            accept="image/*"
-            ref="image"
-            @change="filePictureToUpload()"
-            :placeholder="post.imageUrl"
-          />
-          <button
-            id="modify-button"
-            type="submit"
-            @click.prevent="modifyPost(post._id)"
-          >
-            Modifier voter post
-          </button>
-        </form>
-      </div>
-    </div>
-  </article>
-  <article class="container" v-else>
-    <span>Modifier vos Posts</span>
-    <div id="modify-all" v-for="post in allPosts.reverse()" :key="post.id">
-      <div class="container-modify" v-if="post.userId == this.userId">
-        <div class="container-info">
-          <span id="title"> {{ post.title }}</span>
-          <P> {{ post.message }} </P>
-          <img
-            class="modify-picture"
-            v-if="post.imageUrl != null"
-            :src="post.imageUrl"
-            alt="photo"
-          />
+            <label for="title">Titre</label>
+            <input
+              type="text"
+              class="input-post"
+              v-model="title"
+              placeholder="votre titre"
+            />
+            <label for="message">Message</label>
+            <textarea
+              class="input-post"
+              cols="30"
+              rows="10"
+              :placeholder="post.message"
+              v-model="message"
+            >
+            </textarea>
+            <label for="image">Image du Post</label>
+            <input
+              class="input-post"
+              type="file"
+              name="image"
+              accept="image/*"
+              ref="image"
+              @change="filePictureToUpload()"
+              :placeholder="post.imageUrl"
+            />
+            <button
+              id="modify-button"
+              type="submit"
+              @click.prevent="modifyPost(post._id)"
+            >
+              Modifier voter post
+            </button>
+          </form>
         </div>
-        <form action="" class="modify-form" v-if="post.userId == this.userId">
-          <label for="titre">Titre</label>
-          <input
-            type="text"
-            class="modify-post"
-            v-model="pseudo"
-            placeholder="Votre titre"
-          />
-          <label for="message">Message</label>
-          <textarea
-            class="modify-post"
-            cols="30"
-            rows="10"
-            :placeholder="post.message"
-            v-model="message"
-          >
-          </textarea>
-          <label for="image">Image</label>
-          <input
-            class="modify-post"
-            type="file"
-            name="image"
-            accept="image/*"
-            ref="image"
-            @change="filePictureToUpload()"
-          />
-          <button
-            id="modify-button"
-            type="submit"
-            @click.prevent="modifyPost(post._id)"
-          >
-            Modifier voter post
-          </button>
-        </form>
       </div>
-    </div>
-  </article>
+    </article>
+    <article class="container" v-else>
+      <div id="modify-all" v-for="post in allPosts" :key="post.id">
+        <div class="container-modify" v-if="post.userId == this.userId">
+          <div class="container-info">
+            <span id="title"> {{ post.title }}</span>
+            <span id="text"> {{ post.message }} </span>
+            <img
+              class="modify-picture"
+              v-if="post.imageUrl != null"
+              :src="post.imageUrl"
+              alt="photo"
+            />
+          </div>
+          <form action="" class="modify-form" v-if="post.userId == this.userId">
+            <label for="titre">Titre</label>
+            <input
+              type="text"
+              class="modify-post"
+              v-model="title"
+              placeholder="Votre titre"
+            />
+            <label for="message">Message</label>
+            <textarea
+              class="modify-post"
+              cols="30"
+              rows="10"
+              :placeholder="post.message"
+              v-model="message"
+            >
+            </textarea>
+            <label for="image">Image</label>
+            <input
+              class="modify-post"
+              type="file"
+              name="image"
+              accept="image/*"
+              ref="image"
+              @change="filePictureToUpload()"
+            />
+            <button
+              id="modify-button"
+              type="submit"
+              @click.prevent="modifyPost(post._id)"
+            >
+              Modifier voter post
+            </button>
+          </form>
+        </div>
+      </div>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -178,7 +179,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.allPosts = response.data;
+          this.allPosts = response.data.reverse();
         })
         .catch((error) => {
           console.log(error);
@@ -191,107 +192,145 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-.container {
-  @include flspa;
-  flex-wrap: wrap;
-  @media (max-width: 750px) {
-    @include flcecol;
-    align-items: center;
+#modify {
+  @include flcecol;
+  align-items: center;
+  .delete-text {
+    color: $text-alert;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 20px 0 40px 0;
   }
-  #modify-one {
-    @include flcecol;
-    width: 60%;
-    @media (max-width: 750px) {
-      margin: 0 15px 0 15px;
-      width: 95%;
-    }
-    .container-modify {
-      @include border(2px, 15px, 0);
-      margin: 15px;
-      width: 80%;
-      .container-info {
-        @include flcecol;
-        align-items: center;
-        @include border(2px, 15px, 0);
-        border-color: $secondary-color;
-        margin: 15px;
-        #title {
-          padding: 10px;
-        }
-        .modify-picture {
-          width: 40%;
-          margin-bottom: 20px;
-        }
-      }
-      .post-form {
-        @include flcecol;
-        margin: 20px;
-        label {
-          color: $primary-color;
-        }
-        .input-post {
-          margin: 15px 0 15px 0;
-          @include border(2px, 15px, 0 0 0 15px);
-          font-size: 18px;
-        }
-        #modify-button {
-          @include border(2px, 15px, 0 0 0 15px);
-          background-color: $primary-color;
-          color: $text-color;
-          font-size: 18px;
-          @include box-shadow;
-          margin-top: 20px;
-          padding: 8px 0 8px 0;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-  #modify-all {
+  .container {
     @include flspa;
-    width: 40%;
     flex-wrap: wrap;
     @media (max-width: 750px) {
-      margin: 0 15px 0 15px;
-      width: 95%;
+      @include flcecol;
+      align-items: center;
     }
-    .container-modify {
-      @include border(2px, 15px, 0);
-      margin: 15px;
-      width: 80%;
-      .container-info {
-        @include flcecol;
-        align-items: center;
+    #modify-one {
+      @include flcecol;
+      width: 75vw;
+      align-items: center;
+      @media (max-width: 750px) {
+        margin: 0 15px 0 15px;
+        width: 95vw;
+      }
+      .container-modify {
         @include border(2px, 15px, 0);
         margin: 15px;
-        #title {
-          padding: 10px;
+        width: 80%;
+        .container-info {
+          @include flcecol;
+          align-items: center;
+          @include border(2px, 15px, 0);
+          margin: 15px;
+           #title {
+            padding: 15px 10px 30px 10px;
+            color: $primary-color;
+          }
+          #text {
+            padding: 15px;
+            font-size: 18px;
+            color: $tertiary-color;
+          }
+          .modify-picture {
+            width: 40%;
+            margin-bottom: 20px;
+          }
         }
-        .modify-picture {
-          width: 40%;
-          margin-bottom: 20px;
+        .post-form {
+          @include flcecol;
+          margin: 20px;
+          align-items: center;
+          width: auto;
+          label {
+            color: $primary-color;
+          }
+          .input-post {
+            margin: 15px 0 15px 0;
+            @include border(2px, 15px, 0 0 0 15px);
+            font-size: 18px;
+            width: 90%;
+          }
+          #modify-button {
+            @include border(2px, 15px, 0 0 0 15px);
+            background-color: $primary-color;
+            color: $text-color;
+            font-size: 18px;
+            @include box-shadow;
+            margin-top: 20px;
+            padding: 8px 0 8px 0;
+            cursor: pointer;
+          }
         }
       }
-      .modify-form {
+    }
+    #modify-all {
+      @include flspa;
+      width: 45vw;
+      @media (max-width: 900px) {
+        margin: 0 15px 0 15px;
         @include flcecol;
-        margin: 20px;
-        label {
-          color: $primary-color;
+        width: 80vw;
+      }
+      .container-modify {
+        @include border(2px, 15px, 0);
+        margin: 15px;
+        display: flex;
+        @media (max-width: 900px) {
+          @include flcecol;
         }
-        .modify-post {
-          margin: 15px 0 15px 0;
-          @include border(2px, 15px, 0 0 0 15px);
-          font-size: 18px;
+        .container-info {
+          @include flcecol;
+          align-items: center;
+          @include border(2px, 15px, 0);
+          margin: 15px;
+          width: 35%;
+          @media (max-width: 900px) {
+            width: auto;
+          }
+          #title {
+            padding: 15px 10px 30px 10px;
+            color: $primary-color;
+            font-weight: bold;
+          }
+          #text {
+            padding: 15px;
+            font-size: 18px;
+            color: $tertiary-color;
+          }
+          .modify-picture {
+            width: 60%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            padding-top: 40px;
+          }
         }
-        #modify-button {
-          @include border(2px, 15px, 0 0 0 15px);
-          background-color: $primary-color;
-          color: $text-color;
-          font-size: 18px;
-          @include box-shadow;
-          margin-top: 20px;
-          padding: 8px 0 8px 0;
-          cursor: pointer;
+        .modify-form {
+          @include flcecol;
+          margin: 20px;
+          align-items: center;
+          width: auto;
+          label {
+            color: $primary-color;
+          }
+          .modify-post {
+            margin: 15px 0 15px 0;
+            @include border(2px, 15px, 0 0 0 15px);
+            font-size: 18px;
+            width: 80%;
+          }
+          #modify-button {
+            @include border(2px, 15px, 0 0 0 15px);
+            background-color: $primary-color;
+            color: $text-color;
+            font-size: 18px;
+            @include box-shadow;
+            margin-top: 20px;
+            padding: 8px 0 8px 0;
+            cursor: pointer;
+          }
         }
       }
     }

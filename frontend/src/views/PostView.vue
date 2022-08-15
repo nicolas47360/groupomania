@@ -119,7 +119,6 @@ export default {
     }
     #mode {
       display: flex;
-      flex-wrap: wrap;
       #gestion-mode {
         display: flex;
         justify-content: center;

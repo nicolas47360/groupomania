@@ -61,10 +61,10 @@ export default {
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
       }
-      formData.append('pseudo', this.pseudo);
-      formData.append('firstname', this.firstname);
-      formData.append('lastname', this.lastname);
-      formData.append('userId', this.userId)     
+      formData.append("pseudo", this.pseudo);
+      formData.append("firstname", this.firstname);
+      formData.append("lastname", this.lastname);
+      formData.append("userId", this.userId);
       axios
         .put("http://localhost:5000/api/user/" + this.userId, formData, {
           headers: {
@@ -91,12 +91,16 @@ export default {
 .profil-form {
   @include flcecol;
   margin: 20px;
-  flex-wrap: wrap;
+  align-items: center;
+  label {
+    color: $primary-color;
+    font-size: 18px;
+  }
   .input-profil {
     margin: 15px 0 15px 0;
     @include border(2px, 15px, 0 0 0 15px);
     font-size: 20px;
-    max-width: 80%;
+    width: 100%;
   }
   #profil-button {
     @include border(2px, 15px, 0 0 0 15px);
@@ -107,6 +111,7 @@ export default {
     margin: 20px 0 20px 0;
     padding: 8px 0 8px 0;
     cursor: pointer;
+    width: 60%;
   }
 }
 </style>

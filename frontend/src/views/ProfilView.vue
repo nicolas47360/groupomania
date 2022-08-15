@@ -127,7 +127,10 @@ export default {
   align-items: center;
   margin: 35px 0 35px 0;
   flex-wrap: wrap;
-  width: 60%;  
+  width: 60vw;
+  @media (max-width: 750px) {
+    width: 80vw;
+  }  
   .switch{
     @include flcecol;
     align-items: center;

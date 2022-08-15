@@ -7,10 +7,13 @@
     >
       <div class="container-post">
         <div id="user-info">
-          <p>
+          <span class="user-pseudo" v-if="post.pseudo != ''">
             {{ post.pseudo }}
+          </span>
+          <span class="user-pseudo" v-else>
+            {{ post.firstname }}
             {{ post.lastname }}
-          </p>
+          </span>
           <img
             :src="post.userImageUrl"
             alt="photo de profil"
@@ -18,16 +21,17 @@
           />
         </div>
         <div id="post-info">
-          <span> {{ post.message }} </span>
+          <span id="title-message"> {{ post.title }}</span>
+          <span id="post-message"> {{ post.message }} </span>
           <img
             v-if="post.imageUrl != null"
             :src="post.imageUrl"
             alt="photo"
             id="post-picture"
           />
-          <img v-else id="none"/>
-          <span>{{ format_date(post.createdAt) }}</span>
+          <img v-else id="none" />
         </div>
+        <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
         <div id="link-comment">
           <router-link to="/comment">
             <div id="link-icon">
@@ -49,9 +53,8 @@
             @click.prevent="goToModify(post._id)"
           >
             <fa icon="circle" />
-             Modifier
+            Modifier
           </button>
-
         </div>
       </div>
     </article>
@@ -122,6 +125,7 @@ export default {
             post.pseudo = user.pseudo;
             post.lastname = user.lastname;
             post.userImageUrl = user.imageUrl;
+            post.firstname = user.firstname;
           }
         });
       });
@@ -154,7 +158,7 @@ export default {
     @include flspa;
     flex-wrap: wrap;
     margin: 40px;
-    width: 450px;
+    width: 39vw;
     @media (max-width: 950px) {
       width: 85vw;
       @include flce;
@@ -168,7 +172,10 @@ export default {
       #user-info {
         @include flspa;
         align-items: center;
-        margin-bottom: 20px;
+        .user-pseudo {
+          color: $primary-color;
+          font-size: 20px;
+        }
         #profil-picture {
           max-width: 20%;
           object-fit: cover;
@@ -177,12 +184,27 @@ export default {
       #post-info {
         @include flcol;
         @include border(1px, 0, 8px);
-        height: 80%;
+        align-items: center;
+        height: 85%;
+        #title-message {
+          color: $tertiary-color;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        #post-message {
+          padding: 15px;
+          color: $tertiary-color;
+          font-size: 18px;
+        }
         #post-picture {
           object-fit: cover;
           max-width: 300px;
           max-height: 300px;
+          padding-top: 15px;
         }
+      }
+      #date {
+        padding: 8px;
       }
       #link-comment {
         @include flsparo;
