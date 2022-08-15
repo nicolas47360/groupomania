@@ -27,7 +27,8 @@ export default {
   @include flspb;
   align-items: center;
   #logo {
-    max-width: 450px;
+    max-width: 35%;
+    object-fit: cover;
   }
   a {
     text-decoration: none;

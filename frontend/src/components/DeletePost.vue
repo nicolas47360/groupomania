@@ -1,44 +1,61 @@
 <template>
   <NavBar />
-  <article class="delete" v-if="this.postId != null">
-    <p class="delete-text">Voulez vous suprimer ce post?</p>
-    <div class="delete-container" v-for="post in allPosts" :key="post.id">
-      <div
-        class="delete-message"
-        v-if="post.userId == this.userId && post._id == this.postId"
+  <section id="delete">
+    <span class="delete-text">Voulez vous suprimer ce post?</span>
+    <article id="delete-one" v-if="this.postId != null">
+      <section id="one-container">
+        <div class="delete-container" v-for="post in allPosts" :key="post.id">
+          <div
+            class="delete-message"
+            v-if="post.userId == this.userId && post._id == this.postId"
+          >
+            <span id="title-message"> {{ post.title }}</span>
+            <span id="text-message">{{ post.message }}</span>
+            <img
+              class="delete-picture"
+              :src="post.imageUrl"
+              alt="photo"
+              v-if="post.imageUrl != null"
+            />
+            <button
+              id="delete-button"
+              type="reset"
+              @click.prevent="deletePost(post._id)"
+            >
+              SUPPRIMER
+            </button>
+          </div>
+        </div>
+      </section>
+    </article>
+    <article id="delete-all" v-else>
+      <section
+        id="all-container"
+        v-for="post in allPosts.reverse()"
+        :key="post.id"
       >
-        <p>{{ post.message }}</p>
-        <img :src="post.imageUrl" alt="photo" v-if="post.imageUrl != null" />
-        <button
-          id="delete-button"
-          type="reset"
-          @click.prevent="deletePost(post._id)"
-        >
-          SUPPRIMER
-        </button>
-      </div>
-    </div>
-  </article>
-  <article class="delete" v-else>
-    <p class="delete-text">Voulez vous suprimer ce post?</p>
-    <div
-      class="delete-container"
-      v-for="post in allPosts.reverse()"
-      :key="post.id"
-    >
-      <div class="delete-message" v-if="post.userId == this.userId">
-        <p>{{ post.message }}</p>
-        <img :src="post.imageUrl" alt="photo" v-if="post.imageUrl != null" />
-        <button
-          id="delete-button"
-          type="reset"
-          @click.prevent="deletePost(post._id)"
-        >
-          SUPPRIMER
-        </button>
-      </div>
-    </div>
-  </article>
+        <div class="delete-container" v-if="post.userId == this.userId">
+          <div class="delete-message">
+            <span id="title-message"> {{ post.title }}</span>
+            <span id="text-message">{{ post.message }}</span>
+            <img
+              class="delete-picture"
+              :src="post.imageUrl"
+              alt="photo"
+              v-if="post.imageUrl != null"
+            />
+            <button
+              id="delete-button"
+              type="reset"
+              @click.prevent="deletePost(post._id)"
+            >
+              SUPPRIMER
+            </button>
+          </div>
+        </div>
+      </section>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -102,32 +119,124 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-.delete {
+#delete {
   @include flcecol;
   align-items: center;
   .delete-text {
     color: $text-alert;
     font-weight: bold;
     font-size: 22px;
+    margin-top: 20px;
   }
-  .delete-container {
+  #delete-one {
     @include flcecol;
-    .delete-message {
+    align-items: center;
+    margin: 10px;
+    .delete-text {
+      color: $text-alert;
+      font-weight: bold;
+      font-size: 22px;
+    }
+    #one-container {
+      @include flce;
+      margin: 40px;
+      .delete-container {
+        .delete-message {
+          @include flcecol;
+          @include border(2px, 15px, 15px);
+          padding: 15px;
+          margin: 20px 0 20px 0;
+          align-items: center;
+          #title-message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: $primary-color;
+            font-weight: bold;
+          }
+          #text-message {
+            margin: 15px 0 20px 0;
+            color: $tertiary-color;
+            font-size: 18px;
+          }
+          .delete-picture {
+            width: 85%;
+            object-fit: cover;
+          }
+          #delete-button {
+            @include border(2px, 15px, 0 0 0 15px);
+            background-color: $primary-color;
+            color: $text-color;
+            font-size: 18px;
+            @include box-shadow;
+            margin-top: 20px;
+            padding: 8px 0 8px 0;
+            cursor: pointer;
+            width: 50%;
+            @media (max-width: 750px) {
+              width: 75%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #delete-all {
+    @include flspa;
+    align-items: center;
+    flex-wrap: wrap;
+    @media (max-width: 900px) {
       @include flcecol;
-      @include border(2px, 15px, 15px);
-      padding: 15px;
-      margin: 20px 0 20px 0;
       align-items: center;
-      #delete-button {
-        @include border(2px, 15px, 0 0 0 15px);
-        background-color: $primary-color;
-        color: $text-color;
-        font-size: 18px;
-        @include box-shadow;
-        margin-top: 20px;
-        padding: 8px 0 8px 0;
-        cursor: pointer;
-        width: 320px;
+    }
+    #all-container {
+      @include flspa;
+      flex-wrap: wrap;
+      @media (max-width: 900px) {
+        @include flcecol;
+        align-items: center;
+      }
+      .delete-container {
+        // @include flspa;
+        flex-wrap: wrap;
+        margin: 20px;
+        .delete-message {
+          @include flcecol;
+          @include border(2px, 15px, 15px);
+          padding: 15px;
+          margin: 20px 0 20px 0;
+          align-items: center;
+          width: 40vw;
+          @media (max-width: 900px) {
+            width: 80vw;
+          }
+          #title-message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: $primary-color;
+            font-weight: bold;
+          }
+          #text-message {
+            margin: 15px 0 20px 0;
+            color: $tertiary-color;
+            font-size: 18px;
+          }
+          .delete-picture {
+            object-fit: cover;
+            width: 80%;
+          }
+          #delete-button {
+            @include border(2px, 15px, 0 0 0 15px);
+            background-color: $primary-color;
+            color: $text-color;
+            font-size: 18px;
+            @include box-shadow;
+            margin-top: 20px;
+            padding: 8px 0 8px 0;
+            cursor: pointer;
+            width: 50%;
+          }
+        }
       }
     }
   }

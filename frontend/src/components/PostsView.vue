@@ -1,6 +1,10 @@
 <template>
   <section id="all-container">
-    <article v-for="post in allPosts.reverse()" :key="post.id" id="container">
+    <article
+      v-for="post in allPosts.reverse()"
+      :key="post.id"
+      id="container-posts"
+    >
       <div class="container-post">
         <div id="user-info">
           <p>
@@ -14,13 +18,14 @@
           />
         </div>
         <div id="post-info">
-          {{ post.message }}
+          <span> {{ post.message }} </span>
           <img
             v-if="post.imageUrl != null"
             :src="post.imageUrl"
             alt="photo"
             id="post-picture"
           />
+          <img v-else id="none"/>
           <span>{{ format_date(post.createdAt) }}</span>
         </div>
         <div id="link-comment">
@@ -31,7 +36,7 @@
             </div>
           </router-link>
           <button
-            id="delete-button"
+            class="go"
             v-if="post.userId == this.userId"
             @click.prevent="goToTrash(post._id)"
           >
@@ -39,7 +44,7 @@
             supprimer
           </button>
           <button
-            id="delete-button"
+            class="go"
             v-if="post.userId == this.userId"
             @click.prevent="goToModify(post._id)"
           >
@@ -141,14 +146,25 @@ export default {
 #all-container {
   @include flspa;
   flex-wrap: wrap;
-  #container {
+  margin: 0 15px 0 15px;
+  @media (max-width: 950px) {
+    @include flcecol;
+  }
+  #container-posts {
     @include flspa;
-    margin: 10px;
-    width: 30%;
+    flex-wrap: wrap;
+    margin: 40px;
+    width: 450px;
+    @media (max-width: 950px) {
+      width: 85vw;
+      @include flce;
+    }
     .container-post {
       @include border(2px, 15px, 0);
       @include flcol;
-      margin: 15px 0 15px 0;
+      margin: 30px 0 30px 0;
+      width: 100%;
+      height: 100%;
       #user-info {
         @include flspa;
         align-items: center;
@@ -163,8 +179,9 @@ export default {
         @include border(1px, 0, 8px);
         height: 80%;
         #post-picture {
-          max-width: 25%;
           object-fit: cover;
+          max-width: 300px;
+          max-height: 300px;
         }
       }
       #link-comment {
@@ -181,6 +198,11 @@ export default {
       a {
         text-decoration: none;
         color: $tertiary-color;
+      }
+      .go {
+        @include border(2px, 15px, 5px);
+        background-color: $primary-color;
+        color: $secondary-color;
       }
     }
   }

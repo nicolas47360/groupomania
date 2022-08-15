@@ -1,12 +1,14 @@
 <template>
   <NavBarVue />
   <article class="container" v-if="this.postId != null">
+    <span>Modifier vos Posts</span>
     <div id="modify-one" v-for="post in allPosts" :key="post.id">
       <div
         class="container-modify"
         v-if="post.userId == this.userId && post._id == this.postId"
       >
         <div class="container-info">
+          <span id="title"> {{ post.title }}</span>
           <P> {{ post.message }} </P>
           <img
             class="modify-picture"
@@ -19,12 +21,12 @@
           class="post-form"
           v-if="post.userId == this.userId && post._id == this.postId"
         >
-          <label for="pseudo">Pseudo</label>
+          <label for="title">Titre</label>
           <input
             type="text"
             class="input-post"
             v-model="pseudo"
-            placeholder="Pseudo"
+            placeholder="votre titre"
           />
           <label for="message">Message</label>
           <textarea
@@ -35,7 +37,7 @@
             v-model="message"
           >
           </textarea>
-          <label for="image">Image de profil</label>
+          <label for="image">Image du Post</label>
           <input
             class="input-post"
             type="file"
@@ -57,9 +59,11 @@
     </div>
   </article>
   <article class="container" v-else>
+    <span>Modifier vos Posts</span>
     <div id="modify-all" v-for="post in allPosts.reverse()" :key="post.id">
       <div class="container-modify" v-if="post.userId == this.userId">
         <div class="container-info">
+          <span id="title"> {{ post.title }}</span>
           <P> {{ post.message }} </P>
           <img
             class="modify-picture"
@@ -68,26 +72,26 @@
             alt="photo"
           />
         </div>
-        <form action="" class="post-form" v-if="post.userId == this.userId">
-          <label for="pseudo">Pseudo</label>
+        <form action="" class="modify-form" v-if="post.userId == this.userId">
+          <label for="titre">Titre</label>
           <input
             type="text"
-            class="input-post"
+            class="modify-post"
             v-model="pseudo"
-            placeholder="Pseudo"
+            placeholder="Votre titre"
           />
           <label for="message">Message</label>
           <textarea
-            class="input-post"
+            class="modify-post"
             cols="30"
             rows="10"
             :placeholder="post.message"
             v-model="message"
           >
           </textarea>
-          <label for="image">Image de profil</label>
+          <label for="image">Image</label>
           <input
-            class="input-post"
+            class="modify-post"
             type="file"
             name="image"
             accept="image/*"
@@ -123,7 +127,7 @@ export default {
       mode: "create",
       FILE: null,
       name: "",
-      pseudo: "",
+      title: "",
       message: "",
       imageUrl: "",
       likes: 0,
@@ -139,7 +143,7 @@ export default {
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
       }
-      formData.append("pseudo", this.pseudo);
+      formData.append("title", this.title);
       formData.append("message", this.message);
       formData.append("userId", this.userId);
       formData.append("likes", this.likes);
@@ -190,9 +194,17 @@ export default {
 .container {
   @include flspa;
   flex-wrap: wrap;
+  @media (max-width: 750px) {
+    @include flcecol;
+    align-items: center;
+  }
   #modify-one {
     @include flcecol;
     width: 60%;
+    @media (max-width: 750px) {
+      margin: 0 15px 0 15px;
+      width: 95%;
+    }
     .container-modify {
       @include border(2px, 15px, 0);
       margin: 15px;
@@ -201,14 +213,22 @@ export default {
         @include flcecol;
         align-items: center;
         @include border(2px, 15px, 0);
+        border-color: $secondary-color;
         margin: 15px;
+        #title {
+          padding: 10px;
+        }
         .modify-picture {
-          width: 80%;
+          width: 40%;
+          margin-bottom: 20px;
         }
       }
       .post-form {
         @include flcecol;
         margin: 20px;
+        label {
+          color: $primary-color;
+        }
         .input-post {
           margin: 15px 0 15px 0;
           @include border(2px, 15px, 0 0 0 15px);
@@ -231,6 +251,10 @@ export default {
     @include flspa;
     width: 40%;
     flex-wrap: wrap;
+    @media (max-width: 750px) {
+      margin: 0 15px 0 15px;
+      width: 95%;
+    }
     .container-modify {
       @include border(2px, 15px, 0);
       margin: 15px;
@@ -240,14 +264,21 @@ export default {
         align-items: center;
         @include border(2px, 15px, 0);
         margin: 15px;
+        #title {
+          padding: 10px;
+        }
         .modify-picture {
-          width: 80%;
+          width: 40%;
+          margin-bottom: 20px;
         }
       }
-      .post-form {
+      .modify-form {
         @include flcecol;
         margin: 20px;
-        .input-post {
+        label {
+          color: $primary-color;
+        }
+        .modify-post {
           margin: 15px 0 15px 0;
           @include border(2px, 15px, 0 0 0 15px);
           font-size: 18px;

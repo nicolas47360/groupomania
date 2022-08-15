@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <section id="container">
-    <section>
+    <section id="container-post">
       <div class="switch">
         <div class="title-post">
           <h1 v-if="mode == 'create'">Rédiger votre post</h1>
@@ -26,17 +26,17 @@
           Supprimer votre post
         </button>
       </div>
-    </section>
-    <section>
-      <div v-if="mode == 'create'">
-        <CreatePost />
-      </div>
-      <div v-if="mode == 'modify'">
-        <ModifyPost />
-      </div>
-      <div v-if="mode == 'delete'">
-        <DeletePost />
-      </div>
+      <section id="mode">
+        <div id="gestion-mode" v-if="mode == 'create'">
+          <CreatePost />
+        </div>
+        <div v-if="mode == 'modify'">
+          <ModifyPost />
+        </div>
+        <div v-if="mode == 'delete'">
+          <DeletePost />
+        </div>
+      </section>
     </section>
   </section>
 </template>
@@ -85,20 +85,45 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include flcecol;
-  @include border(2px, 15px, 0);
-  align-items: center;
-  .switch {
+  @include flce;
+  flex-wrap: wrap;
+  #container-post {
     @include flcecol;
+    @include border(2px, 15px, 0);
     align-items: center;
-    .switch-button {
-      margin: 20px 0 0 0;
-      @include border(2px, 15px, 5px 15px 5px 15px);
-      font-size: 18px;
-      background-color: $primary-color;
-      color: $text-color;
-      @include box-shadow;
-      cursor: pointer;
+    width: 50%;
+    margin: 45px 0 0 0;
+    @media (max-width: 800px) {
+      width: 80vw;
+    }
+    .switch {
+      @include flcecol;
+      align-items: center;
+      h1 {
+        color: $tertiary-color;
+        font-size: 24px;
+      }
+      .post-switch {
+        color: $tertiary-color;
+        font-weight: bold;
+      }
+      .switch-button {
+        margin: 20px 0 0 0;
+        @include border(2px, 15px, 5px 15px 5px 15px);
+        font-size: 18px;
+        background-color: $primary-color;
+        color: $secondary-color;
+        @include box-shadow;
+        cursor: pointer;
+      }
+    }
+    #mode {
+      display: flex;
+      flex-wrap: wrap;
+      #gestion-mode {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }

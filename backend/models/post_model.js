@@ -6,11 +6,9 @@ const modelPost = mongoose.Schema(
       type: String,
       reruired: true,
     },
-
-    // postId: {
-    //   type: String,
-    //   required: true,
-    // },
+    title: {
+      type: String,
+    },
 
     message: {
       type: String,
