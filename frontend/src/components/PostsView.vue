@@ -1,10 +1,6 @@
 <template>
   <section id="all-container">
-    <article
-      v-for="post in allPosts.reverse()"
-      :key="post.id"
-      id="container-posts"
-    >
+    <article v-for="post in allPosts" :key="post.id" id="container-posts">
       <div class="container-post">
         <div id="user-info">
           <span class="user-pseudo" v-if="post.pseudo != ''">
@@ -94,7 +90,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.allPosts = response.data;
+          this.allPosts = response.data.reverse();
           this.mergeUsersAndPosts();
         })
         .catch((error) => {
