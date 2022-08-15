@@ -4,7 +4,7 @@
       <li class="nav-component">
         <router-link to="/profil">Profil</router-link>
       </li>
-      <li class="nav-component">
+      <li class="nav-component" v-if="this.userId != null">
         <router-link to="/post">Post</router-link>
       </li>
     </ul>
@@ -12,7 +12,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      userId: localStorage.getItem("userId"),
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

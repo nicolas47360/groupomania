@@ -78,7 +78,7 @@ export default {
   methods: {
     format_date(value) {
       if (value) {
-        return moment(String(value)).format("MM/DD/YYYY hh:mm");
+        return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
     getPosts() {
@@ -179,9 +179,11 @@ export default {
       }
       #post-info {
         @include flcol;
-        @include border(1px, 0, 8px);
+        @include border(1px, 15px, 8px);
         align-items: center;
+        border-color: $tertiary-color;
         height: 85%;
+        margin: (0 -1px 0 -1px);
         #title-message {
           color: $tertiary-color;
           font-size: 20px;
