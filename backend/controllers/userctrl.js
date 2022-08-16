@@ -33,10 +33,10 @@ exports.createUser = (req, res, next) => {
   }
   user.save()
     .then(() => {
-      res.status(201).json({ message: "l'utilisateur a été enregistré" });
+      res.status(201).json({ message: "Votre profil a bien été cré" });
       console.log(user);
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ message: "Ce pseudo est déjà utiliseé" }));
 };
 
 exports.updateUser = (req, res, next) => {
@@ -48,7 +48,7 @@ exports.updateUser = (req, res, next) => {
     }
     : { ...req.body };
   User.updateOne({ userId: req.params.id }, { ...userObject, userId: req.params.id })
-    .then(() => res.status(200).json({ message: "les données de l'utilisateur ont été modifiées" }))
+    .then(() => res.status(200).json({ message: "Les données de votre profil ont été modifiées" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -59,7 +59,7 @@ exports.deleteUser = (req, res, next) => {
       fs.unlink(`images/${filename}`, () => {
         User.deleteOne({ id: req.params.id })
           .then(() =>
-            res.status(200).json({ message: "le user a été supprimée" })
+            res.status(200).json({ message: "Votre profil a été supprimée" })
           )
           .catch((error) => res.status(400).json({ error }));
       });

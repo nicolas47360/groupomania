@@ -28,13 +28,23 @@
           <img v-else id="none" />
         </div>
         <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
-        <div id="link-comment">
-          <router-link to="/comment">
-            <div id="link-icon">
+        <div class="link-comment">
+          <router-link to="/comment" v-if="this.userId != null">
+            <div class="link-icon">
               <p>commenter</p>
               <fa icon="comment" />
             </div>
           </router-link>
+          <button
+            class="link-comment"
+            v-if="this.userId != null"
+            @click.prevent="goToShowComment(post._id)"
+          >
+            <div class="link-icon">
+              <p>Voir les commentaires</p>
+              <fa icon="comment" />
+            </div>
+          </button>
           <button
             class="go"
             v-if="post.userId == this.userId"
@@ -136,6 +146,11 @@ export default {
       localStorage.setItem("postId", postId);
       this.$router.push("/post/modify");
     },
+
+    goToShowComment(postId) {
+      localStorage.setItem("postId", postId);
+      this.$router.push("/comment/show");
+    },
   },
 };
 </script>
@@ -204,12 +219,17 @@ export default {
       #date {
         padding: 8px;
       }
-      #link-comment {
+      .link-comment {
         @include flsparo;
         align-items: center;
-        #link-icon {
+        border: none;
+        // background-color: white;
+        .link-icon {
           @include flspb;
+          color: $tertiary-color;
           align-items: center;
+          background-color: white;
+          @include border(2px, 15px,0);
           p {
             padding-right: 5px;
           }

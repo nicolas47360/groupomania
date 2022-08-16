@@ -1,9 +1,9 @@
 <template>
   <div id="delete-profil">
     <p id="delete-text">
-      Attention vous êtes sur le point de supprimer votre profil,vous ne
-      pourrez plus accéder au service du Réseau Social de Groupomania.<br>
-      Si vous voulez de nouveau nous rejoindre réinscrivez-vous
+      Attention vous êtes sur le point de supprimer votre profil, vous ne plus
+      pourrez créer de post ou laisser des commentaires. <br>
+      Pour celà veuillez-vous créer un nouveau profil.
     </p>
     <button id="delete-button" type="reset" @click.prevent="deleteProfil()">
       SUPPRIMER
@@ -30,6 +30,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
+          alert(response.data.message);
           this.$router.push("/");
         })
         .catch((error) => {
@@ -50,6 +51,7 @@ export default {
     color: $text-alert;
     font-weight: bold;
     font-size: 18px;
+    text-align: center;
   }
   #delete-button {
     @include border(2px, 15px, 0 0 0 15px);

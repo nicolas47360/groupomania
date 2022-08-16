@@ -9,6 +9,9 @@
         placeholder="Pseudo"
         id="pseudo"
       />
+      <span v-if="this.error" id="error-message">
+        {{ this.error.message }}
+      </span>
       <label for="firstname">Nom</label>
       <input
         class="input-profil"
@@ -40,7 +43,6 @@
       <button id="profil-button" type="submit">Créer votre profil</button>
     </form>
   </section>
- 
 </template>
 
 <script>
@@ -52,6 +54,7 @@ export default {
       userId: localStorage.getItem("userId"),
       id: localStorage.getItem("id"),
       mode: "create",
+      error: "",
       FILE: null,
       name: "",
       pseudo: "",
@@ -80,9 +83,13 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
+          alert(response.data.message);
           this.$router.push("/home");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err.response.data);
+          this.error = err.response.data;
+        });
     },
     filePictureToUpload(e) {
       if (e.target.files[0]) {
@@ -100,6 +107,12 @@ export default {
   .profil-form {
     @include flcecol;
     margin: 20px;
+    #error-message {
+      color: $text-alert;
+      padding: 10px 0 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
     .input-profil {
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);

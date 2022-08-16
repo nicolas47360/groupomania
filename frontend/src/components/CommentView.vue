@@ -29,56 +29,13 @@
     </section>
     <section>
       <div class="create-post" v-if="mode == 'create'">
-        <form class="post-form" action="">
-          <label for="message">Message</label>
-          <textarea
-            class="input-post"
-            cols="30"
-            rows="10"
-            placeholder="Votre texte"
-            v-model="message"
-          >
-          </textarea>
-          <button
-            id="post-button"
-            type="submit"
-            @click.prevent="createComment()"
-          >
-            Publier votre commentaire
-          </button>
-        </form>
+        <CreateComment />
       </div>
       <div class="modify-post" v-if="mode == 'modify'">
-        <form action="" class="post-form">
-          <label for="message">Message</label>
-          <textarea
-            class="input-post"
-            cols="30"
-            rows="10"
-            placeholder="Votre texte"
-            v-model="message"
-          >
-          </textarea>
-          <button
-            id="profil-button"
-            type="submit"
-            @click.prevent="modifyComment()"
-          >
-            Modifier voter commentaire
-          </button>
-        </form>
+        <ModifyComment />
       </div>
       <div class="delte-profil" v-if="mode == 'delete'">
-        <p id="delete-text">
-          Attention vous êtes sur le point de supprimer votre commentaire
-        </p>
-        <button
-          class="delete-button"
-          type="reset"
-          @click.prevent="deleteComment()"
-        >
-          SUPPRIMER
-        </button>
+        <DeleteComment />
       </div>
     </section>
   </section>
@@ -87,6 +44,10 @@
 <script>
 import axios from "axios";
 import NavBar from "../components/NavBar.vue";
+import CreateComment from "./CreateComment.vue";
+import ModifyComment from "./ModifyComment.vue";
+import DeleteComment from "./DeleteComment.vue";
+
 export default {
   name: "commentView",
   data() {
@@ -96,11 +57,14 @@ export default {
       mode: "create",
       message: "",
       likes: 0,
-    }
+    };
   },
 
   components: {
     NavBar,
+    CreateComment,
+    ModifyComment,
+    DeleteComment,
   },
 
   methods: {
@@ -115,55 +79,6 @@ export default {
     switchtoDeleteComment() {
       this.mode = "delete";
     },
-
-    createComment() {
-      // const formData = new FormData();
-      // formData.append("message", "je sais pas ");
-      // formData.append("userId", this.userId);
-      // formData.append("likes", this.likes);
-      axios
-        .post(
-          "http://localhost:5000/api/comment",
-          {
-            message: this.message,
-            userId: this.userId,
-            likes: this.likes,
-          },
-          {
-            headers: {
-              Authorization: "bearer " + this.token,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/home");
-        })
-        .catch((err) => console.log(err.response.data));
-    },
-
-    modifyComment() {
-      axios
-        .put(
-          "http://localhost:5000/api/comment/" + this.userId,
-          {
-            message: this.message,
-            userId: this.userId,
-            likes: this.likes,
-          },
-          {
-            headers: {
-              Authorization: "bearer " + this.token,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-          this.$router.push("/home");
-        })
-        .catch((err) => console.log(err));
-    },
-
     deleteComment() {
       axios
         .delete("http://localhost:5000/api/comment/" + this.userId, {

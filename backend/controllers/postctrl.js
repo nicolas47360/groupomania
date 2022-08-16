@@ -27,7 +27,7 @@ exports.updatePost = (req, res, next) => {
     }
     : { ...req.body };
   Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "le post a été modifiée" }))
+    .then(() => res.status(200).json({ message: "Le post a été modifiée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -42,7 +42,7 @@ exports.deletePost = (req, res, next) => {
           Post.deleteOne({ _id: req.params.id })
             .then((del) => {
               console.log(del)
-              res.status(200).json({ message: "le post a été suprrimée" })
+              res.status(200).json({ message: "Le post a été suprrimée" })
             })
             .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
         });
@@ -51,7 +51,7 @@ exports.deletePost = (req, res, next) => {
         Post.deleteOne({ _id: req.params.id })
           .then((del) => {
             console.log(del)
-            res.status(200).json({ message: "le post a été suprrimée" })
+            res.status(200).json({ message: "Le post a été suprrimée" })
           })
           .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
       }
@@ -76,7 +76,7 @@ exports.createPost = (req, res, next) => {
     });
   }
   post.save()
-    .then(() => res.status(201).json({ message: "le post a été enregistrée" }))
+    .then(() => res.status(201).json({ message: "Le post a été enregistrée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 

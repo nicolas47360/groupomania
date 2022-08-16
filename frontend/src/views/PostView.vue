@@ -2,7 +2,7 @@
   <NavBar />
   <section id="container">
     <section id="container-post">
-      <div class="switch" v-if="this.userId != null">
+      <div class="switch">
         <div class="title-post">
           <h1 v-if="mode == 'create'">Rédiger votre post</h1>
           <h1 v-if="mode == 'modify'">Modifier votre post</h1>
@@ -57,9 +57,7 @@ export default {
 
   data() {
     return {
-      token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      id: localStorage.getItem("id"),
       mode: "create",
     };
   },

@@ -4,9 +4,7 @@
     <section id="container">
       <div class="switch">
         <div class="title-profil">
-          <h1 v-if="mode == 'create' && this.user != this.userId">
-            Créer votre profil
-          </h1>
+          <h1 v-if="mode == 'create'">Créer votre profil</h1>
           <h1 v-if="mode == 'modify'">Modifier votre profil</h1>
           <h1 v-if="mode == 'delete'">Supprimer votre profil</h1>
         </div>
@@ -29,10 +27,7 @@
         </button>
       </div>
       <section id="profil">
-        <div
-          class="create-profil"
-          v-if="mode == 'create' && this.user != this.userId"
-        >
+        <div class="create-profil" v-if="mode == 'create'">
           <CreateProfil />
         </div>
         <div class="modify-profil" v-if="mode == 'modify'">

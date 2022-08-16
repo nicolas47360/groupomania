@@ -47,7 +47,6 @@ export default {
       message: "",
       imageUrl: "",
       likes: 0,
-      // postId: "",
     };
   },
   methods: {
@@ -68,6 +67,7 @@ export default {
           },
         })
         .then((response) => {
+          alert(response.data.message);
           this.$router.push("/home");
           console.log(response.data);
         });

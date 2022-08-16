@@ -87,6 +87,7 @@ export default {
           if (this.postId != null) {
             localStorage.removeItem("postId");
           }
+          alert(response.data.message);
           this.$router.push("/home");
         })
         .catch((error) => {
