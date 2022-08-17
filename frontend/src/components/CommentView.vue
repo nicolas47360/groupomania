@@ -1,14 +1,14 @@
 <template>
   <NavBar />
   <section id="container">
-    <section>
+    <section id="container-comment">
       <div class="switch">
         <div class="title-post">
           <h1 v-if="mode == 'create'">Rédiger votre commentaire</h1>
           <h1 v-if="mode == 'modify'">Modifier votre commentaire</h1>
           <h1 v-if="mode == 'delete'">Supprimer votre commentaire</h1>
         </div>
-        <div class="post-switch" v-if="mode == 'create'">
+        <div class="comment-switch" v-if="mode == 'create'">
           Modifier ou supprimer votre commentaire
         </div>
         <button
@@ -26,17 +26,17 @@
           Supprimer votre commentaire
         </button>
       </div>
-    </section>
-    <section>
-      <div class="create-post" v-if="mode == 'create'">
-        <CreateComment />
-      </div>
-      <div class="modify-post" v-if="mode == 'modify'">
-        <ModifyComment />
-      </div>
-      <div class="delte-profil" v-if="mode == 'delete'">
-        <DeleteComment />
-      </div>
+      <section id="mode">
+        <div id="create-comment" v-if="mode == 'create'">
+          <CreateComment />
+        </div>
+        <div v-if="mode == 'modify'">
+          <ModifyComment />
+        </div>
+        <div v-if="mode == 'delete'">
+          <DeleteComment />
+        </div>
+      </section>
     </section>
   </section>
 </template>
@@ -102,40 +102,44 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include flcecol;
-  @include border(2px, 15px, 0);
-  align-items: center;
-  .switch {
+  @include flce;
+  flex-wrap: wrap; 
+  #container-comment {
     @include flcecol;
+    @include border(2px, 15px, 0);
     align-items: center;
-    .switch-button {
-      margin: 20px 0 0 0;
-      @include border(2px, 15px, 5px 15px 5px 15px);
-      font-size: 18px;
-      background-color: $primary-color;
-      color: $text-color;
-      @include box-shadow;
-      cursor: pointer;
+    width: 50%;
+    margin: 45px 0 0 0;
+    // @media (max-width: 800px) {
+    //   width: 70vw;
+    // }
+    .switch {
+      @include flcecol;
+      align-items: center;
+      h1 {
+        color: $tertiary-color;
+        font-size: 24px;
+      }
+      .comment-switch {
+        color: $tertiary-color;
+        font-weight: bold;
+      }
+      .switch-button {
+        margin: 20px 0 0 0;
+        @include border(2px, 15px, 5px 15px 5px 15px);
+        font-size: 18px;
+        background-color: $primary-color;
+        color: $secondary-color;
+        @include box-shadow;
+        cursor: pointer;
+      }
     }
-  }
-
-  .post-form {
-    @include flcecol;
-    margin: 20px;
-    .input-post {
-      margin: 15px 0 15px 0;
-      @include border(2px, 15px, 0 0 0 15px);
-      font-size: 18px;
-    }
-    #post-button {
-      @include border(2px, 15px, 0 0 0 15px);
-      background-color: $primary-color;
-      color: $text-color;
-      font-size: 18px;
-      @include box-shadow;
-      margin-top: 20px;
-      padding: 8px 0 8px 0;
-      cursor: pointer;
+    #mode {
+      display: flex;
+      #create-comment {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }</style>

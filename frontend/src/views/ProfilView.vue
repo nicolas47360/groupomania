@@ -116,6 +116,7 @@ export default {
 @import "../styles/utils/__variables.scss";
 #global {  
   @include flce;
+  width: 100vw;
    #container { 
   @include flcecol;
   @include border(2px, 15px, 0);
@@ -124,7 +125,7 @@ export default {
   flex-wrap: wrap;
   width: 60vw;
   @media (max-width: 750px) {
-    width: 80vw;
+    width: 80vw;    
   }  
   .switch{
     @include flcecol;

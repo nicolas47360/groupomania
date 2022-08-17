@@ -29,38 +29,48 @@
         </div>
         <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
         <div class="link-comment">
-          <router-link to="/comment" v-if="this.userId != null">
-            <div class="link-icon">
-              <p>commenter</p>
-              <fa icon="comment" />
-            </div>
-          </router-link>
-          <button
-            class="link-comment"
-            v-if="this.userId != null"
-            @click.prevent="goToShowComment(post._id)"
-          >
-            <div class="link-icon">
-              <p>Voir les commentaires</p>
-              <fa icon="comment" />
-            </div>
-          </button>
-          <button
-            class="go"
-            v-if="post.userId == this.userId"
-            @click.prevent="goToTrash(post._id)"
-          >
-            <fa icon="trash" />
-            supprimer
-          </button>
-          <button
-            class="go"
-            v-if="post.userId == this.userId"
-            @click.prevent="goToModify(post._id)"
-          >
-            <fa icon="circle" />
-            Modifier
-          </button>
+          <div class="link-page">
+            <button
+              class="button-comment"
+              v-if="this.userId != null"
+              @click.prevent="goTocomment(post._id)"
+            >
+              <div class="link-icon">
+                <p>commenter</p>
+                <fa icon="comment" />
+              </div>
+            </button>
+            <button
+              class="button-comment"
+              v-if="this.userId != null"
+              @click.prevent="goToShowComment(post._id)"
+            >
+              <div class="link-icon">
+                <p>Voir les commentaires</p>
+                <fa icon="comment" />
+              </div>
+            </button>
+          </div>
+          <div class="link-page">
+            <button
+              class="go"
+              v-if="post.userId == this.userId"
+              @click.prevent="goToTrash(post._id)"
+            >
+              <div class="link-icon">
+                <fa icon="trash" />
+                <p>supprimer</p>
+              </div>
+            </button>
+            <button
+              class="go"
+              v-if="post.userId == this.userId"
+              @click.prevent="goToModify(post._id)"
+            >
+              <fa icon="circle" />
+              Modifier
+            </button>
+          </div>
         </div>
       </div>
     </article>
@@ -151,6 +161,11 @@ export default {
       localStorage.setItem("postId", postId);
       this.$router.push("/comment/show");
     },
+
+    goTocomment(postId) {
+      localStorage.setItem("postId", postId);
+      this.$router.push("/comment");
+    },
   },
 };
 </script>
@@ -170,9 +185,10 @@ export default {
     flex-wrap: wrap;
     margin: 40px;
     width: 39vw;
-    @media (max-width: 950px) {
-      width: 85vw;
-      @include flce;
+    @media (max-width: 1000px) {
+      @include flcecol;
+      margin: 20px 5px 10px 5px;
+      width: 100%;
     }
     .container-post {
       @include border(2px, 15px, 0);
@@ -222,27 +238,42 @@ export default {
       .link-comment {
         @include flsparo;
         align-items: center;
-        border: none;
-        // background-color: white;
-        .link-icon {
-          @include flspb;
-          color: $tertiary-color;
-          align-items: center;
-          background-color: white;
-          @include border(2px, 15px,0);
-          p {
-            padding-right: 5px;
+        .link-page {
+          @include flspa;
+          margin: 15px;
+          @media (max-width: 1100px) {
+            @include flcecol;
+          }
+          .button-comment {
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            .link-icon {
+              @include flspb;
+              color: $tertiary-color;
+              align-items: center;
+              background-color: white;
+              @include border(2px, 15px, 0 5px 0 5px);
+              height: 25px;
+              margin-bottom: 10px;
+              p {
+                padding-right: 5px;
+              }
+            }
+          }
+          a {
+            text-decoration: none;
+            color: $tertiary-color;
+          }
+          .go {
+            @include flspa;
+            @include border(2px, 15px, 5px);
+            background-color: $primary-color;
+            color: $secondary-color;
+            height: 28px;
+            margin: 15px;
           }
         }
-      }
-      a {
-        text-decoration: none;
-        color: $tertiary-color;
-      }
-      .go {
-        @include border(2px, 15px, 5px);
-        background-color: $primary-color;
-        color: $secondary-color;
       }
     }
   }

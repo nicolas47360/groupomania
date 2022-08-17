@@ -1,10 +1,14 @@
 <template>
-  <section>
-    <div class="create-post" v-if="mode == 'create'">
-      <form class="post-form" action="">
+  <section id="modify-comment" v-for="comment in allComments" :key="comment.id">
+    <div id="comment-show" v-if="comment.userId == this.userId">
+      <span id="post-message">{{ comment.message }}</span>
+      <span>Publier le {{ format_date(comment.createdAt) }}</span>
+    </div>
+    <div class="modify-comment" v-if="comment.userId == this.userId">
+      <form class="comment-form" action="">
         <label for="message">Message</label>
         <textarea
-          class="input-post"
+          class="input-comment"
           cols="30"
           rows="10"
           placeholder="Votre texte"
@@ -12,7 +16,7 @@
         >
         </textarea>
         <button id="post-button" type="submit" @click.prevent="createComment()">
-          Publier votre commentaire
+          Modifier votre commentaire
         </button>
       </form>
     </div>
@@ -21,7 +25,7 @@
 
 <script>
 import axios from "axios";
-
+import moment from "moment";
 export default {
   name: "commentView",
   data() {
@@ -31,9 +35,18 @@ export default {
       mode: "create",
       message: "",
       likes: 0,
+      allComments: [],
     };
   },
+  created() {
+    this.getComments();
+  },
   methods: {
+    format_date(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY hh:mm");
+      }
+    },
     modifyComment() {
       axios
         .put(
@@ -55,6 +68,22 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+
+    getComments() {
+      axios
+        .get("http://localhost:5000/api/comment", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allComments = response.data.comments.reverse();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -62,31 +91,34 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#container {
-  @include flcecol;
+#modify-comment {
+  @include flspa;
+  margin: 15px 0 30px 0;
   @include border(2px, 15px, 0);
-  align-items: center;
-  .switch {
+  width: 35vw;
+  flex-wrap: wrap;
+  #comment-show {
+    @include border(2px, 15px, 15px);
+    margin: 15px 0 15px 0;
+    width: 25%;
     @include flcecol;
     align-items: center;
-    .switch-button {
-      margin: 20px 0 0 0;
-      @include border(2px, 15px, 5px 15px 5px 15px);
+    #post-message {
       font-size: 18px;
-      background-color: $primary-color;
-      color: $text-color;
-      @include box-shadow;
-      cursor: pointer;
+      color: $tertiary-color;
+      padding: 15px 0 15px 0;
     }
   }
-
-  .post-form {
+  .comment-form {
     @include flcecol;
     margin: 20px;
-    .input-post {
+    align-items: center;
+    width: auto;
+    .input-comment {
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
+      width: 80%;
     }
     #post-button {
       @include border(2px, 15px, 0 0 0 15px);
@@ -97,6 +129,8 @@ export default {
       margin-top: 20px;
       padding: 8px 0 8px 0;
       cursor: pointer;
+      width: 80%;
     }
   }
-}</style>
+}
+</style>

@@ -1,17 +1,17 @@
 <template>
-  <section>
-    <div class="create-post" v-if="mode == 'create'">
-      <form class="post-form" action="">
+  <section id="create-container">
+    <div class="create-comment" v-if="mode == 'create'">
+      <form class="comment-form" action="">
         <label for="message">Message</label>
         <textarea
-          class="input-post"
+          class="input-comment"
           cols="30"
           rows="10"
           placeholder="Votre texte"
           v-model="message"
         >
         </textarea>
-        <button id="post-button" type="submit" @click.prevent="createComment()">
+        <button id="comment-button" type="submit" @click.prevent="createComment()">
           Publier votre commentaire
         </button>
       </form>
@@ -28,6 +28,7 @@ export default {
     return {
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
+      postId: localStorage.getItem("postId"),
       mode: "create",
       message: "",
       likes: 0,
@@ -39,6 +40,7 @@ export default {
         .post(
           "http://localhost:5000/api/comment",
           {
+            postId: this.postId,
             message: this.message,
             userId: this.userId,
             likes: this.likes,
@@ -62,33 +64,26 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#container {
-  @include flcecol;
-  @include border(2px, 15px, 0);
-  align-items: center;
-  .switch {
+#create-container {
+  @include flce;
+  .comment-form {
     @include flcecol;
     align-items: center;
-    .switch-button {
-      margin: 20px 0 0 0;
-      @include border(2px, 15px, 5px 15px 5px 15px);
-      font-size: 18px;
-      background-color: $primary-color;
-      color: $text-color;
-      @include box-shadow;
-      cursor: pointer;
+    margin: 20px 0 20px 0;
+    label {
+      color: $primary-color;
     }
-  }
-
-  .post-form {
-    @include flcecol;
-    margin: 20px;
-    .input-post {
+    .input-comment {
+      display: flex;
+      flex-wrap: wrap;
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
+      @media (max-width: 800px) {
+        width: 80%;
+      }
     }
-    #post-button {
+    #comment-button {
       @include border(2px, 15px, 0 0 0 15px);
       background-color: $primary-color;
       color: $text-color;
@@ -97,6 +92,10 @@ export default {
       margin-top: 20px;
       padding: 8px 0 8px 0;
       cursor: pointer;
+      width: 70%;
     }
   }
-}</style>
+}
+
+
+</style>

@@ -39,7 +39,7 @@ export default {
     return {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      id: localStorage.getItem("id"),
+      postId: localStorage.getItem("postId"),
       mode: "create",
       FILE: null,
       name: "",
@@ -59,7 +59,6 @@ export default {
       formData.append("message", this.message);
       formData.append("userId", this.userId);
       formData.append("likes", this.likes);
-      // formData.append("postId", this.postId);
       axios
         .post("http://localhost:5000/api/post", formData, {
           headers: {

@@ -7,6 +7,11 @@ const modelComment = mongoose.Schema(
       required: true,
     },
 
+    postId: {
+      type: String,
+      required: true,
+    },
+
     message: {
       type: String,
       required: true,

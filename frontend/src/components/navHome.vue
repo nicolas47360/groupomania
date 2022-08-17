@@ -32,13 +32,25 @@ export default {
   #nav-list {
     @include flsparo;
     list-style-type: none;
+    @media (max-width: 700px) {
+      @include flcecol;
+      padding: 0;
+      width: 50%;
+    }
     .nav-component {
-      margin: 30px 80px 30px 80px;
-      font-size: 20px;
+      margin: 30px 40px 30px 40px;
+      font-size: 15px;
+      height: 10px;
+      text-align: center;
       @include border(2px, 15px, 15px);
-      background-color: $secondary-color;
       color: $tertiary-color;
-      @include box-shadow;
+      @media (max-width: 800px) {
+        margin: 30px 20px 30px 20px;
+      }
+      @media (max-width: 700px) {
+        @include flcecol;
+        margin: 15px 5px 15px 5px;
+      }
       a {
         text-decoration: none;
         color: $primary-color;
