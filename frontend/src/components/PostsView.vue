@@ -205,6 +205,7 @@ export default {
         }
         #profil-picture {
           max-width: 20%;
+          height: 55px;
           object-fit: cover;
         }
       }
@@ -227,8 +228,8 @@ export default {
         }
         #post-picture {
           object-fit: cover;
-          max-width: 300px;
-          max-height: 300px;
+          max-width: 70%;
+          max-height: 70%;
           padding-top: 15px;
         }
       }

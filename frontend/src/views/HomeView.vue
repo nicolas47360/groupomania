@@ -41,7 +41,6 @@ export default {
     @include box-shadow;
     @include flce;
     width: 20%;
-    display: flex;
     flex-wrap: wrap;
     background-color: $primary-color;
     color: $secondary-color;
@@ -50,11 +49,12 @@ export default {
     height: 12px;
     @media (max-width: 1100px) {
       width: 30%;
-      @media (max-width: 750px) {
-        width: 40%;
-      }
       @media (max-width: 1000px) {
         width: 50%;
+      }
+      @media (max-width: 750px) {
+        width: 40%;
+        height: auto;
       }
     }
     span {
