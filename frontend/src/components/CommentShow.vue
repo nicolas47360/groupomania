@@ -1,13 +1,13 @@
 <template>
   <NavBar />
-  <section>
+  <section id="container-show">
     <h1>Les commentaires du post</h1>
-  </section>
-  <div id="show-comment" v-for="comment in allComments" :key="comment.id">
-    <div v-if="comment.postId == this.postId">
-      <span v-if="comment.postId == this.postId">{{ comment.message }}</span>
+    <div id="show-comment" v-for="comment in allComments" :key="comment.id">
+      <div v-if="comment.postId == this.postId">
+        <span>{{ comment.message }}</span>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -83,9 +83,14 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#show-comment {
+#container-show {
+  @include flcecol;
+  align-items: center;
+  #show-comment {
     @include border(2px, 15px, 15px);
     @include flce;
     margin: 15px 0 15px 0;
+    width: 87%;
+  }
 }
 </style>

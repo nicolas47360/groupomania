@@ -36,6 +36,9 @@ export default {
       @include flcecol;
       padding: 0;
       width: 50%;
+      @media (max-width: 400px) {
+        width: 70%;
+      }
     }
     .nav-component {
       margin: 30px 40px 30px 40px;

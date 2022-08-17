@@ -59,7 +59,7 @@
             >
               <div class="link-icon">
                 <fa icon="trash" />
-                <p>supprimer</p>
+                <p>Supprimer ce post</p>
               </div>
             </button>
             <button
@@ -68,7 +68,7 @@
               @click.prevent="goToModify(post._id)"
             >
               <fa icon="circle" />
-              Modifier
+              Modifier ce post
             </button>
           </div>
         </div>
@@ -225,6 +225,7 @@ export default {
           padding: 15px;
           color: $tertiary-color;
           font-size: 18px;
+          text-align: center;
         }
         #post-picture {
           object-fit: cover;
@@ -239,6 +240,9 @@ export default {
       .link-comment {
         @include flsparo;
         align-items: center;
+        @media (max-width: 350px) {
+          @include flcecol;
+        }
         .link-page {
           @include flspa;
           margin: 15px;
@@ -267,12 +271,19 @@ export default {
             color: $tertiary-color;
           }
           .go {
-            @include flspa;
+            @include flspb;
             @include border(2px, 15px, 5px);
             background-color: $primary-color;
             color: $secondary-color;
-            height: 28px;
-            margin: 15px;
+            align-items: center;
+            height: 40px;
+            .link-icon {
+              @include flspb;
+              align-items: center;
+            }
+            p {
+              padding-left: 10px;
+            }
           }
         }
       }

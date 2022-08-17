@@ -15,7 +15,11 @@
           v-model="message"
         >
         </textarea>
-        <button id="post-button" type="submit" @click.prevent="createComment()">
+        <button
+          id="post-button"
+          type="submit"
+          @click.prevent="modifyComment(comment._id)"
+        >
           Modifier votre commentaire
         </button>
       </form>
@@ -32,6 +36,7 @@ export default {
     return {
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
+      postId: localStorage.getItem("postId"),
       mode: "create",
       message: "",
       likes: 0,
@@ -47,10 +52,10 @@ export default {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
-    modifyComment() {
+    modifyComment(id) {
       axios
         .put(
-          "http://localhost:5000/api/comment/" + this.userId,
+          "http://localhost:5000/api/comment/" + id,
           {
             message: this.message,
             userId: this.userId,
@@ -100,7 +105,7 @@ export default {
   #comment-show {
     @include border(2px, 15px, 15px);
     margin: 15px 0 15px 0;
-    width: 25%;
+    width: 85%;
     @include flcecol;
     align-items: center;
     #post-message {

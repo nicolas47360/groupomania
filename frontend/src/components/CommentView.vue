@@ -103,16 +103,16 @@ export default {
 @import "../styles/utils/__variables.scss";
 #container {
   @include flce;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   #container-comment {
     @include flcecol;
-    @include border(2px, 15px, 0);
+    // @include border(2px, 15px, 0);
     align-items: center;
     width: 50%;
     margin: 45px 0 0 0;
-    // @media (max-width: 800px) {
-    //   width: 70vw;
-    // }
+    @media (max-width: 800px) {
+      width: 80%;
+    }
     .switch {
       @include flcecol;
       align-items: center;

@@ -7,9 +7,7 @@ exports.readComment = (req, res, next) => {
 };
 
 exports.createComment = (req, res, next) => {
-  console.log(req.body)
   const commentObject = req.body;
-  console.log(commentObject)
   delete commentObject._id;
   const comment = new Comment({
     ...commentObject,
@@ -24,6 +22,7 @@ exports.createComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
+  console.log(req.params.id);
   Comment.findOne({ _id: req.params.id });
   Comment.deleteOne({ _id: req.params.id }).then(() =>
     res.status(200).json({ message: "le commentaire a été supprimé" })
