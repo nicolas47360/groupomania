@@ -24,7 +24,7 @@ const modeluser = mongoose.Schema({
 
   imageUrl: {
     type: String,
-    default: "http://localhost:5000/images/profil.png"
+    default: "http://localhost:5000/image/profil.png"
   },
 });
 

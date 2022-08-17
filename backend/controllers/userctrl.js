@@ -33,7 +33,7 @@ exports.createUser = (req, res, next) => {
   }
   user.save()
     .then(() => {
-      res.status(201).json({ message: "Votre profil a bien été cré" });
+      res.status(201).json({ message: "Votre profil a bien été créé" });
       console.log(user);
     })
     .catch((error) => res.status(400).json({ message: "Ce pseudo est déjà utiliseé" }));
@@ -53,6 +53,7 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
+  console.log(req.params);
   User.findOne({ userId: req.params.id })
     .then((user) => {
       const filename = user.imageUrl.split("/images")[1];

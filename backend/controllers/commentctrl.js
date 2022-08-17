@@ -16,7 +16,7 @@ exports.createComment = (req, res, next) => {
   });
   comment
     .save()
-    .then(() => res.status(201).json({ message: "le post a été enregistrée" }))
+    .then(() => res.status(201).json({ message: "le commentaire a été enregistrée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -24,9 +24,11 @@ exports.createComment = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
   console.log(req.params.id);
   Comment.findOne({ _id: req.params.id });
-  Comment.deleteOne({ _id: req.params.id }).then(() =>
-    res.status(200).json({ message: "le commentaire a été supprimé" })
-  );
+  Comment.deleteOne({ _id: req.params.id })
+    .then(() =>
+      res.status(200).json({ message: "le commentaire a été supprimé" })
+    )
+    .catch((error) => res.status(400).json({ error }));
 };
 
 exports.updateComment = (req, res, next) => {

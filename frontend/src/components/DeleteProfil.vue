@@ -18,12 +18,13 @@ export default {
     return {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      email: localStorage.getItem("email"),
     };
   },
   methods: {
     deleteProfil() {
       axios
-        .delete("http://localhost:5000/api/user/" + this.userId, {
+        .delete("http://localhost:5000/user/" + this.userId, {
           headers: {
             Authorization: "bearer " + this.token,
           },
@@ -31,7 +32,7 @@ export default {
         .then((response) => {
           console.log(response);
           alert(response.data.message);
-          this.$router.push("/");
+          // this.$router.push("/");
         })
         .catch((error) => {
           console.log(error);

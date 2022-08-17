@@ -58,10 +58,9 @@ export default {
       FILE: null,
       name: "",
       pseudo: "",
-      message: "",
+      firstname: "",
+      lastname: "",
       imageUrl: "",
-      likes: 0,
-      // postId: "",
     };
   },
   methods: {

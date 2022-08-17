@@ -56,7 +56,7 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
+          alert(response.data.message);
           this.$router.push("/home");
         })
         .catch((err) => console.log(err.response.data));

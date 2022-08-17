@@ -51,8 +51,6 @@ export default {
       imageUrl: "",
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      user: "",
-      nickname: "",
     };
   },
   methods: {

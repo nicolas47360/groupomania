@@ -140,7 +140,6 @@ export default {
       border-color: $tertiary-color;
       margin-top: 30px;
       width: 85%;
-      
     }
   }
 }</style>

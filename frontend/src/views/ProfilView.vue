@@ -58,40 +58,9 @@ export default {
   },
   data() {
     return {
-      mode: "create",
-      FILE: null,
-      name: "",      
-      pseudo: "",
-      firstname: "",
-      lastname: "",            
-      imageUrl: "",
-      token: localStorage.getItem("token"),
-      userId: localStorage.getItem("userId"),
-      user: "",
-      nickname : "",      
+      mode: "create",          
     };
-}, 
-  mounted() {          
-      axios
-      .get("http://localhost:5000/api/user/" + this.userId,{
-         headers: {
-              Authorization: "bearer " + this.token
-            }
-      })
-      .then((response) => {
-        console.log(response.data);
-        this.nickname = response.data.pseudo;
-        this.user = response.data.userId;
-        this.prenom = response.data.lastname;
-        this.nom = response.data.firstname;
-        console.log(this.user)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    },
-
- 
+},  
   
   methods: {      
     switchtoModifyProfil(){
