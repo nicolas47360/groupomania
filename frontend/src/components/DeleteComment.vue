@@ -1,20 +1,25 @@
 <template>
   <section id="container" v-for="comment in allComments" :key="comment.id">
-    <div>
-      <div v-if="comment.userId == this.userId">
-        <span> {{ comment.message }}</span>
-        <span> {{ comment.createdAt }}</span>
+    <div id="container-info" v-if="comment.userId == this.userId">
+      <div id="container-display">
+        <span id="display-text"> {{ comment.message }}</span>
+        <span id="display-date">
+          Publier le {{ format_date(comment.createdAt) }}
+        </span>
       </div>
+      <button
+        @click.prevent="deleteComment(comment._id)"
+        v-if="comment.userId == this.userId"
+      >
+        Supprimer le commentaire
+      </button>
     </div>
-    <button @click.prevent="deleteComment(comment._id)">
-      Supprimer le commentaire
-    </button>
   </section>
- 
 </template>
 
 <script>
 import axios from "axios";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -57,6 +62,11 @@ export default {
           console.log(error);
         });
     },
+    format_date(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY hh:mm");
+      }
+    },
   },
 };
 </script>
@@ -65,8 +75,32 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include border(2px, 15px, 0);
   margin: 15px 0 15px 0;
   padding: 15px;
+  #container-info {
+    @include border(2px, 15px, 25px);
+    @include flcecol;
+    align-items: center;
+    #container-display {
+      @include flcecol;
+      #display-text {
+        padding: 10px 0 10px 0;
+      }
+      #display-date {
+        padding: 10px 0 10px 0;
+      }
+    }
+    button {
+      @include border(2px, 15px, 0 0 0 15px);
+      background-color: $primary-color;
+      color: $text-color;
+      font-size: 18px;
+      @include box-shadow;
+      margin-top: 20px;
+      padding: 8px 0 8px 0;
+      cursor: pointer;
+      width: 80%;
+    }
+  }
 }
 </style>

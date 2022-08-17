@@ -99,13 +99,12 @@ export default {
 #modify-comment {
   @include flspa;
   margin: 15px 0 30px 0;
-  @include border(2px, 15px, 0);
-  width: 35vw;
+  width: 50vw;
   flex-wrap: wrap;
   #comment-show {
     @include border(2px, 15px, 15px);
     margin: 15px 0 15px 0;
-    width: 85%;
+    width: 75%;
     @include flcecol;
     align-items: center;
     #post-message {
@@ -117,13 +116,14 @@ export default {
   .comment-form {
     @include flcecol;
     margin: 20px;
-    align-items: center;
-    width: auto;
+    align-items: center; 
     .input-comment {
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
-      width: 80%;
+      @media (max-width: 550px) {
+        width: 90%;
+      }
     }
     #post-button {
       @include border(2px, 15px, 0 0 0 15px);

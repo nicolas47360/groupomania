@@ -2,7 +2,7 @@
   <section id="create-container">
     <div class="create-comment" v-if="mode == 'create'">
       <form class="comment-form" action="">
-        <label for="message">Message</label>
+        <label for="message">Votre commentaire</label>
         <textarea
           class="input-comment"
           cols="30"
@@ -11,7 +11,11 @@
           v-model="message"
         >
         </textarea>
-        <button id="comment-button" type="submit" @click.prevent="createComment()">
+        <button
+          id="comment-button" 
+          type="submit" 
+          @click.prevent="createComment()"
+        >
           Publier votre commentaire
         </button>
       </form>
@@ -72,15 +76,16 @@ export default {
     margin: 20px 0 20px 0;
     label {
       color: $primary-color;
+      font-size: 18px;
+      font-weight: bold;
     }
     .input-comment {
       display: flex;
-      flex-wrap: wrap;
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
-      @media (max-width: 800px) {
-        width: 80%;
+      @media (max-width: 550px) {
+        width: 90%;
       }
     }
     #comment-button {

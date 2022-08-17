@@ -30,10 +30,10 @@
         <div id="create-comment" v-if="mode == 'create'">
           <CreateComment />
         </div>
-        <div v-if="mode == 'modify'">
+        <div id="modify-comment" v-if="mode == 'modify'">
           <ModifyComment />
         </div>
-        <div v-if="mode == 'delete'">
+        <div id="delete-comment" v-if="mode == 'delete'">
           <DeleteComment />
         </div>
       </section>
@@ -135,11 +135,12 @@ export default {
       }
     }
     #mode {
-      display: flex;
-      #create-comment {
-        display: flex;
-        justify-content: center;
-      }
+      @include flspa;
+      @include border(2px, 15px, 5px 35px 5px 35px);
+      border-color: $tertiary-color;
+      margin-top: 30px;
+      width: 85%;
+      
     }
   }
 }</style>
