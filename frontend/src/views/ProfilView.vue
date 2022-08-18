@@ -27,7 +27,10 @@
         </button>
       </div>
       <section id="profil">
-        <div class="create-profil" v-if="mode == 'create'">
+        <div
+          class="create-profil"
+          v-if="mode == 'create'"
+        >
           <CreateProfil />
         </div>
         <div class="modify-profil" v-if="mode == 'modify'">
@@ -58,9 +61,14 @@ export default {
   },
   data() {
     return {
-      mode: "create",          
+      allUsers: [],
+      mode: "create",
+      userId: localStorage.getItem("userId"),                
     };
-},  
+}, 
+created() {
+  this.getUsers()
+}, 
   
   methods: {      
     switchtoModifyProfil(){
@@ -73,6 +81,21 @@ export default {
 
     switchtoDeleteProfil(){
       this.mode = "delete"
+    },
+    getUsers() {
+      axios
+        .get("http://localhost:5000/api/user", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allUsers = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },    
   },
 }
@@ -84,18 +107,15 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #global {  
-  @include flce;
-  width: 100vw;
-   #container { 
   @include flcecol;
-  @include border(2px, 15px, 0);
-  align-items: center;
-  margin: 35px 0 35px 0;
-  flex-wrap: wrap;
-  width: 60vw;
-  @media (max-width: 750px) {
-    width: 80vw;    
-  }  
+  align-items: center;  
+  #container {   
+    @include border(2px, 15px, 0);
+    margin: 35px 0 35px 0;
+    @media (max-width: 750px) {
+      width: 80vw;
+      @include flcecol;    
+    }  
   .switch{
     @include flcecol;
     align-items: center;
@@ -118,6 +138,9 @@ export default {
     @include box-shadow;
     cursor: pointer; 
     }
+  }
+  #profil {
+   @include flcecol;
   }
 }
 }

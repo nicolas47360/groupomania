@@ -78,6 +78,7 @@ export default {
 #container {
   margin: 15px 0 15px 0;
   padding: 15px;
+  width: 60vw;
   #container-info {
     @include border(2px, 15px, 25px);
     @include flcecol;
@@ -100,7 +101,7 @@ export default {
       margin-top: 20px;
       padding: 8px 0 8px 0;
       cursor: pointer;
-      width: 80%;
+      width: 60%;
     }
   }
 }

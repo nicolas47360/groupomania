@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <section id="delete">
-    <span class="delete-text">Voulez vous suprimer ce post?</span>
+    <span class="delete-text">Suprimer vos Posts</span>
     <article id="delete-one" v-if="this.postId != null">
       <section id="one-container">
         <div class="delete-container" v-for="post in allPosts" :key="post.id">
@@ -122,7 +122,7 @@ export default {
   .delete-text {
     color: $text-alert;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 28px;
     margin-top: 20px;
   }
   #delete-one {
@@ -179,13 +179,8 @@ export default {
   }
 
   #delete-all {
-    @include flspa;
+    @include flcecol;
     align-items: center;
-    flex-wrap: wrap;
-    @media (max-width: 900px) {
-      @include flcecol;
-      align-items: center;
-    }
     #all-container {
       @include flspa;
       width: 45vw;

@@ -4,7 +4,9 @@
     <section id="container-comment">
       <div class="switch">
         <div class="title-post">
-          <h1 v-if="mode == 'create' && this.postId != null">Rédiger votre comentaire</h1>
+          <h1 v-if="mode == 'create' && this.postId != null">
+            Rédiger votre comentaire
+          </h1>
           <h1 v-if="mode == 'modify'">Modifier votre commentaire</h1>
           <h1 v-if="mode == 'delete'">Supprimer votre commentaire</h1>
         </div>
@@ -26,18 +28,10 @@
           Supprimer votre commentaire
         </button>
       </div>
-      <section id="mode" v-if="this.postId != null">
-        <div id="create-comment" v-if="mode == 'create'">
+      <section id="mode">
+        <div id="create-comment" v-if="mode == 'create' && this.postId != null">
           <CreateComment />
         </div>
-        <div id="modify-comment" v-if="mode == 'modify'">
-          <ModifyComment />
-        </div>
-        <div id="delete-comment" v-if="mode == 'delete'">
-          <DeleteComment />
-        </div>
-      </section>
-      <section id="mode" v-else>
         <div id="modify-comment" v-if="mode == 'modify'">
           <ModifyComment />
         </div>
@@ -145,10 +139,14 @@ export default {
     }
     #mode {
       @include flspa;
-      @include border(2px, 15px, 5px 35px 5px 35px);
-      border-color: $tertiary-color;
       margin-top: 30px;
       width: 85%;
+      #modify-comment {
+        @include border(2px, 15px, 25px);
+      }
+      #delete-comment {
+        @include flcecol;
+      }
     }
   }
 }</style>

@@ -98,14 +98,12 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #modify-comment {
-  @include flspa;
+  @include flcecol;
   margin: 15px 0 30px 0;
-  width: 50vw;
-  flex-wrap: wrap;
+  width: 60vw;
   #comment-show {
     @include border(2px, 15px, 15px);
     margin: 15px 0 15px 0;
-    width: 75%;
     @include flcecol;
     align-items: center;
     #post-message {

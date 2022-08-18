@@ -8,7 +8,7 @@
         <img :src="user.imageUrl" alt="photo de profil" />
       </div>
     </div>
-    <div>
+    <div id="container-form">
       <form @submit.prevent="modifyProfil" class="profil-form">
         <label for="pseudo">Pseudo</label>
         <input
@@ -121,47 +121,55 @@ export default {
 @import "../styles/utils/__variables.scss";
 #modify-container {
   @include flspa;
+  @media (max-width: 750px) {
+    @include flcecol;
+  }
   #container-user {
     @include flcecol;
     #user-info {
       @include flcecol;
       align-items: center;
-      flex-wrap: wrap;
       span {
         font-size: 18px;
         color: $tertiary-color;
         margin: 20px 0 20px 0;
       }
       img {
-        width: 65%;
+        width: 55%;
         margin-top: 50px;
       }
     }
   }
-  .profil-form {
-    @include flcecol;
-    margin: 20px;
-    align-items: center;
-    label {
-      color: $primary-color;
-      font-size: 18px;
+  #container-form {
+    width: 80%;
+    @media (max-width: 750px) {
+      width: auto;
     }
-    .input-profil {
-      margin: 15px 0 15px 0;
-      @include border(2px, 15px, 0 0 0 15px);
-      font-size: 20px;
-      width: 100%;
-    }
-    #profil-button {
-      @include border(2px, 15px, 0 0 0 15px);
-      background-color: $primary-color;
-      color: $text-color;
-      font-size: 18px;
-      @include box-shadow;
-      margin: 20px 0 20px 0;
-      padding: 8px 0 8px 0;
-      cursor: pointer;
-      width: 60%;
+    .profil-form {
+      @include flcecol;
+      margin: 20px;
+      align-items: center;
+      label {
+        color: $primary-color;
+        font-size: 18px;
+      }
+      .input-profil {
+        margin: 15px 0 15px 0;
+        @include border(2px, 15px, 0 0 0 15px);
+        font-size: 20px;
+        width: 100%;
+      }
+      #profil-button {
+        @include border(2px, 15px, 0 0 0 15px);
+        background-color: $primary-color;
+        color: $text-color;
+        font-size: 18px;
+        @include box-shadow;
+        margin: 20px 0 20px 0;
+        padding: 8px 0 8px 0;
+        cursor: pointer;
+        width: 60%;
+      }
     }
   }
 }

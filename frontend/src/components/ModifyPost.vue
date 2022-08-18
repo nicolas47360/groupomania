@@ -268,8 +268,8 @@ export default {
       }
     }
     #modify-all {
-      @include flspa;
-      width: 45vw;
+      @include flcecol;
+      width: 70vw;
       @media (max-width: 900px) {
         margin: 0 15px 0 15px;
         @include flcecol;
@@ -278,7 +278,7 @@ export default {
       .container-modify {
         @include border(2px, 15px, 0);
         margin: 15px;
-        display: flex;
+        @include flce;
         @media (max-width: 900px) {
           @include flcecol;
         }
@@ -312,7 +312,11 @@ export default {
           @include flcecol;
           margin: 20px;
           align-items: center;
-          width: auto;
+          width: 60%;
+          @media (max-width: 900px) {
+            width: 90%;
+            margin: 10px;
+          }
           label {
             color: $primary-color;
           }

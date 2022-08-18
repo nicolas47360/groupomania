@@ -217,6 +217,7 @@ export default {
           max-width: 20%;
           height: 55px;
           object-fit: cover;
+          border-radius: 220px;
         }
       }
       #no-info {
