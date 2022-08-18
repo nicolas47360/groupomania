@@ -11,7 +11,7 @@
             {{ post.lastname }}
           </span>
           <img
-            v-if="post.imageUrl != 'profil.png'"
+            v-if="post.imageUrl != null"
             :src="post.userImageUrl"
             alt="photo de profil"
             class="profil-picture"
@@ -22,6 +22,9 @@
             alt="photo-par-default"
             class="profil-picture"
           />
+        </div>
+        <div id="no-info" v-else>
+          <h1>L'utilisateur à supprimer son compte</h1>
         </div>
         <div id="post-info">
           <span id="title-message"> {{ post.title }}</span>
@@ -214,6 +217,12 @@ export default {
           max-width: 20%;
           height: 55px;
           object-fit: cover;
+        }
+      }
+      #no-info {
+        @include flce;
+        h1 {
+          color: $text-alert;
         }
       }
       #post-info {

@@ -4,7 +4,7 @@
     <section id="container-comment">
       <div class="switch">
         <div class="title-post">
-          <h1 v-if="mode == 'create'">Rédiger votre commentaire</h1>
+          <h1 v-if="mode == 'create' && this.postId != null">Rédiger votre comentaire</h1>
           <h1 v-if="mode == 'modify'">Modifier votre commentaire</h1>
           <h1 v-if="mode == 'delete'">Supprimer votre commentaire</h1>
         </div>
@@ -26,10 +26,18 @@
           Supprimer votre commentaire
         </button>
       </div>
-      <section id="mode">
+      <section id="mode" v-if="this.postId != null">
         <div id="create-comment" v-if="mode == 'create'">
           <CreateComment />
         </div>
+        <div id="modify-comment" v-if="mode == 'modify'">
+          <ModifyComment />
+        </div>
+        <div id="delete-comment" v-if="mode == 'delete'">
+          <DeleteComment />
+        </div>
+      </section>
+      <section id="mode" v-else>
         <div id="modify-comment" v-if="mode == 'modify'">
           <ModifyComment />
         </div>
@@ -54,6 +62,7 @@ export default {
     return {
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
+      postId: localStorage.getItem("postId"),
       mode: "create",
       message: "",
       likes: 0,
