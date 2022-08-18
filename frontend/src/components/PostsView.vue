@@ -2,7 +2,7 @@
   <section id="all-container">
     <article v-for="post in allPosts" :key="post.id" id="container-posts">
       <div class="container-post">
-        <div id="user-info">
+        <div id="user-info" v-if="post.pseudo != null">
           <span class="user-pseudo" v-if="post.pseudo != ''">
             {{ post.pseudo }}
           </span>
@@ -11,9 +11,16 @@
             {{ post.lastname }}
           </span>
           <img
+            v-if="post.imageUrl != 'profil.png'"
             :src="post.userImageUrl"
             alt="photo de profil"
-            id="profil-picture"
+            class="profil-picture"
+          />
+          <img
+            v-else
+            src="../../public/image/profil.png"
+            alt="photo-par-default"
+            class="profil-picture"
           />
         </div>
         <div id="post-info">
@@ -203,7 +210,7 @@ export default {
           color: $primary-color;
           font-size: 20px;
         }
-        #profil-picture {
+        .profil-picture {
           max-width: 20%;
           height: 55px;
           object-fit: cover;

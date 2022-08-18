@@ -1,11 +1,10 @@
 <template>
   <div id="delete-profil">
     <p id="delete-text">
-      Attention vous êtes sur le point de supprimer votre profil, vous ne plus
-      pourrez créer de post ou laisser des commentaires. <br>
-      Pour celà veuillez-vous créer un nouveau profil.
+      Attention vous êtes sur le point de supprimer votre compte, vous ne
+      pourrez plus accéder au réseau social Groupomania
     </p>
-    <button id="delete-button" type="reset" @click.prevent="deleteProfil()">
+    <button id="delete-button" type="reset" @click.prevent="deleteAccount()">
       SUPPRIMER
     </button>
   </div>
@@ -24,7 +23,21 @@ export default {
   methods: {
     deleteProfil() {
       axios
-        .delete("http://localhost:5000/user/" + this.userId, {
+        .delete("http://localhost:5000/api/user/" + this.userId, {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.data);
+        });
+    },
+    deleteAccount() {
+      axios
+        .delete("http://localhost:5000/api/auth/delete/" + this.email, {
           headers: {
             Authorization: "bearer " + this.token,
           },
@@ -32,10 +45,12 @@ export default {
         .then((response) => {
           console.log(response);
           alert(response.data.message);
-          // this.$router.push("/");
+          this.deleteProfil();
+          localStorage.clear();
+          this.$router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.data);
         });
     },
   },

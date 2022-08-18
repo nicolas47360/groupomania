@@ -123,6 +123,7 @@ export default {
       axios
         .post("http://localhost:5000/api/auth/signup", userInfo)
         .then((response) => {
+          localStorage.setItem("email", this.email);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);

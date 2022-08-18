@@ -8,8 +8,6 @@ exports.readPost = (req, res, next) => {
 };
 
 exports.getPost = (req, res, next) => {
-  console.log(req.params._id)
-  console.log(req.body)
   Post.findOne({ id: req.params.id })
     .then((user) => {
       res.status(200).json(user)

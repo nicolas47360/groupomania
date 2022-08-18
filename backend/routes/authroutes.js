@@ -5,5 +5,6 @@ const validation = require("../middelware/input_validation");
 
 router.post("/signup", validation.userInput, authCtrl.signup);
 router.post("/login", validation.userInput, authCtrl.login);
+router.delete("/delete/:id", authCtrl.deleteAccount);
 
 module.exports = router;

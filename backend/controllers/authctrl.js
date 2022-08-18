@@ -57,10 +57,11 @@ exports.login = (req, res, next) => {
 };
 
 exports.deleteAccount = (req, res, next) => {
-  console.log(req.params)
+  console.log(req.params.id)
   auth
-    .findOne({ email: req.body.email })
-    .deleteOne({ email: req.body.email })
+    .findOne({ email: req.params.id })
+    .deleteOne({ email: req.params.id })
     .then(() => res.status(201).json({ message: " Votre compte va être supprimé" }))
     .catch((error) => res.status(401).json({ error }));
 }
+

@@ -42,6 +42,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allComments = response.data.comments;
+          this.mergeUsersAndPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +58,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allPosts = response.data.reverse();
-          this.mergeUsersAndPosts();
+         
         })
         .catch((error) => {
           console.log(error);
@@ -65,13 +66,10 @@ export default {
     },
 
     mergePostsAndComments() {
-      this.allPosts.forEach((post) => {
-        this.allCcomments.forEach((user) => {
-          if (post.userId == user.userId) {
-            post.pseudo = user.pseudo;
-            post.lastname = user.lastname;
-            post.userImageUrl = user.imageUrl;
-            post.firstname = user.firstname;
+      this.allComments.forEach((comment) => {
+        this.allPosts.forEach((post) => {
+          if (comment.postId == post._id) {
+            comment.message = post.message;
           }
         });
       });

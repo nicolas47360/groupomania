@@ -53,12 +53,12 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  console.log(req.params);
+  console.log(req.params.id);
   User.findOne({ userId: req.params.id })
     .then((user) => {
       const filename = user.imageUrl.split("/images")[1];
       fs.unlink(`images/${filename}`, () => {
-        User.deleteOne({ id: req.params.id })
+        User.deleteOne({ userId: req.params.id })
           .then(() =>
             res.status(200).json({ message: "Votre profil a été supprimée" })
           )
