@@ -2,11 +2,14 @@
   <NavBarVue />
   <section id="modify">
     <span class="delete-text">Modifier vos Posts</span>
-    <article class="container" v-if="this.postId != null">
+    <article class="container" v-if="this.postId != null" >
       <div id="modify-one" v-for="post in allPosts" :key="post.id">
         <div
           class="container-modify"
-          v-if="post.userId == this.userId && post._id == this.postId"
+          v-if="
+            (post.userId == this.userId && post._id == this.postId) ||
+            (post._id == this.postId && this.isAdmin === 'True')
+          "
         >
           <div class="container-info">
             <span id="title"> {{ post.title }}</span>
@@ -20,7 +23,10 @@
           </div>
           <form
             class="post-form"
-            v-if="post.userId == this.userId && post._id == this.postId"
+            v-if="
+              (post.userId == this.userId && post._id == this.postId) ||
+              (post._id == this.postId && this.isAdmin === 'True')
+            "
           >
             <label for="title">Titre</label>
             <input
@@ -125,6 +131,7 @@ export default {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       postId: localStorage.getItem("postId"),
+      isAdmin: localStorage.getItem("isAdmin"),
       mode: "create",
       FILE: null,
       name: "",

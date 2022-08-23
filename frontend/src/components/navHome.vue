@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       userId: localStorage.getItem("userId"),
+      isAdmin: localStorage.getItem("isAdmin"),
     };
   },
 };
@@ -43,8 +44,7 @@ export default {
     .nav-component {
       margin: 30px 40px 30px 40px;
       font-size: 15px;
-      height: 10px;
-      text-align: center;
+      text-align: center; 
       @include border(2px, 15px, 15px);
       color: $tertiary-color;
       @media (max-width: 800px) {

@@ -52,7 +52,7 @@ export default {
     return {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
-      id: localStorage.getItem("id"),
+      allUsers: [],
       mode: "create",
       error: "",
       FILE: null,
@@ -62,6 +62,9 @@ export default {
       lastname: "",
       imageUrl: "",
     };
+  },
+  created() {
+    this.getUsers();
   },
   methods: {
     createProfil() {
@@ -94,6 +97,21 @@ export default {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
+    },
+    getUsers() {
+      axios
+        .get("http://localhost:5000/api/user", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allUsers = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

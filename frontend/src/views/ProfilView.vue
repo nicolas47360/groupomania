@@ -29,7 +29,7 @@
       <section id="profil">
         <div
           class="create-profil"
-          v-if="mode == 'create'"
+          v-if="mode == 'create' && this.userprofil == null"
         >
           <CreateProfil />
         </div>
@@ -61,13 +61,15 @@ export default {
   },
   data() {
     return {
-      allUsers: [],
+      userprofil: "",
+      user: "",
       mode: "create",
-      userId: localStorage.getItem("userId"),                
+      userId: localStorage.getItem("userId"),
+      token: localStorage.getItem("token")                
     };
 }, 
 created() {
-  this.getUsers()
+  this.getUser()
 }, 
   
   methods: {      
@@ -82,21 +84,23 @@ created() {
     switchtoDeleteProfil(){
       this.mode = "delete"
     },
-    getUsers() {
+    getUser() {
       axios
-        .get("http://localhost:5000/api/user", {
+        .get("http://localhost:5000/api/user/" + this.userId, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
           console.log(response.data);
-          this.allUsers = response.data;
+          this.userprofil = response.data
+          
         })
         .catch((error) => {
           console.log(error);
         });
     },    
+    
   },
 }
 

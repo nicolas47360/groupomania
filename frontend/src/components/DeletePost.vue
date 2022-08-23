@@ -7,7 +7,10 @@
         <div class="delete-container" v-for="post in allPosts" :key="post.id">
           <div
             class="delete-message"
-            v-if="post.userId == this.userId && post._id == this.postId"
+            v-if="
+              (post.userId == this.userId && post._id == this.postId) ||
+              (this.isAdmin === 'True' && post._id == this.postId)
+            "
           >
             <span id="title-message"> {{ post.title }}</span>
             <span id="text-message">{{ post.message }}</span>
@@ -68,6 +71,7 @@ export default {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       postId: localStorage.getItem("postId"),
+      isAdmin: localStorage.getItem("isAdmin"),
     };
   },
 

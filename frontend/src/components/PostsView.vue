@@ -64,7 +64,7 @@
           <div class="link-page">
             <button
               class="go"
-              v-if="post.userId == this.userId"
+              v-if="post.userId == this.userId || this.isAdmin === 'True'"
               @click.prevent="goToTrash(post._id)"
             >
               <div class="link-icon">
@@ -74,7 +74,7 @@
             </button>
             <button
               class="go"
-              v-if="post.userId == this.userId"
+              v-if="post.userId == this.userId || this.isAdmin === 'True'"
               @click.prevent="goToModify(post._id)"
             >
               <fa icon="circle" />
@@ -98,6 +98,7 @@ export default {
       allUsers: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      isAdmin: localStorage.getItem("isAdmin"),
       postId: "",
     };
   },

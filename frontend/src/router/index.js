@@ -6,7 +6,7 @@ import Post from "../views/PostView.vue";
 import CommentPost from "../components/CommentView.vue";
 import DeletePost from "../components/DeletePost.vue";
 import ModifyPost from "../components/ModifyPost.vue";
-import CommentShow from "../components/CommentShow.vue"
+import CommentShow from "../components/CommentShow.vue";
 
 const routes = [
     {
@@ -48,7 +48,7 @@ const routes = [
         path: "/comment/show",
         name: "commentshow",
         component: CommentShow,
-    }
+    },
 ];
 
 const router = createRouter({
