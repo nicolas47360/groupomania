@@ -18,7 +18,7 @@
           />
           <img
             v-else
-            src="../../public/image/profil.png"
+            src="/image/profil.png"
             alt="photo-par-default"
             class="profil-picture"
           />
@@ -37,7 +37,10 @@
           />
           <img v-else id="none" />
         </div>
-        <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
+        <div>
+          <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
+          <fa icon="thumbs-up" @click.prevent="likePost(post._id)" />
+        </div>
         <div class="link-comment">
           <div class="link-page">
             <button
@@ -176,6 +179,20 @@ export default {
     goTocomment(postId) {
       localStorage.setItem("postId", postId);
       this.$router.push("/comment");
+    },
+    likePost(id) {
+      axios
+        .post("http://localhost:5000/api/post/" + id + "/like", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
     },
   },
 };

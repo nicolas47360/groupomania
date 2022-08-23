@@ -79,10 +79,11 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.likePost = (req, res, next) => {
+  console.log(req.params);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (req.body.like === 1 && !post.usersLiked.includes(req.body.userId)) {
-        Comment.updateOne({ _id: req.params.id },
+        Post.updateOne({ _id: req.params.id },
           {
             $inc: { likes: 1 },
             $push: { usersLiked: req.body.userId }
