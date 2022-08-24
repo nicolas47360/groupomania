@@ -40,21 +40,21 @@ exports.deletePost = (req, res, next) => {
           Post.deleteOne({ _id: req.params.id })
             .then((del) => {
               console.log(del)
-              res.status(200).json({ message: "Le post a été suprrimée" })
+              res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
             })
-            .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
+            .catch((error) => res.status(400).json({ error }));
         });
       }
       else {
         Post.deleteOne({ _id: req.params.id })
           .then((del) => {
             console.log(del)
-            res.status(200).json({ message: "Le post a été suprrimée" })
+            res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
           })
-          .catch((error) => res.status(400).json({ message: " le probléme vienr de la" }));
+          .catch((error) => res.status(400).json({ error }));
       }
     })
-    .catch((error) => res.status(500).json({ message: "c ets ici la merde " }));
+    .catch((error) => res.status(500).json({ error }));
 };
 
 exports.createPost = (req, res, next) => {
@@ -74,7 +74,7 @@ exports.createPost = (req, res, next) => {
     });
   }
   post.save()
-    .then(() => res.status(201).json({ message: "Le post a été ajouté" }))
+    .then(() => res.status(201).json({ message: "Le post a été ajouté au fil d'actualité" }))
     .catch((error) => res.status(400).json({ error }));
 };
 

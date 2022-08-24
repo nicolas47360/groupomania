@@ -7,7 +7,7 @@ import CommentPost from "../components/CommentView.vue";
 import DeletePost from "../components/DeletePost.vue";
 import ModifyPost from "../components/ModifyPost.vue";
 import CommentShow from "../components/CommentShow.vue";
-
+import ModifyComment from "../components/ModifyComment.vue";
 const routes = [
     {
         path: "/",
@@ -48,6 +48,11 @@ const routes = [
         path: "/comment/show",
         name: "commentshow",
         component: CommentShow,
+    },
+    {
+        path: "/comment/modify",
+        name: "commentmodify",
+        component: ModifyComment,
     },
 ];
 

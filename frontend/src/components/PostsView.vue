@@ -42,10 +42,9 @@
           <fa icon="thumbs-up" @click.prevent="likePost(post._id)" />
         </div>
         <div class="link-comment">
-          <div class="link-page">
+          <div class="link-page" v-if="this.isAdmin != 'True'">
             <button
               class="button-comment"
-              v-if="this.userId != null"
               @click.prevent="goTocomment(post._id)"
             >
               <div class="link-icon">
@@ -55,10 +54,11 @@
             </button>
             <button
               class="button-comment"
-              v-if="this.userId != null"
               @click.prevent="goToShowComment(post._id)"
+              v-for="comment in allComments"
+              :key="comment.id"
             >
-              <div class="link-icon">
+              <div class="link-icon" v-if="post._id == comment.postId">
                 <p>Voir les commentaires</p>
                 <fa icon="comment" />
               </div>
@@ -99,6 +99,7 @@ export default {
     return {
       allPosts: [],
       allUsers: [],
+      allComments: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       isAdmin: localStorage.getItem("isAdmin"),
@@ -108,6 +109,7 @@ export default {
   created() {
     this.getUsers();
     this.getPosts();
+    this.getAllComment();
   },
   methods: {
     format_date(value) {
@@ -123,7 +125,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data[3]);
           this.allPosts = response.data.reverse();
           this.mergeUsersAndPosts();
         })
@@ -142,6 +144,22 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allUsers = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getAllComment() {
+      axios
+        .get("http://localhost:5000/api/comment", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.comments);
+          this.allComments = response.data.comments;
         })
         .catch((error) => {
           console.log(error);
@@ -182,7 +200,7 @@ export default {
     },
     likePost(id) {
       axios
-        .post("http://localhost:5000/api/post/" + id + "/like", {
+        .post("http://localhost:5000/api/post/" + id, {
           headers: {
             Authorization: "bearer " + this.token,
           },
@@ -212,11 +230,14 @@ export default {
     @include flspa;
     flex-wrap: wrap;
     margin: 40px;
-    width: 39vw;
+    width: 25%;
+    @media (max-width: 1200px) {
+      width: 35%;
+    }
     @media (max-width: 1000px) {
       @include flcecol;
       margin: 20px 5px 10px 5px;
-      width: 100%;
+      width: 90%;
     }
     .container-post {
       @include border(2px, 15px, 0);
@@ -240,6 +261,7 @@ export default {
       }
       #no-info {
         @include flce;
+        text-align: center;
         h1 {
           color: $text-alert;
         }
@@ -281,6 +303,7 @@ export default {
         .link-page {
           @include flspa;
           margin: 15px;
+          flex-wrap: wrap;
           @media (max-width: 1100px) {
             @include flcecol;
           }

@@ -2,7 +2,7 @@
   <div id="homepage">
     <NavBar />
     <navHome />
-    <div id="post">
+    <div id="post" v-if="this.isAdmin != 'True'">
       <div id="gopost" @click="goToPost()">
         <span>Rédiger un nouveau Post</span>
         <fa icon="plus" id="plus" />
@@ -22,6 +22,11 @@ export default {
     NavBar,
     navHome,
     PostsView,
+  },
+  data() {
+    return {
+      isAdmin: localStorage.getItem("isAdmin"),
+    };
   },
   methods: {
     goToPost() {

@@ -31,6 +31,15 @@ exports.deleteComment = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+exports.deleteCommentsByPostId = (req, res, next) => {
+  Comment.find({ postId: req.params.id });
+  Comment.deleteMany({ postId: req.params.id })
+    .then(() =>
+      res.status(200).json({ message: "le commentaire a été supprimé" })
+    )
+    .catch((error) => res.status(400).json({ error }));
+}
+
 exports.updateComment = (req, res, next) => {
   const commentObject = req.file ?
     {

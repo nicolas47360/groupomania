@@ -34,6 +34,7 @@
               class="input-post"
               v-model="title"
               placeholder="votre titre"
+              v-text="post.title"
             />
             <label for="message">Message</label>
             <textarea

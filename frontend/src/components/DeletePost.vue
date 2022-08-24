@@ -27,6 +27,9 @@
             >
               SUPPRIMER
             </button>
+            <span v-if="this.message" class="message-back">
+              {{ this.message }}
+            </span>
           </div>
         </div>
       </section>
@@ -50,11 +53,17 @@
             >
               SUPPRIMER
             </button>
+            <span v-if="this.message" class="message-back">
+              {{ this.message }}
+            </span>
           </div>
         </div>
       </section>
     </article>
   </section>
+  <div v-for="comment in allComments" :key="comment.id">
+    <span v-if="comment.postId == this.postId">{{ comment.postId }}</span>
+  </div>
 </template>
 
 <script>
@@ -68,15 +77,18 @@ export default {
   data() {
     return {
       allPosts: [],
+      allComments: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       postId: localStorage.getItem("postId"),
       isAdmin: localStorage.getItem("isAdmin"),
+      message: "",
     };
   },
 
   created() {
     this.getAllPost();
+    this.getAllComment();
   },
   methods: {
     deletePost(id) {
@@ -87,12 +99,27 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           if (this.postId != null) {
             localStorage.removeItem("postId");
           }
-          alert(response.data.message);
+          this.deleteComments(id);
+          this.message = response.data.message;
           this.$router.push("/home");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteComments(id) {
+      axios
+        .delete("http://localhost:5000/api/comment/all/" + id, {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -108,6 +135,21 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allPosts = response.data.reverse();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getAllComment() {
+      axios
+        .get("http://localhost:5000/api/comment", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allComments = response.data.comments;
         })
         .catch((error) => {
           console.log(error);
@@ -139,8 +181,9 @@ export default {
       font-size: 22px;
     }
     #one-container {
-      @include flce;
+      @include flcecol;
       margin: 40px;
+      width: 50vw;
       .delete-container {
         .delete-message {
           @include flcecol;
@@ -174,7 +217,8 @@ export default {
             cursor: pointer;
             width: 50%;
             @media (max-width: 750px) {
-              width: 75%;
+              width: 95%;
+              font-size: 15px;
             }
           }
         }

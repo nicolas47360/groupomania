@@ -1,5 +1,5 @@
 <template>
-  <div id="nav-home">
+  <div id="nav-home" v-if="this.isAdmin != 'True'">
     <ul id="nav-list">
       <li class="nav-component">
         <router-link to="/profil">Gérer votre profil</router-link>

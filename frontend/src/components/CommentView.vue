@@ -1,42 +1,51 @@
 <template>
   <NavBar />
   <section id="container">
+    <h1 class="comment-switch" v-if="mode == 'create' && this.postId == null">
+      Modifier ou supprimer votre commentaire
+    </h1>
     <section id="container-comment">
       <div class="switch">
         <div class="title-post">
-          <h1 v-if="mode == 'create' && this.postId != null">
+          <h2 v-if="mode == 'create' && this.postId != null">
             Rédiger votre comentaire
-          </h1>
-          <h1 v-if="mode == 'modify'">Modifier votre commentaire</h1>
-          <h1 v-if="mode == 'delete'">Supprimer votre commentaire</h1>
+          </h2>
         </div>
-        <div class="comment-switch" v-if="mode == 'create'">
-          Modifier ou supprimer votre commentaire
-        </div>
-        <button
-          class="switch-button"
-          v-if="mode == 'create'"
-          @click="switchtoModifyComment()"
-        >
-          Modifier votre commentaire
-        </button>
-        <button
-          class="switch-button"
-          v-if="mode == 'create'"
-          @click="switchtoDeleteComment()"
-        >
-          Supprimer votre commentaire
-        </button>
       </div>
+      <section
+        id="delete-modify"
+        v-for="comment in allComments"
+        :key="comment.id"
+      >
+        <div
+          id="container-info"
+          v-if="comment.userId == this.userId && this.postId == null">
+          <div id="container-display">
+            <span id="display-text"> {{ comment.message }} </span>
+            <span id="display-date">
+              Publier le {{ format_date(comment.createdAt) }}
+            </span>
+          </div>
+          <button
+            @click.prevent="deleteComment(comment._id)"
+            v-if="comment.userId == this.userId"
+          >
+            Supprimer le commentaire
+          </button>
+          <button
+            @click.prevent="goToModify(comment._id)"
+            v-if="comment.userId == this.userId"
+          >
+            Modifier le commentaire
+          </button>
+        </div>
+      </section>
       <section id="mode">
         <div id="create-comment" v-if="mode == 'create' && this.postId != null">
           <CreateComment />
         </div>
         <div id="modify-comment" v-if="mode == 'modify'">
           <ModifyComment />
-        </div>
-        <div id="delete-comment" v-if="mode == 'delete'">
-          <DeleteComment />
         </div>
       </section>
     </section>
@@ -45,15 +54,17 @@
 
 <script>
 import axios from "axios";
+import moment from "moment";
 import NavBar from "../components/NavBar.vue";
 import CreateComment from "./CreateComment.vue";
 import ModifyComment from "./ModifyComment.vue";
-import DeleteComment from "./DeleteComment.vue";
+// import DeleteComment from "./DeleteComment.vue";
 
 export default {
   name: "commentView",
   data() {
     return {
+      allComments: [],
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
       postId: localStorage.getItem("postId"),
@@ -62,12 +73,15 @@ export default {
       likes: 0,
     };
   },
+  created() {
+    this.getComments();
+  },
 
   components: {
     NavBar,
     CreateComment,
     ModifyComment,
-    DeleteComment,
+    // DeleteComment,
   },
 
   methods: {
@@ -79,23 +93,48 @@ export default {
       this.mode = "create";
     },
 
-    switchtoDeleteComment() {
-      this.mode = "delete";
-    },
-    deleteComment() {
+    // switchtoDeleteComment() {
+    //   this.mode = "delete";
+    // },
+    deleteComment(id) {
       axios
-        .delete("http://localhost:5000/api/comment/" + this.userId, {
+        .delete("http://localhost:5000/api/comment/" + id, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
           console.log(response);
+          alert("commentaire supprimé");
           this.$router.push("/home");
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    getComments() {
+      axios
+        .get("http://localhost:5000/api/comment", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.allComments = response.data.comments.reverse();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    format_date(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY hh:mm");
+      }
+    },
+    goToModify(commentId) {
+      localStorage.setItem("commentId", commentId);
+      this.$router.push("comment/modify");
     },
   },
 };
@@ -105,36 +144,69 @@ export default {
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
 #container {
-  @include flce;
-  flex-wrap: wrap;
+  @include flcecol;
+  align-items: center;
+  // flex-wrap: wrap;
+  h1 {
+    color: $tertiary-color;
+    font-size: 24px;
+    text-align: center;
+  }
   #container-comment {
-    @include flcecol;
-    // @include border(2px, 15px, 0);
-    align-items: center;
-    width: 50%;
+    @include flspa;
+    flex-wrap: wrap;
     margin: 45px 0 0 0;
-    @media (max-width: 800px) {
-      width: 80%;
+    width: 90vw;
+    @media (max-width: 980px) {
+      @include flcecol;
+      align-items: center;
     }
     .switch {
       @include flcecol;
       align-items: center;
-      h1 {
-        color: $tertiary-color;
-        font-size: 24px;
-      }
       .comment-switch {
         color: $tertiary-color;
         font-weight: bold;
+        font-size: 19px;
       }
-      .switch-button {
-        margin: 20px 0 0 0;
-        @include border(2px, 15px, 5px 15px 5px 15px);
-        font-size: 18px;
-        background-color: $primary-color;
-        color: $secondary-color;
-        @include box-shadow;
-        cursor: pointer;
+    }
+    #delete-modify {
+      margin: 15px 0 15px 0;
+      padding: 15px;
+      width: 30%;
+      @media (max-width: 980px) {
+        width: 80vw;
+      }
+      #container-info {
+        @include border(2px, 15px, 25px);
+        @include flcecol;
+        align-items: center;
+        #container-display {
+          @include flcecol;
+          align-items: center;
+          #display-text {
+            padding: 10px 0 10px 0;
+            text-align: center;
+          }
+          #display-date {
+            padding: 10px 0 10px 0;
+          }
+        }
+        button {
+          @include border(2px, 15px, 0 0 0 15px);
+          background-color: $primary-color;
+          color: $text-color;
+          font-size: 16px;
+          @include box-shadow;
+          margin-top: 20px;
+          padding: 8px 0 8px 0;
+          cursor: pointer;
+          width: 60%;
+          @media (max-width: 600px) {
+            font-size: 14px;
+            width: 80%;
+          }
+        }
       }
     }
     #mode {
@@ -149,4 +221,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

@@ -1,10 +1,12 @@
 <template>
+<NavBar />
   <section id="modify-comment" v-for="comment in allComments" :key="comment.id">
-    <div id="comment-show" v-if="comment.userId == this.userId">
+    <div id="comment-show" v-if="comment._id == this.commentId">
+      <span id="border-comment">Votre commentaire</span>
       <span id="post-message">{{ comment.message }}</span>
       <span>Publier le {{ format_date(comment.createdAt) }}</span>
     </div>
-    <div class="modify-comment" v-if="comment.userId == this.userId">
+    <div class="modify-comment" v-if="comment._id == this.commentId">
       <form class="comment-form" action="">
         <label for="message">Message</label>
         <textarea
@@ -30,13 +32,17 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import NavBar from "./NavBar.vue";
 export default {
   name: "commentView",
+  components: {
+    NavBar,
+  },
   data() {
     return {
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
-      postId: localStorage.getItem("postId"),
+      commentId: localStorage.getItem("commentId"),
       mode: "create",
       message: "",
       likes: 0,
@@ -69,6 +75,7 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
+          localStorage.removeItem("commentId");
           alert(response.data.message);
           this.$router.push("/home");
         })
@@ -99,13 +106,18 @@ export default {
 @import "../styles/utils/__variables.scss";
 #modify-comment {
   @include flcecol;
-  margin: 15px 0 30px 0;
-  width: 60vw;
+  align-items: center;
+  margin-top: 20px;
   #comment-show {
     @include border(2px, 15px, 15px);
     margin: 15px 0 15px 0;
     @include flcecol;
     align-items: center;
+    #border-comment {
+      color: $primary-color;
+      font-size: 18px;
+      font-weight: bold;
+    }
     #post-message {
       font-size: 18px;
       color: $tertiary-color;
