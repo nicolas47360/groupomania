@@ -1,5 +1,5 @@
 <template>
-<NavBar />
+  <NavBar />
   <section id="modify-comment" v-for="comment in allComments" :key="comment.id">
     <div id="comment-show" v-if="comment._id == this.commentId">
       <span id="border-comment">Votre commentaire</span>
@@ -113,6 +113,7 @@ export default {
     margin: 15px 0 15px 0;
     @include flcecol;
     align-items: center;
+    width: 60vw;
     #border-comment {
       color: $primary-color;
       font-size: 18px;
@@ -127,11 +128,13 @@ export default {
   .comment-form {
     @include flcecol;
     margin: 20px;
-    align-items: center; 
+    align-items: center;
+    width: 90vw;
     .input-comment {
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
+      width: 80%;
       @media (max-width: 550px) {
         width: 90%;
       }
@@ -145,7 +148,10 @@ export default {
       margin-top: 20px;
       padding: 8px 0 8px 0;
       cursor: pointer;
-      width: 80%;
+      width: 40%;
+      @media (max-width: 550px) {
+        width: 70%;
+      }
     }
   }
 }

@@ -12,8 +12,8 @@
         >
         </textarea>
         <button
-          id="comment-button" 
-          type="submit" 
+          id="comment-button"
+          type="submit"
           @click.prevent="createComment()"
         >
           Publier votre commentaire
@@ -70,10 +70,12 @@ export default {
 @import "../styles/utils/__variables.scss";
 #create-container {
   @include flce;
+  // width: 60vw;
   .comment-form {
     @include flcecol;
     align-items: center;
     margin: 20px 0 20px 0;
+    width: 80vw;
     label {
       color: $primary-color;
       font-size: 18px;
@@ -84,6 +86,7 @@ export default {
       margin: 15px 0 15px 0;
       @include border(2px, 15px, 0 0 0 15px);
       font-size: 18px;
+      width: 80%;
       @media (max-width: 550px) {
         width: 90%;
       }
@@ -97,10 +100,11 @@ export default {
       margin-top: 20px;
       padding: 8px 0 8px 0;
       cursor: pointer;
-      width: 70%;
+      width: 40%;
+      @media (max-width: 550px) {
+        width: 70%;
+      }
     }
   }
 }
-
-
 </style>

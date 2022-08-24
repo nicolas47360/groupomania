@@ -4,14 +4,18 @@
     <h1 class="comment-switch" v-if="mode == 'create' && this.postId == null">
       Modifier ou supprimer votre commentaire
     </h1>
+    <h1 v-if="mode == 'create' && this.postId != null">
+      Rédiger votre comentaire
+    </h1>
     <section id="container-comment">
-      <div class="switch">
-        <div class="title-post">
-          <h2 v-if="mode == 'create' && this.postId != null">
-            Rédiger votre comentaire
-          </h2>
+      <section id="mode">
+        <div id="create-comment" v-if="mode == 'create' && this.postId != null">
+          <CreateComment />
         </div>
-      </div>
+        <div id="modify-comment" v-if="mode == 'modify'">
+          <ModifyComment />
+        </div>
+      </section>
       <section
         id="delete-modify"
         v-for="comment in allComments"
@@ -19,7 +23,8 @@
       >
         <div
           id="container-info"
-          v-if="comment.userId == this.userId && this.postId == null">
+          v-if="comment.userId == this.userId && this.postId == null"
+        >
           <div id="container-display">
             <span id="display-text"> {{ comment.message }} </span>
             <span id="display-date">
@@ -38,14 +43,6 @@
           >
             Modifier le commentaire
           </button>
-        </div>
-      </section>
-      <section id="mode">
-        <div id="create-comment" v-if="mode == 'create' && this.postId != null">
-          <CreateComment />
-        </div>
-        <div id="modify-comment" v-if="mode == 'modify'">
-          <ModifyComment />
         </div>
       </section>
     </section>
@@ -151,24 +148,16 @@ export default {
     color: $tertiary-color;
     font-size: 24px;
     text-align: center;
+    margin: 45px 0 0 25px;
   }
   #container-comment {
     @include flspa;
     flex-wrap: wrap;
-    margin: 45px 0 0 0;
+    margin: 2px 0 0 0;
     width: 90vw;
     @media (max-width: 980px) {
       @include flcecol;
       align-items: center;
-    }
-    .switch {
-      @include flcecol;
-      align-items: center;
-      .comment-switch {
-        color: $tertiary-color;
-        font-weight: bold;
-        font-size: 19px;
-      }
     }
     #delete-modify {
       margin: 15px 0 15px 0;
