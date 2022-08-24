@@ -96,11 +96,9 @@ export default {
       display: flex;
       flex-wrap: wrap;
       margin: 15px 0 15px 0;
-      @include border(2px, 15px, 0 0 0 15px);
+      @include border(2px, 15px, 6px);
       font-size: 18px;
-      @media (max-width: 800px) {
-        width: 80%;
-      }
+      width: 70vw;
     }
     #post-button {
       @include border(2px, 15px, 0 0 0 15px);

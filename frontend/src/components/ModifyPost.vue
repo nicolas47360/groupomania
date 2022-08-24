@@ -1,8 +1,8 @@
 <template>
   <NavBarVue />
   <section id="modify">
-    <span class="delete-text">Modifier vos Posts</span>
-    <article class="container" v-if="this.postId != null" >
+    <h1 class="delete-text">Modifier votre Post</h1>
+    <article class="container">
       <div id="modify-one" v-for="post in allPosts" :key="post.id">
         <div
           class="container-modify"
@@ -54,56 +54,6 @@
               ref="image"
               @change="filePictureToUpload()"
               :placeholder="post.imageUrl"
-            />
-            <button
-              id="modify-button"
-              type="submit"
-              @click.prevent="modifyPost(post._id)"
-            >
-              Modifier voter post
-            </button>
-          </form>
-        </div>
-      </div>
-    </article>
-    <article class="container" v-else>
-      <div id="modify-all" v-for="post in allPosts" :key="post.id">
-        <div class="container-modify" v-if="post.userId == this.userId">
-          <div class="container-info">
-            <span id="title"> {{ post.title }}</span>
-            <span id="text"> {{ post.message }} </span>
-            <img
-              class="modify-picture"
-              v-if="post.imageUrl != null"
-              :src="post.imageUrl"
-              alt="photo"
-            />
-          </div>
-          <form action="" class="modify-form" v-if="post.userId == this.userId">
-            <label for="titre">Titre</label>
-            <input
-              type="text"
-              class="modify-post"
-              v-model="title"
-              placeholder="Votre titre"
-            />
-            <label for="message">Message</label>
-            <textarea
-              class="modify-post"
-              cols="30"
-              rows="10"
-              :placeholder="post.message"
-              v-model="message"
-            >
-            </textarea>
-            <label for="image">Image</label>
-            <input
-              class="modify-post"
-              type="file"
-              name="image"
-              accept="image/*"
-              ref="image"
-              @change="filePictureToUpload()"
             />
             <button
               id="modify-button"
@@ -261,78 +211,6 @@ export default {
             @include border(2px, 15px, 0 0 0 15px);
             font-size: 18px;
             width: 90%;
-          }
-          #modify-button {
-            @include border(2px, 15px, 0 0 0 15px);
-            background-color: $primary-color;
-            color: $text-color;
-            font-size: 18px;
-            @include box-shadow;
-            margin-top: 20px;
-            padding: 8px 0 8px 0;
-            cursor: pointer;
-          }
-        }
-      }
-    }
-    #modify-all {
-      @include flcecol;
-      width: 70vw;
-      @media (max-width: 900px) {
-        margin: 0 15px 0 15px;
-        @include flcecol;
-        width: 80vw;
-      }
-      .container-modify {
-        @include border(2px, 15px, 0);
-        margin: 15px;
-        @include flce;
-        @media (max-width: 900px) {
-          @include flcecol;
-        }
-        .container-info {
-          @include flcecol;
-          align-items: center;
-          @include border(2px, 15px, 0);
-          margin: 15px;
-          width: 35%;
-          @media (max-width: 900px) {
-            width: auto;
-          }
-          #title {
-            padding: 15px 10px 30px 10px;
-            color: $primary-color;
-            font-weight: bold;
-          }
-          #text {
-            padding: 15px;
-            font-size: 18px;
-            color: $tertiary-color;
-          }
-          .modify-picture {
-            width: 60%;
-            margin-bottom: 20px;
-            object-fit: cover;
-            padding-top: 40px;
-          }
-        }
-        .modify-form {
-          @include flcecol;
-          margin: 20px;
-          align-items: center;
-          width: 60%;
-          @media (max-width: 900px) {
-            width: 90%;
-            margin: 10px;
-          }
-          label {
-            color: $primary-color;
-          }
-          .modify-post {
-            margin: 15px 0 15px 0;
-            @include border(2px, 15px, 0 0 0 15px);
-            font-size: 18px;
-            width: 80%;
           }
           #modify-button {
             @include border(2px, 15px, 0 0 0 15px);

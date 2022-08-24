@@ -55,7 +55,6 @@ import moment from "moment";
 import NavBar from "../components/NavBar.vue";
 import CreateComment from "./CreateComment.vue";
 import ModifyComment from "./ModifyComment.vue";
-// import DeleteComment from "./DeleteComment.vue";
 
 export default {
   name: "commentView",
@@ -78,7 +77,6 @@ export default {
     NavBar,
     CreateComment,
     ModifyComment,
-    // DeleteComment,
   },
 
   methods: {
@@ -89,10 +87,6 @@ export default {
     switchtoCreateComment() {
       this.mode = "create";
     },
-
-    // switchtoDeleteComment() {
-    //   this.mode = "delete";
-    // },
     deleteComment(id) {
       axios
         .delete("http://localhost:5000/api/comment/" + id, {
@@ -145,7 +139,7 @@ export default {
   align-items: center;
   // flex-wrap: wrap;
   h1 {
-    color: $tertiary-color;
+    color: $primary-color;
     font-size: 24px;
     text-align: center;
     margin: 45px 0 0 25px;
@@ -170,6 +164,7 @@ export default {
         @include border(2px, 15px, 25px);
         @include flcecol;
         align-items: center;
+        overflow: auto;
         #container-display {
           @include flcecol;
           align-items: center;

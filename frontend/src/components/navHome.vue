@@ -5,7 +5,7 @@
         <router-link to="/profil">Gérer votre profil</router-link>
       </li>
       <li class="nav-component" v-if="this.userId != null">
-        <router-link to="/post">Gérer vos posts</router-link>
+        <router-link to="/post/delete">Gérer vos posts</router-link>
       </li>
       <li class="nav-component" v-if="this.userId != null">
         <router-link to="/comment">Gérer vos commentaires</router-link>

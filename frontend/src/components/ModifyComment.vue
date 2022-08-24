@@ -114,6 +114,7 @@ export default {
     @include flcecol;
     align-items: center;
     width: 60vw;
+    overflow: auto;
     #border-comment {
       color: $primary-color;
       font-size: 18px;
@@ -123,6 +124,8 @@ export default {
       font-size: 18px;
       color: $tertiary-color;
       padding: 15px 0 15px 0;
+      width: 80%;
+      text-align: center;
     }
   }
   .comment-form {
