@@ -69,13 +69,8 @@
           </div>
         </section>
       </section>
-      
-      
     </article>
   </section>
-  <!-- <div v-for="comment in allComments" :key="comment.id">
-    <span v-if="comment.postId == this.postId">{{ comment.postId }}</span>
-  </div> -->
 </template>
 
 <script>
@@ -243,6 +238,7 @@ export default {
       color: $text-alert;
       font-weight: bold;
       font-size: 22px;
+      text-align: center;
     }
     #big-container {
       @include flspa;
@@ -285,13 +281,14 @@ export default {
               padding: 8px 0 8px 0;
               cursor: pointer;
               width: 50%;
+              @media (max-width: 450px) {
+                width: 70%;
+              }
             }
           }
         }
       }
     }
-    
-    
   }
 }
 </style>
