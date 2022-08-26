@@ -198,9 +198,10 @@ export default {
       localStorage.setItem("postId", postId);
       this.$router.push("/comment");
     },
-    likePost(id) {
+    likePost(postId) {
+      console.log(postId);
       axios
-        .post("http://localhost:5000/api/post/" + id, {
+        .post("http://localhost:5000/api/post/" + postId, {
           headers: {
             Authorization: "bearer " + this.token,
           },

@@ -22,52 +22,52 @@
                 <span>Prénom: {{ user.lastname }}</span>
                 <img :src="user.imageUrl" alt="photo de profil" />
               </div>
-            </div>
-            <div id="container-form">
-              <form @submit.prevent="modifyProfil" class="profil-form">
-                <label for="pseudo">Pseudo</label>
-                <input
-                  class="input-profil"
-                  v-model="pseudo"
-                  type="text"
-                  placeholder="Pseudo"
-                  required
-                />
-                <label for="firstname">Nom</label>
-                <input
-                  class="input-profil"
-                  v-model="firstname"
-                  type="text"
-                  placeholder="Nom de Famille"
-                  required
-                />
-                <label for="lastname">Prénom</label>
-                <input
-                  class="input-profil"
-                  v-model="lastname"
-                  type="text"
-                  placeholder="Prénom"
-                  required
-                />
-                <label for="image">Image de profil</label>
-                <input
-                  class="input-profil"
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  ref="image"
-                  @change="filePictureToUpload"
-                  id="image"
-                />
-                <button id="profil-button" type="submit">MODIFIER</button>
-                <button
-                  id="profil-button"
-                  type="submit"
-                  @click.prevent="deleteAccount()"
-                >
-                  SUPPRIMER
-                </button>
-              </form>
+              <div id="container-form" v-if="user.userId === this.userId">
+                <form @submit.prevent="modifyProfil" class="profil-form">
+                  <label for="pseudo">Pseudo</label>
+                  <input
+                    class="input-profil"
+                    v-model="pseudo"
+                    type="text"
+                    :placeholder="user.pseudo"
+                    required
+                  />
+                  <label for="firstname">Nom</label>
+                  <input
+                    class="input-profil"
+                    v-model="firstname"
+                    type="text"
+                    :placeholder="user.firstname"
+                    required
+                  />
+                  <label for="lastname">Prénom</label>
+                  <input
+                    class="input-profil"
+                    v-model="lastname"
+                    type="text"
+                    :placeholder="user.lastname"
+                    required
+                  />
+                  <label for="image">Image de profil</label>
+                  <input
+                    class="input-profil"
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    ref="image"
+                    @change="filePictureToUpload"
+                    id="image"
+                  />
+                  <button id="profil-button" type="submit">MODIFIER</button>
+                  <button
+                    id="profil-button"
+                    type="submit"
+                    @click.prevent="deleteAccount()"
+                  >
+                    SUPPRIMER
+                  </button>
+                </form>
+              </div>
             </div>
           </section>
         </div>
@@ -83,9 +83,9 @@ import NavBar from "../components/NavBar.vue";
 import CreateProfil from "../components/CreateProfil.vue";
 export default {
   name: "profil",
-  components:{
+  components: {
     NavBar,
-    CreateProfil,    
+    CreateProfil,
   },
   data() {
     return {
@@ -94,20 +94,23 @@ export default {
       user: "",
       mode: "create",
       userId: localStorage.getItem("userId"),
-      token: localStorage.getItem("token"),      
-      email: localStorage.getItem("email"), 
+      token: localStorage.getItem("token"),
+      email: localStorage.getItem("email"),
+      pseudo: "",
+      lastname: "",
+      firstname: "",
     };
-}, 
-created() {
-  this.getUser();
-  this.getUsers();
-}, 
-  
-  methods: { 
-    switchtoCreateProfil(){
-      this.mode = "create"
+  },
+  created() {
+    this.getUser();
+    this.getUsers();
+  },
+
+  methods: {
+    switchtoCreateProfil() {
+      this.mode = "create";
     },
-   
+
     getUser() {
       axios
         .get("http://localhost:5000/api/user/" + this.userId, {
@@ -117,8 +120,7 @@ created() {
         })
         .then((response) => {
           console.log(response.data);
-          this.userprofil = response.data
-          
+          this.userprofil = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -165,7 +167,7 @@ created() {
           console.log(error);
         });
     },
-        deleteProfil() {
+    deleteProfil() {
       axios
         .delete("http://localhost:5000/api/user/" + this.userId, {
           headers: {
@@ -196,90 +198,89 @@ created() {
         .catch((error) => {
           console.log(error.data);
         });
-    },    
-    
+    },
   },
-}
-
-
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
-#global {  
+#global {
   @include flcecol;
-  align-items: center; 
-  h1{
+  align-items: center;
+  h1 {
     color: $primary-color;
     text-align: center;
-  } 
-  #container {   
+  }
+  #container {
     @include border(2px, 15px, 0);
     margin: 35px 0 35px 0;
     @media (max-width: 750px) {
       width: 80vw;
-      @include flcecol;    
-    }  
-  
-  #profil {
-   @include flcecol;
-  }
-  #modify-container {
-  @include flspa;
-  @media (max-width: 750px) {
-    @include flcecol;
-  }
-  #container-user {
-    @include flcecol;
-    #user-info {
       @include flcecol;
-      align-items: center;
-      span {
-        font-size: 18px;
-        color: $tertiary-color;
-        margin: 20px 0 20px 0;
-      }
-      img {
-        width: 55%;
-        margin-top: 50px;
-      }
     }
-  }
-  #container-form {
-    width: 80%;
-    @media (max-width: 750px) {
-      width: auto;
-    }
-    .profil-form {
-      @include flcecol;
-      margin: 20px;
-      align-items: center;
-      label {
-        color: $primary-color;
-        font-size: 18px;
-      }
-      .input-profil {
-        margin: 15px 0 15px 0;
-        @include border(2px, 15px, 0 0 0 15px);
-        font-size: 20px;
-        width: 100%;
-      }
-      #profil-button {
-        @include border(2px, 15px, 0 0 0 15px);
-        background-color: $primary-color;
-        color: $text-color;
-        font-size: 18px;
-        @include box-shadow;
-        margin: 20px 0 20px 0;
-        padding: 8px 0 8px 0;
-        cursor: pointer;
-        width: 60%;
-      }
-    }
-  }
-}
-}
-}
 
+    #profil {
+      @include flcecol;
+    }
+    #modify-container {
+      @include flspa;
+      @media (max-width: 750px) {
+        @include flcecol;
+      }
+      #container-user {
+        @include flspa;
+        @media (max-width: 750px) {
+          @include flcecol;
+        }
+        #user-info {
+          @include flcecol;
+          align-items: center;
+          span {
+            font-size: 18px;
+            color: $tertiary-color;
+            margin: 20px 0 20px 0;
+          }
+          img {
+            width: 55%;
+            margin-top: 50px;
+          }
+        }
+      }
+      #container-form {
+        width: 80%;
+        @media (max-width: 750px) {
+          width: auto;
+        }
+        .profil-form {
+          @include flcecol;
+          margin: 20px;
+          align-items: center;
+          label {
+            color: $primary-color;
+            font-size: 18px;
+          }
+          .input-profil {
+            margin: 15px 0 15px 0;
+            @include border(2px, 15px, 0 0 0 15px);
+            font-size: 20px;
+            width: 100%;
+          }
+          #profil-button {
+            @include border(2px, 15px, 0 0 0 15px);
+            background-color: $primary-color;
+            color: $text-color;
+            font-size: 18px;
+            @include box-shadow;
+            margin: 20px 0 20px 0;
+            padding: 8px 0 8px 0;
+            cursor: pointer;
+            width: 60%;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

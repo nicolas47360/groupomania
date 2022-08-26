@@ -164,7 +164,7 @@ export default {
     },
     goToModify(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("post/modify");
+      this.$router.replace({ path: "/post/modify" });
     },
   },
 };

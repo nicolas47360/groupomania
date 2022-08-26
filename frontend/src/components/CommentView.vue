@@ -8,15 +8,15 @@
       Rédiger votre comentaire
     </h1>
     <section id="container-comment">
-      <section id="mode">
+      <article id="mode">
         <div id="create-comment" v-if="mode == 'create' && this.postId != null">
           <CreateComment />
         </div>
         <div id="modify-comment" v-if="mode == 'modify'">
           <ModifyComment />
         </div>
-      </section>
-      <section
+      </article>
+      <article
         id="delete-modify"
         v-for="comment in allComments"
         :key="comment.id"
@@ -44,7 +44,7 @@
             Modifier le commentaire
           </button>
         </div>
-      </section>
+      </article>
     </section>
   </section>
 </template>

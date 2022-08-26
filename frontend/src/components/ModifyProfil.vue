@@ -7,45 +7,46 @@
         <span>Prénom: {{ user.lastname }}</span>
         <img :src="user.imageUrl" alt="photo de profil" />
       </div>
-    </div>
-    <div id="container-form">
-      <form @submit.prevent="modifyProfil" class="profil-form">
-        <label for="pseudo">Pseudo</label>
-        <input
-          class="input-profil"
-          v-model="pseudo"
-          type="text"
-          placeholder="Pseudo"
-          required
-        />
-        <label for="firstname">Nom</label>
-        <input
-          class="input-profil"
-          v-model="firstname"
-          type="text"
-          placeholder="Nom de Famille"
-          required
-        />
-        <label for="lastname">Prénom</label>
-        <input
-          class="input-profil"
-          v-model="lastname"
-          type="text"
-          placeholder="Prénom"
-          required
-        />
-        <label for="image">Image de profil</label>
-        <input
-          class="input-profil"
-          type="file"
-          name="image"
-          accept="image/*"
-          ref="image"
-          @change="filePictureToUpload"
-          id="image"
-        />
-        <button id="profil-button" type="submit">Modifier votre profil</button>
-      </form>
+      <div id="container-form">
+        <form @submit.prevent="modifyProfil" class="profil-form">
+          <label for="pseudo">Pseudo</label>
+          <input
+            class="input-profil"
+            v-model="pseudo"
+            type="text"
+            
+            required
+            :v-text="user.pseudo"
+          />
+          <label for="firstname">Nom</label>
+          <input
+            class="input-profil"
+            v-model="firstname"
+            type="text"
+            placeholder="Nom de Famille"
+            required
+          />
+          <label for="lastname">Prénom</label>
+          <input
+            class="input-profil"
+            v-model="lastname"
+            type="text"
+            placeholder="Prénom"
+            required
+          />
+          <label for="image">Image de profil</label>
+          <input
+            class="input-profil"
+            type="file"
+            name="image"
+            accept="image/*"
+            ref="image"
+            @change="filePictureToUpload"
+            id="image"
+          />
+          <button id="profil-button" type="submit">Modifier votre profil</button>
+        </form>
+      </div>
     </div>
   </section>
 </template>
