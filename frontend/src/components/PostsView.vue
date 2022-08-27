@@ -42,7 +42,10 @@
           <fa icon="thumbs-up" @click.prevent="likePost(post._id)" />
         </div>
         <div class="link-comment">
-          <div class="link-page" v-if="this.isAdmin != 'True'">
+          <div
+            class="link-page"
+            v-if="this.isAdmin != 'True' && post.pseudo != null"
+          >
             <button
               class="button-comment"
               @click.prevent="goTocomment(post._id)"
@@ -108,16 +111,17 @@ export default {
   },
   created() {
     this.getUsers();
-    this.getPosts();
+    this.getPostsUser();
     this.getAllComment();
   },
+
   methods: {
     format_date(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
-    getPosts() {
+    getPostsUser() {
       axios
         .get("http://localhost:5000/api/post", {
           headers: {
@@ -125,7 +129,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data[3]);
+          console.log(response.data);
           this.allPosts = response.data.reverse();
           this.mergeUsersAndPosts();
         })
@@ -174,6 +178,15 @@ export default {
             post.lastname = user.lastname;
             post.userImageUrl = user.imageUrl;
             post.firstname = user.firstname;
+          }
+        });
+      });
+    },
+    mergePostsAndComments() {
+      this.allPosts.forEach((post) => {
+        this.allComments.forEach((comment) => {
+          if (post._id == comment.postId) {
+            post.postId == comment.postId;
           }
         });
       });

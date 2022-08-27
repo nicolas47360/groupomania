@@ -42,6 +42,7 @@ export default {
     return {
       allComments: [],
       allPosts: [],
+      postComments: [],
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       postId: localStorage.getItem("postId"),
@@ -67,7 +68,6 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allComments = response.data.comments;
-          this.mergeUsersAndPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -83,21 +83,10 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allPosts = response.data.reverse();
-         
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-
-    mergePostsAndComments() {
-      this.allComments.forEach((comment) => {
-        this.allPosts.forEach((post) => {
-          if (comment.postId == post._id) {
-            comment.message = post.message;
-          }
-        });
-      });
     },
   },
 };
