@@ -39,12 +39,12 @@
         </div>
         <div id="time-like">
           <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
-          <div v-for="like in allLikes" :key="like.id">
+          <div>
             <fa
               id="fa-icon-like"
               icon="thumbs-up"
               @click.prevent="likePost(post._id)"
-              v-if="this.userId == like"
+              v-if="post.likes > 0"
             />
             <fa
               id="fa-icon-none"
@@ -247,7 +247,7 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          location.reload();
+          this.$router.go(0);
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -349,9 +349,13 @@ export default {
           margin-right: 5px;
           color: $primary-color;
         }
-        #fa-icon-none {
+        #fa-icon-none{
           margin-right: 5px;
           color: $tertiary-color;
+        }
+        #fa-icon-like:active {
+          margin-right: 5px;
+          color: $primary-color;
         }
       }
       .link-comment {
