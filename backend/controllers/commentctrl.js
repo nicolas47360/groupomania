@@ -22,7 +22,6 @@ exports.createComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
-  console.log(req.params.id);
   Comment.findOne({ _id: req.params.id });
   Comment.deleteOne({ _id: req.params.id })
     .then(() =>

@@ -37,9 +37,23 @@
           />
           <img v-else id="none" />
         </div>
-        <div>
+        <div id="time-like">
           <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
-          <fa icon="thumbs-up" @click.prevent="likePost(post._id)" />
+          <div v-for="like in allLikes" :key="like.id">
+            <fa
+              id="fa-icon-like"
+              icon="thumbs-up"
+              @click.prevent="likePost(post._id)"
+              v-if="this.userId == like"
+            />
+            <fa
+              id="fa-icon-none"
+              icon="thumbs-up"
+              @click.prevent="likePost(post._id)"
+              v-else
+            />
+            <span v-if="post.likes > 0"> {{ post.likes }}</span>
+          </div>
         </div>
         <div class="link-comment">
           <div
@@ -103,10 +117,15 @@ export default {
       allPosts: [],
       allUsers: [],
       allComments: [],
+      allLikes: {},
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       isAdmin: localStorage.getItem("isAdmin"),
       postId: "",
+      likes: {
+        type: Number,
+        default: 0,
+      },
     };
   },
   created() {
@@ -131,6 +150,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.allPosts = response.data.reverse();
+          this.likeUserId();
           this.mergeUsersAndPosts();
         })
         .catch((error) => {
@@ -146,7 +166,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           this.allUsers = response.data;
         })
         .catch((error) => {
@@ -214,18 +233,32 @@ export default {
     likePost(postId) {
       console.log(postId);
       axios
-        .post("http://localhost:5000/api/post/" + postId, {
-          headers: {
-            Authorization: "bearer " + this.token,
+        .put(
+          "http://localhost:5000/api/post/" + postId + "/like",
+          {
+            likes: 1,
+            userId: this.userId,
           },
-        })
+          {
+            headers: {
+              Authorization: "bearer " + this.token,
+            },
+          }
+        )
         .then((response) => {
           console.log(response.data);
+          location.reload();
         })
         .catch((error) => {
           console.log(error.response.data);
         });
     },
+    likeUserId() {
+      this.allPosts.forEach((post) => {
+        this.allLikes = post.usersLiked;
+        console.log(this.allLikes);
+      })
+    }
   },
 };
 </script>
@@ -305,8 +338,21 @@ export default {
           padding-top: 15px;
         }
       }
-      #date {
-        padding: 8px;
+      #time-like {
+        @include flspa;
+        align-items: center;
+        #date {
+          padding: 8px;
+          color: $tertiary-color;
+        }
+        #fa-icon-like {
+          margin-right: 5px;
+          color: $primary-color;
+        }
+        #fa-icon-none {
+          margin-right: 5px;
+          color: $tertiary-color;
+        }
       }
       .link-comment {
         @include flsparo;

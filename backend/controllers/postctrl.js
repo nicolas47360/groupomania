@@ -17,7 +17,6 @@ exports.getPost = (req, res, next) => {
 }
 
 exports.updatePost = (req, res, next) => {
-  console.log(req)
   const postObject = req.file ?
     {
       ...req.body,
@@ -30,7 +29,6 @@ exports.updatePost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  console.log(req.params.id)
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       console.log(post);
@@ -79,26 +77,29 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.likePost = (req, res, next) => {
-  console.log(req.params);
+  console.log(req.params.id)
+  console.log(req.body.likes);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (req.body.like === 1 && !post.usersLiked.includes(req.body.userId)) {
+      if (req.body.likes === 1 && !post.usersLiked.includes(req.body.userId)) {
         Post.updateOne({ _id: req.params.id },
           {
             $inc: { likes: 1 },
             $push: { usersLiked: req.body.userId }
-          })
-          .then(() => res.status(201).json({ message: " comment like" }))
+          }
+
+        )
+          .then(() => res.status(201).json({ message: " post est like" }))
           .catch(error => res.status(400).json({ error }))
       }
 
-      else if (req.body.like === 0 && post.usersLiked.includes(req.body.userId)) {
+      else if (req.body.likes !== 0 && post.usersLiked.includes(req.body.userId)) {
         Post.updateOne({ _id: req.params.id },
           {
             $inc: { likes: -1 },
             $pull: { usersLiked: req.body.userId }
           })
-          .then(() => res.status(201).json({ message: " comment dislike" }))
+          .then(() => res.status(201).json({ message: " post est dislike" }))
           .catch(error => res.status(400).json({ error }))
       }
     })

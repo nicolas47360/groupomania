@@ -9,7 +9,6 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  console.log(req.params);
   User.findOne({ userId: req.params.id })
     .then((user) => {
       res.status(200).json(user)
@@ -54,7 +53,6 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  console.log(req.params.id);
   User.findOne({ userId: req.params.id })
     .then((user) => {
       const filename = user.imageUrl.split("/images")[1];
