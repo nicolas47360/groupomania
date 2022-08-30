@@ -1,11 +1,15 @@
 const Comment = require("../models/comment_model");
-
-exports.readComment = (req, res, next) => {
+/*
+allows you to get all comments in the DB 
+*/
+exports.getAllComments = (req, res, next) => {
   Comment.find()
     .then((comments) => res.status(200).json({ comments }))
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to create a comment in the DB 
+*/
 exports.createComment = (req, res, next) => {
   const commentObject = req.body;
   delete commentObject._id;
@@ -20,7 +24,9 @@ exports.createComment = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-
+/*
+allows you to delete a like a comment in the DB by the object id
+*/
 exports.deleteComment = (req, res, next) => {
   Comment.findOne({ _id: req.params.id });
   Comment.deleteOne({ _id: req.params.id })
@@ -29,7 +35,9 @@ exports.deleteComment = (req, res, next) => {
     )
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to delete a like a comment in the DB by the postId
+*/
 exports.deleteCommentsByPostId = (req, res, next) => {
   Comment.find({ postId: req.params.id });
   Comment.deleteMany({ postId: req.params.id })
@@ -38,7 +46,9 @@ exports.deleteCommentsByPostId = (req, res, next) => {
     )
     .catch((error) => res.status(400).json({ error }));
 }
-
+/*
+allows you to update a comment in the DB by the object id
+*/
 exports.updateComment = (req, res, next) => {
   const commentObject = req.file ?
     {
@@ -49,7 +59,9 @@ exports.updateComment = (req, res, next) => {
     .then(() => res.status(200).json({ message: "le commentaire a été mis à jour" }))
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to put a like a comment in the DB by the object id
+*/
 exports.likeComment = (req, res, next) => {
   Comment.findOne({ _id: req.params.id })
     .then((comment) => {

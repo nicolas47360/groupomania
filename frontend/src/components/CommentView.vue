@@ -87,6 +87,9 @@ export default {
     switchtoCreateComment() {
       this.mode = "create";
     },
+    /*
+allows you to delete comment with the comment _id in the DB 
+*/
     deleteComment(id) {
       axios
         .delete("http://localhost:5000/api/comment/" + id, {
@@ -103,6 +106,9 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to get all comments in the DB and return a reverse array allComments
+*/
     getComments() {
       axios
         .get("http://localhost:5000/api/comment", {
@@ -118,11 +124,17 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to transform the format date for the display
+*/
     format_date(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
+    /*
+allows you to go to the comment modify page and send the item commentId in the localstorage
+*/
     goToModify(commentId) {
       localStorage.setItem("commentId", commentId);
       this.$router.push("comment/modify");

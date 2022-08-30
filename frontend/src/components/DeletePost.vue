@@ -98,6 +98,10 @@ export default {
     this.getAllComment();
   },
   methods: {
+    /*
+allows you to delete a post and the all comments associte to the post in the DB by the post _id,
+return in to homepage and delete the item postId in the localstorage
+*/
     deletePost(id) {
       axios
         .delete("http://localhost:5000/api/post/" + id, {
@@ -117,7 +121,9 @@ export default {
           console.log(error);
         });
     },
-
+    /*
+allows you to delete all comments for a post in the DB by the post _id,
+*/
     deleteComments(id) {
       axios
         .delete("http://localhost:5000/api/comment/all/" + id, {
@@ -132,6 +138,9 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to get all posts in the DB and return a reverse array allPosts
+*/
     getAllPost() {
       axios
         .get("http://localhost:5000/api/post", {
@@ -147,6 +156,9 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to get all comments in the DB and return a array allcomments
+*/
     getAllComment() {
       axios
         .get("http://localhost:5000/api/comment", {
@@ -162,6 +174,10 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to go to the post modify page
+ send the item  postId in the localstorage and return to the post modify page
+*/
     goToModify(postId) {
       localStorage.setItem("postId", postId);
       this.$router.replace({ path: "/post/modify" });

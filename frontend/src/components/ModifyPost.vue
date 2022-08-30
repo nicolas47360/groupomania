@@ -96,6 +96,10 @@ export default {
     this.getAllPost();
   },
   methods: {
+    /*
+allows you to update the post by the post _id
+delete item postId if his exist in the localstorage and return in to the homepage
+*/
     modifyPost(postId) {
       const formData = new FormData();
       if (this.FILE != null) {
@@ -123,11 +127,17 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to upload the picture
+*/
     filePictureToUpload(e) {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
     },
+    /*
+allows you to get all posts in DB and return a reverse array allPosts
+*/
     getAllPost() {
       axios
         .get("http://localhost:5000/api/post", {

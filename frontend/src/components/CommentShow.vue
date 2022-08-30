@@ -53,11 +53,17 @@ export default {
     this.getPosts();
   },
   methods: {
+    /*
+allows you to transform the format date for the display
+*/
     format_date(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
+    /*
+allows you to get all comments in the DB and return a array allComments
+*/
     getComments() {
       axios
         .get("http://localhost:5000/api/comment", {
@@ -73,6 +79,9 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to get all posts in the DB and return a array allPosts
+*/
     getPosts() {
       axios
         .get("http://localhost:5000/api/post", {

@@ -4,7 +4,7 @@ const userCtrl = require("../controllers/userctrl");
 const auth = require("../middelware/authuser");
 const multer = require("../middelware/multerconfig");
 
-router.get("/", auth, userCtrl.getAllUser);
+router.get("/", auth, userCtrl.getAllUsers);
 router.get("/:id", auth, userCtrl.getUser);
 router.post("/", auth, multer, userCtrl.createUser);
 router.put("/:id", auth, multer, userCtrl.updateUser);

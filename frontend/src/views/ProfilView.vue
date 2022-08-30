@@ -126,6 +126,10 @@ export default {
           console.log(error);
         });
     },
+    /*
+allows you to update a profil by the userId
+return to the homepage
+*/ 
     modifyProfil() {
       const formData = new FormData();
       if (this.FILE != null) {
@@ -147,11 +151,17 @@ export default {
           this.$router.push("/home");
         });
     },
+    /*
+allows you to upload a picture
+*/
     filePictureToUpload(e) {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
     },
+      /*
+allows you to get all users in the DB and return a array allUsers
+*/  
     getUsers() {
       axios
         .get("http://localhost:5000/api/user", {
@@ -167,6 +177,9 @@ export default {
           console.log(error);
         });
     },
+      /*
+allows you to delete profil by the userId
+*/  
     deleteProfil() {
       axios
         .delete("http://localhost:5000/api/user/" + this.userId, {
@@ -181,6 +194,10 @@ export default {
           console.log(error.data);
         });
     },
+    /*
+allows you delete the account and the profil user in a same time
+clear the localstorage and return to the account page
+*/
     deleteAccount() {
       axios
         .delete("http://localhost:5000/api/auth/delete/" + this.email, {

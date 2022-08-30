@@ -50,6 +50,9 @@ export default {
     };
   },
   methods: {
+    /*
+allows you to create post in the DB and return in to homepage
+*/
     createPost() {
       const formData = new FormData();
       if (this.FILE != null) {
@@ -71,6 +74,9 @@ export default {
           console.log(response.data);
         });
     },
+    /*
+allows you to upload the picture
+*/
     filePictureToUpload(e) {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];

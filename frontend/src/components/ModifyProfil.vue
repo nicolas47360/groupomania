@@ -14,7 +14,6 @@
             class="input-profil"
             v-model="pseudo"
             type="text"
-            
             required
             :v-text="user.pseudo"
           />
@@ -44,7 +43,9 @@
             @change="filePictureToUpload"
             id="image"
           />
-          <button id="profil-button" type="submit">Modifier votre profil</button>
+          <button id="profil-button" type="submit">
+            Modifier votre profil
+          </button>
         </form>
       </div>
     </div>
@@ -72,6 +73,9 @@ export default {
     this.getUsers();
   },
   methods: {
+    /*
+allows you to upload the profil by the userId and return to the homepage
+*/
     modifyProfil() {
       const formData = new FormData();
       if (this.FILE != null) {
@@ -93,11 +97,17 @@ export default {
           this.$router.push("/home");
         });
     },
+    /*
+allows you to upload the picture
+*/
     filePictureToUpload(e) {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
     },
+    /*
+allows you to get all users and return a array allusers
+*/
     getUsers() {
       axios
         .get("http://localhost:5000/api/user", {

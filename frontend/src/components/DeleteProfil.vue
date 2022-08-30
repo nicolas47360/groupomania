@@ -21,6 +21,9 @@ export default {
     };
   },
   methods: {
+    /*
+allows you to delete profil by the userId
+*/
     deleteProfil() {
       axios
         .delete("http://localhost:5000/api/user/" + this.userId, {
@@ -35,6 +38,10 @@ export default {
           console.log(error.data);
         });
     },
+    /*
+allows you delete the account and the profil user in a same time
+clear the localstorage and return to the account page
+*/
     deleteAccount() {
       axios
         .delete("http://localhost:5000/api/auth/delete/" + this.email, {

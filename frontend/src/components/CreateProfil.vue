@@ -67,6 +67,9 @@ export default {
     this.getUsers();
   },
   methods: {
+    /*
+allows you to create users in the DB and return in to homepage
+*/
     createProfil() {
       const formData = new FormData();
       if (this.FILE != null) {
@@ -93,11 +96,17 @@ export default {
           this.error = err.response.data;
         });
     },
+    /*
+allows you to upload picture
+*/
     filePictureToUpload(e) {
       if (e.target.files[0]) {
         this.FILE = e.target.files[0];
       }
     },
+    /*
+allows you to get all users in the DB and return a array allUsers
+*/
     getUsers() {
       axios
         .get("http://localhost:5000/api/user", {

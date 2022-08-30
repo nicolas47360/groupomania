@@ -56,7 +56,9 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+/*
+allows you to delete  your account
+*/
 exports.deleteAccount = (req, res, next) => {
   console.log(req.params.id)
   auth

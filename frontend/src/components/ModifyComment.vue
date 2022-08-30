@@ -53,11 +53,18 @@ export default {
     this.getComments();
   },
   methods: {
+    /*
+allows you to transform the format date for the display
+*/
     format_date(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
+    /*
+allows you to update a comment by the comment _id
+delete the item commentId in the local storage and return to the homepage
+*/
     modifyComment(id) {
       axios
         .put(
@@ -81,7 +88,9 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-
+    /*
+allows you to get all comments in the DB and return a reverse array allcomments
+*/
     getComments() {
       axios
         .get("http://localhost:5000/api/comment", {

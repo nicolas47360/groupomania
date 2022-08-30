@@ -117,6 +117,7 @@ export default {
       allPosts: [],
       allUsers: [],
       allComments: [],
+      commentPostId: "",
       allLikes: {},
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
@@ -135,11 +136,18 @@ export default {
   },
 
   methods: {
+    /*
+allows you to transform the format date for the display
+*/
     format_date(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
+    /*
+allows you to get all users and the all post in teh DB and merge the both
+return a reverse array allPosts 
+*/
     getPostsUser() {
       axios
         .get("http://localhost:5000/api/post", {
@@ -148,16 +156,17 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           this.allPosts = response.data.reverse();
-          this.likeUserId();
           this.mergeUsersAndPosts();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
+    /*
+allows you to get all users in the DB
+return a array allPosts 
+*/
     getUsers() {
       axios
         .get("http://localhost:5000/api/user", {
@@ -172,7 +181,10 @@ export default {
           console.log(error);
         });
     },
-
+    /*
+allows you to get all comments in the DB
+return a array allComments
+*/
     getAllComment() {
       axios
         .get("http://localhost:5000/api/comment", {
@@ -181,14 +193,16 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data.comments);
           this.allComments = response.data.comments;
+          console.log(this.allComments);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
+    /*
+allows you to merge the all users and the all posts
+*/
     mergeUsersAndPosts() {
       this.allPosts.forEach((post) => {
         this.allUsers.forEach((user) => {
@@ -201,35 +215,41 @@ export default {
         });
       });
     },
-    mergePostsAndComments() {
-      this.allPosts.forEach((post) => {
-        this.allComments.forEach((comment) => {
-          if (post._id == comment.postId) {
-            post.postId == comment.postId;
-          }
-        });
-      });
-    },
-
+    /*
+allows you to go to the post delete page 
+send the item postId in the loacalstorage 
+*/
     goToTrash(postId) {
       localStorage.setItem("postId", postId);
       this.$router.push("/post/delete");
     },
-
+    /*
+allows you to go to the post modify page 
+send the item postId in the loacalstorage 
+*/
     goToModify(postId) {
       localStorage.setItem("postId", postId);
       this.$router.push("/post/modify");
     },
-
+    /*
+allows you to go to the comment show page 
+send the item postId in the loacalstorage 
+*/
     goToShowComment(postId) {
       localStorage.setItem("postId", postId);
       this.$router.push("/comment/show");
     },
-
+    /*
+allows you to go to the comment page 
+send the item postId in the loacalstorage 
+*/
     goTocomment(postId) {
       localStorage.setItem("postId", postId);
       this.$router.push("/comment");
     },
+    /*
+allows you to put a like on a post and return to the homepage 
+*/
     likePost(postId) {
       console.log(postId);
       axios
@@ -253,11 +273,12 @@ export default {
           console.log(error.response.data);
         });
     },
-    likeUserId() {
+    getlenghtcomment() {
       this.allPosts.forEach((post) => {
-        this.allLikes = post.usersLiked;
-        console.log(this.allLikes);
-      })
+        // let dic = {};
+        this.allLikes[post._id] = post.likes;
+      });
+      console.log(this.allLikes);
     }
   },
 };

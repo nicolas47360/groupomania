@@ -94,6 +94,11 @@ export default {
   },
 
   methods: {
+    /*
+allows you to connect at an account with a email and a password,
+send the items email, token, uersId, isAdmin in a localstorage
+return to homepage
+*/
     login() {
       const userInfo = {
         email: this.email,
@@ -114,7 +119,11 @@ export default {
           this.error = err.response.data;
         });
     },
-
+    /*
+allows you to create an account with a email and a password,
+send the items email, token, uersId, isAdmin in a localstorage
+return to the create profil page
+*/
     createAccount() {
       const userInfo = {
         email: this.email,

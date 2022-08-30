@@ -1,12 +1,16 @@
 const Post = require("../models/post_model");
 const fs = require("fs");
-
-exports.readPost = (req, res, next) => {
+/*
+allows you to gat all Posts in the DB
+*/
+exports.getAllPosts = (req, res, next) => {
   Post.find()
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to get a post  in the DB by the id
+*/
 exports.getPost = (req, res, next) => {
   Post.findOne({ id: req.params.id })
     .then((user) => {
@@ -15,7 +19,9 @@ exports.getPost = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ error }));
 }
-
+/*
+allows you to update a post in the DB by the object id
+*/
 exports.updatePost = (req, res, next) => {
   const postObject = req.file ?
     {
@@ -28,6 +34,9 @@ exports.updatePost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+/*
+allows you to delete a post in the DB by the object id
+*/
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
@@ -54,7 +63,9 @@ exports.deletePost = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+/*
+allows you to create a post in the DB
+*/
 exports.createPost = (req, res, next) => {
   const postObject = req.body;
   delete postObject._id;
@@ -75,7 +86,9 @@ exports.createPost = (req, res, next) => {
     .then(() => res.status(201).json({ message: "Le post a été ajouté au fil d'actualité" }))
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to put a like a post and the user id of the liker in the DB by the object id
+*/
 exports.likePost = (req, res, next) => {
   console.log(req.params.id)
   console.log(req.body.likes);

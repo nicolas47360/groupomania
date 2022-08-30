@@ -3,7 +3,7 @@ const router = express.Router();
 const commentCtrl = require("../controllers/commentctrl");
 const authuser = require("../middelware/authuser");
 
-router.get("/", authuser, commentCtrl.readComment);
+router.get("/", authuser, commentCtrl.getAllComments);
 router.post("/", authuser, commentCtrl.createComment);
 router.put("/:id", authuser, commentCtrl.updateComment);
 router.delete("/:id", authuser, commentCtrl.deleteComment);

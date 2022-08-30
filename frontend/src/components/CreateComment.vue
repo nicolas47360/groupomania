@@ -39,6 +39,9 @@ export default {
     };
   },
   methods: {
+    /*
+allows you to create comment in the DB and return in to homepage
+*/
     createComment() {
       axios
         .post(

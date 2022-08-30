@@ -1,13 +1,18 @@
 const User = require("../models/user_model");
 const fs = require("fs");
 
-
-exports.getAllUser = (req, res, next) => {
+/*
+allows you to get all users in the DB
+*/
+exports.getAllUsers = (req, res, next) => {
   User.find()
     .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json({ error }));
 };
 
+/*
+allows you to get one user in the DB by the user ID
+*/
 exports.getUser = (req, res, next) => {
   User.findOne({ userId: req.params.id })
     .then((user) => {
@@ -16,7 +21,9 @@ exports.getUser = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ error }));
 }
-
+/*
+allows you to create a user in the DB
+*/
 exports.createUser = (req, res, next) => {
   const userObject = req.body;
   delete userObject._id;
@@ -38,7 +45,9 @@ exports.createUser = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ message: "Ce pseudo est déjà utiliseé" }));
 };
-
+/*
+allows you to update a user in the DB by the user Id
+*/
 exports.updateUser = (req, res, next) => {
   const userObject = req.file ?
     {
@@ -51,7 +60,9 @@ exports.updateUser = (req, res, next) => {
     .then(() => res.status(200).json({ message: "Les données de votre profil ont été modifiées" }))
     .catch((error) => res.status(400).json({ error }));
 };
-
+/*
+allows you to delete a user in the DB by thr user ID
+*/
 exports.deleteUser = (req, res, next) => {
   User.findOne({ userId: req.params.id })
     .then((user) => {
