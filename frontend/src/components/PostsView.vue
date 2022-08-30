@@ -279,7 +279,7 @@ allows you to put a like on a post and return to the homepage
         this.allLikes[post._id] = post.likes;
       });
       console.log(this.allLikes);
-    }
+    },
   },
 };
 </script>
@@ -370,7 +370,7 @@ allows you to put a like on a post and return to the homepage
           margin-right: 5px;
           color: $primary-color;
         }
-        #fa-icon-none{
+        #fa-icon-none {
           margin-right: 5px;
           color: $tertiary-color;
         }
