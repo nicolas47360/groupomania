@@ -62,7 +62,7 @@ allows you to transform the format date for the display
       }
     },
     /*
-allows you to get all comments in the DB and return a array allComments
+allows you to get all comments in the DB and return a reverse array allComments
 */
     getComments() {
       axios
@@ -73,7 +73,7 @@ allows you to get all comments in the DB and return a array allComments
         })
         .then((response) => {
           console.log(response.data);
-          this.allComments = response.data.comments;
+          this.allComments = response.data.comments.reverse();
         })
         .catch((error) => {
           console.log(error);

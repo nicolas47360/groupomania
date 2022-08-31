@@ -26,6 +26,7 @@ export default {
     },
     removePostId() {
       localStorage.removeItem("postId");
+      localStorage.removeItem("commentId");
     },
   },
 };

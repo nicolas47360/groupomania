@@ -193,7 +193,7 @@ allows you to get all posts in DB and return a reverse array allPosts
           align-items: center;
           @include border(2px, 15px, 0);
           margin: 15px;
-           #title {
+          #title {
             padding: 15px 10px 30px 10px;
             color: $primary-color;
           }
@@ -229,6 +229,7 @@ allows you to get all posts in DB and return a reverse array allPosts
             @include box-shadow;
             margin-top: 20px;
             padding: 8px 0 8px 0;
+            width: 40%;
             cursor: pointer;
           }
         }

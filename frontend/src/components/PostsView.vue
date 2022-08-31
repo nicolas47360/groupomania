@@ -72,8 +72,8 @@
             <button
               class="button-comment"
               @click.prevent="goToShowComment(post._id)"
-              v-for="comment in allComments"
-              :key="comment.id"
+              v-for="comment in sortComments"
+              :key="comment"
             >
               <div class="link-icon" v-if="post._id == comment.postId">
                 <p>Voir les commentaires</p>
@@ -117,8 +117,8 @@ export default {
       allPosts: [],
       allUsers: [],
       allComments: [],
+      sortComments: [],
       commentPostId: "",
-      allLikes: {},
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       isAdmin: localStorage.getItem("isAdmin"),
@@ -194,7 +194,8 @@ return a array allComments
         })
         .then((response) => {
           this.allComments = response.data.comments;
-          console.log(this.allComments);
+          // console.log(this.allComments);
+          this.getCommentForPost();
         })
         .catch((error) => {
           console.log(error);
@@ -273,12 +274,27 @@ allows you to put a like on a post and return to the homepage
           console.log(error.response.data);
         });
     },
-    getlenghtcomment() {
+    getCommentForPost() {
+      let commentaires = [];
+      let newcomment = [];
+      let sortcomment = [];
       this.allPosts.forEach((post) => {
-        // let dic = {};
-        this.allLikes[post._id] = post.likes;
+        this.allComments.forEach((comment) => {
+          if (post._id == comment.postId) {
+            commentaires.push(comment);
+          }
+        });
+        let trie = commentaires.find(
+          (commentaire) => post._id == commentaire.postId
+        );
+        newcomment.push(trie);
       });
-      console.log(this.allLikes);
+      newcomment.forEach((sort) => {
+        if (sort != undefined) {
+          sortcomment.push(sort);
+        }
+      });
+      this.sortComments = sortcomment;
     },
   },
 };
