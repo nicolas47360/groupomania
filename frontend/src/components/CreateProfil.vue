@@ -63,9 +63,9 @@ export default {
       imageUrl: "",
     };
   },
-  created() {
-    this.getUsers();
-  },
+  // created() {
+  //   this.getUsers();
+  // },
   methods: {
     /*
 allows you to create users in the DB and return in to homepage
@@ -75,7 +75,11 @@ allows you to create users in the DB and return in to homepage
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
       }
-      formData.append("pseudo", this.pseudo);
+      if (this.pseudo != null) {
+        formData.append("pseudo", this.pseudo);
+      } else {
+        formData.append("pseudo");
+      }
       formData.append("firstname", this.firstname);
       formData.append("lastname", this.lastname);
       formData.append("userId", this.userId);
@@ -107,21 +111,21 @@ allows you to upload picture
     /*
 allows you to get all users in the DB and return a array allUsers
 */
-    getUsers() {
-      axios
-        .get("http://localhost:5000/api/user", {
-          headers: {
-            Authorization: "bearer " + this.token,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          this.allUsers = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // getUsers() {
+    //   axios
+    //     .get("http://localhost:5000/api/user", {
+    //       headers: {
+    //         Authorization: "bearer " + this.token,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       this.allUsers = response.data;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
   },
 };
 </script>

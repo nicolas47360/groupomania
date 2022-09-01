@@ -11,7 +11,7 @@
             {{ post.lastname }}
           </span>
           <img
-            v-if="post.imageUrl != null"
+            v-if="post.userImageUrl != null"
             :src="post.userImageUrl"
             alt="photo de profil"
             class="profil-picture"
@@ -39,7 +39,7 @@
         </div>
         <div id="time-like">
           <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
-          <div>
+          <div v-if="this.isAdmin != 'True' && post.pseudo != null">
             <fa
               id="fa-icon-like"
               icon="thumbs-up"
@@ -89,7 +89,7 @@
             >
               <div class="link-icon">
                 <fa icon="trash" />
-                <p>Supprimer ce post</p>
+                <p>Supprimer</p>
               </div>
             </button>
             <button
@@ -98,7 +98,7 @@
               @click.prevent="goToModify(post._id)"
             >
               <fa icon="circle" />
-              Modifier ce post
+              <p>Modifier</p>
             </button>
           </div>
         </div>
@@ -402,7 +402,7 @@ allows you to put a like on a post and return to the homepage
           @include flcecol;
         }
         .link-page {
-          @include flspa;
+          @include flspb;
           margin: 15px;
           flex-wrap: wrap;
           @media (max-width: 1100px) {

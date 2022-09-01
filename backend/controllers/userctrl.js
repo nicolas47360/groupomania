@@ -43,7 +43,7 @@ exports.createUser = (req, res, next) => {
       res.status(201).json({ message: "Votre profil a bien été créé" });
       console.log(user);
     })
-    .catch((error) => res.status(400).json({ message: "Ce pseudo est déjà utiliseé" }));
+    .catch(() => res.status(400).json({ message: "Ce pseudo est déjà utiliseé" }));
 };
 /*
 allows you to update a user in the DB by the user Id

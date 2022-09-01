@@ -1,6 +1,9 @@
 <template>
   <NavBar />
   <section id="delete">
+    <span v-if="this.message" class="message-back">
+      {{ this.message }}
+    </span>
     <article id="delete-one" v-if="this.postId != null">
       <h1 class="delete-text">Suprimer votre post</h1>
       <section id="one-container">
@@ -27,9 +30,6 @@
             >
               SUPPRIMER
             </button>
-            <span v-if="this.message" class="message-back">
-              {{ this.message }}
-            </span>
           </div>
         </div>
       </section>
@@ -62,9 +62,6 @@
               >
                 MODIFIER
               </button>
-              <span v-if="this.message" class="message-back">
-                {{ this.message }}
-              </span>
             </div>
           </div>
         </section>
@@ -101,6 +98,7 @@ export default {
     /*
 allows you to delete a post and the all comments associte to the post in the DB by the post _id,
 return in to homepage and delete the item postId in the localstorage
+Display 
 */
     deletePost(id) {
       axios
@@ -115,7 +113,9 @@ return in to homepage and delete the item postId in the localstorage
           }
           this.deleteComments(id);
           this.message = response.data.message;
-          this.$router.push("/home");
+          setTimeout(() => {
+            this.$router.push("/home");
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);
@@ -192,6 +192,11 @@ allows you to go to the post modify page
 #delete {
   @include flcecol;
   align-items: center;
+  .message-back {
+    font-size: 25px;
+    color: $text-alert;
+    margin: 45px 0 45px 0;
+  }
   #delete-one {
     @include flcecol;
     align-items: center;

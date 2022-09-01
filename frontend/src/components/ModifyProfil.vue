@@ -10,13 +10,7 @@
       <div id="container-form">
         <form @submit.prevent="modifyProfil" class="profil-form">
           <label for="pseudo">Pseudo</label>
-          <input
-            class="input-profil"
-            v-model="pseudo"
-            type="text"
-            required
-            :v-text="user.pseudo"
-          />
+          <input class="input-profil" v-model="pseudo" type="text" />
           <label for="firstname">Nom</label>
           <input
             class="input-profil"
