@@ -161,6 +161,7 @@ return to the create profil page
 @import "../styles/utils/__variables.scss";
 .global-form {
   @include flcecol;
+  width: 70vw;
   .title-form {
     @include flce;
     margin: 10px;
@@ -176,6 +177,8 @@ return to the create profil page
     font-size: 20px;
     color: $tertiary-color;
     font-weight: bold;
+    text-align: center;
+    // width: 80%;
     .switch-button {
       background-color: $primary-color;
       @include border(2px, 15px, 0 0 0 15px);
@@ -185,28 +188,41 @@ return to the create profil page
       @include box-shadow;
       font-size: 18px;
       cursor: pointer;
-      width: 220px;
+      width: 40%;
+      @media (max-width: 900px) {
+          width: 60%;
+        }
+      @media (max-width: 550px) {
+        font-size: 16px;
+      }
     }
   }
 
   #form-home {
     @include flce;
     border: none;
-    width: 500px;
-    .signin-form {
+    width: auto;
+    .form-content{
+      width: 60%;
+      @media (max-width: 900px) {
+        width: 90%;
+      }
+      .signin-form {
       @include flcol;
       margin: 20px;
-      align-items: center;
+      align-items: center;      
       .label-form {
         font-size: 18px;
         margin: 15px;
         color: $tertiary-color;
         font-weight: bold;
+        width: auto;
       }
       #signin-email {
         margin: 10px;
         @include border(2px, 15px, 0 0 0 15px);
         font-size: 20px;
+        width: 90%;
       }
       .error-auth {
         color: $text-alert;
@@ -218,6 +234,7 @@ return to the create profil page
         margin: 10px;
         @include border(2px, 15px, 0 0 0 15px);
         font-size: 18px;
+        width: 90%;
       }
       #button-form {
         @include border(2px, 15px, 0 0 0 15px);
@@ -228,9 +245,17 @@ return to the create profil page
         margin: 20px;
         cursor: pointer;
         padding: 5px;
-        width: 220px;
+        width: 40%;
+        @media (max-width: 900px) {
+          width: 60%;
+        }
+        @media (max-width: 550px) {
+        font-size: 16px;
+      }
       }
     }
+    }
+    
   }
 }
 </style>

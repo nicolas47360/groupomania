@@ -29,16 +29,20 @@ export default {
   #logo-groupo {
     @include flce;
     margin-bottom: 25px;
+    width: 70%;
     img {
       object-fit: cover;
       display: flex;
-      max-width: 70%;
+      width: 70%;
     }
   }
   .home {
     @include flce;
     @include border(2px, 15px, 0 0 0 0);
-    max-width: 70vh;
+    width: 50%;
+    @media (max-width: 900px) {
+      width: 80%;
+    }
   }
 }
 </style>

@@ -208,7 +208,7 @@ allows you to go to the comment modify page and send the item commentId in the l
           margin-top: 20px;
           padding: 8px 0 8px 0;
           cursor: pointer;
-          width: 70%;
+          width: 50%;
           @media (max-width: 600px) {
             font-size: 14px;
             width: 80%;
