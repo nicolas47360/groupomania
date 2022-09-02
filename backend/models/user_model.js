@@ -5,13 +5,6 @@ const modeluser = mongoose.Schema({
     type: String,
   },
 
-  pseudo: {
-    type: String,
-    minLenght: 3,
-    maxLenght: 30,
-    unique: true,
-  },
-
   firstname: {
     type: String,
     required: true,

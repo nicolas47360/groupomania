@@ -51,8 +51,8 @@
               name="image"
               accept="image/*"
               ref="image"
-              @change="filePictureToUpload()"
-              :placeholder="post.imageUrl"
+              @change="filePictureToUpload"
+              id="image"
             />
             <button
               id="modify-button"
@@ -116,6 +116,7 @@ delete item postId if his exist in the localstorage and return in to the homepag
           },
         })
         .then((response) => {
+          console.log(response.data);
           if (this.postId != null) {
             localStorage.removeItem("postId");
           }

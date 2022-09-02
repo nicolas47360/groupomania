@@ -1,17 +1,6 @@
 <template>
   <section id="container-create">
     <form @submit.prevent="createProfil" class="profil-form">
-      <label for="pseudo">Pseudo</label>
-      <input
-        class="input-profil"
-        v-model="pseudo"
-        type="text"
-        placeholder="Pseudo"
-        id="pseudo"
-      />
-      <span v-if="this.error" id="error-message">
-        {{ this.error.message }}
-      </span>
       <label for="firstname">Nom</label>
       <input
         class="input-profil"
@@ -57,15 +46,11 @@ export default {
       error: "",
       FILE: null,
       name: "",
-      pseudo: "",
       firstname: "",
       lastname: "",
       imageUrl: "",
     };
   },
-  // created() {
-  //   this.getUsers();
-  // },
   methods: {
     /*
 allows you to create users in the DB and return in to homepage
@@ -74,11 +59,6 @@ allows you to create users in the DB and return in to homepage
       const formData = new FormData();
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
-      }
-      if (this.pseudo != null) {
-        formData.append("pseudo", this.pseudo);
-      } else {
-        formData.append("pseudo");
       }
       formData.append("firstname", this.firstname);
       formData.append("lastname", this.lastname);
@@ -108,24 +88,6 @@ allows you to upload picture
         this.FILE = e.target.files[0];
       }
     },
-    /*
-allows you to get all users in the DB and return a array allUsers
-*/
-    // getUsers() {
-    //   axios
-    //     .get("http://localhost:5000/api/user", {
-    //       headers: {
-    //         Authorization: "bearer " + this.token,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.allUsers = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
   },
 };
 </script>

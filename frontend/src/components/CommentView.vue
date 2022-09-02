@@ -173,6 +173,7 @@ allows you to go to the comment modify page and send the item commentId in the l
       margin: 15px 0 15px 0;
       padding: 15px;
       @include flspa;
+      width: 90vw;
       flex-wrap: wrap;
       @media (max-width: 980px) {
         @include flcecol;
@@ -183,17 +184,18 @@ allows you to go to the comment modify page and send the item commentId in the l
         align-items: center;
         overflow: auto;
         margin: 0 15px 25px 15px;
-        width: 40%;
+        width: 30%;
         @media (max-width: 980px) {
           font-size: 14px;
-          width: 60vw;
+          width: 80%;
         }
         #container-display {
           @include flcecol;
           align-items: center;
           #display-text {
             padding: 10px 0 10px 0;
-            text-align: center;          }
+            text-align: center;
+          }
           #display-date {
             padding: 10px 0 10px 0;
           }

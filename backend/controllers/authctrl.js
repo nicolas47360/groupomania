@@ -60,7 +60,6 @@ exports.login = (req, res, next) => {
 allows you to delete  your account
 */
 exports.deleteAccount = (req, res, next) => {
-  console.log(req.params.id)
   auth
     .findOne({ email: req.params.id })
     .deleteOne({ email: req.params.id })

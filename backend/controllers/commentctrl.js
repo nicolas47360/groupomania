@@ -46,6 +46,15 @@ exports.deleteCommentsByPostId = (req, res, next) => {
     )
     .catch((error) => res.status(400).json({ error }));
 }
+
+exports.deleteCommentsByUserId = (req, res, next) => {
+  Comment.find({ userId: req.params.id });
+  Comment.deleteMany({ userId: req.params.id })
+    .then(() =>
+      res.status(200).json({ message: "le commentaire a été supprimé" })
+    )
+    .catch((error) => res.status(400).json({ error }));
+}
 /*
 allows you to update a comment in the DB by the object id
 */

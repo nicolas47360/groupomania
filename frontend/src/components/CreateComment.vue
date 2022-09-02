@@ -59,6 +59,7 @@ allows you to create comment in the DB and return in to homepage
           }
         )
         .then((response) => {
+          localStorage.removeItem("postId");
           alert(response.data.message);
           this.$router.push("/home");
         })

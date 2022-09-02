@@ -15,7 +15,6 @@ exports.getPost = (req, res, next) => {
   Post.findOne({ id: req.params.id })
     .then((user) => {
       res.status(200).json(user)
-      console.log(user);
     })
     .catch((error) => res.status(400).json({ error }));
 }
@@ -25,7 +24,7 @@ allows you to update a post in the DB by the object id
 exports.updatePost = (req, res, next) => {
   const postObject = req.file ?
     {
-      ...req.body,
+      ...req.body.post,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     }
     : { ...req.body };
@@ -40,13 +39,11 @@ allows you to delete a post in the DB by the object id
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      console.log(post);
       if (post.imageUrl !== null) {
         const filename = post.imageUrl.split("/images")[1];
         fs.unlink(`images/${filename}`, () => {
           Post.deleteOne({ _id: req.params.id })
-            .then((del) => {
-              console.log(del)
+            .then(() => {
               res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
             })
             .catch((error) => res.status(400).json({ error }));
@@ -54,12 +51,40 @@ exports.deletePost = (req, res, next) => {
       }
       else {
         Post.deleteOne({ _id: req.params.id })
-          .then((del) => {
-            console.log(del)
+          .then(() => {
             res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
           })
           .catch((error) => res.status(400).json({ error }));
       }
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+exports.deletePostsByUserId = (req, res, next) => {
+  Post.find({ userId: req.params.id })
+    .then((posts) => {
+      for (let post of posts) {
+        if (post.imageUrl !== null) {
+          const filename = post.imageUrl.split("/images")[1];
+          fs.unlink(`images/${filename}`, () => {
+            Post.deleteMany({ userId: req.params.id })
+              .then(() => {
+                res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
+              })
+              .catch((error) => res.status(400).json({ error }));
+          });
+          return
+        }
+        else {
+          Post.deleteMany({ userId: req.params.id })
+            .then(() => {
+              res.status(200).json({ message: "Le post ainsi que les commentaires associés ont été supprimés" })
+            })
+            .catch((error) => res.status(400).json({ error }));
+          return
+        }
+      }
+
     })
     .catch((error) => res.status(500).json({ error }));
 };
@@ -90,8 +115,6 @@ exports.createPost = (req, res, next) => {
 allows you to put a like a post and the user id of the liker in the DB by the object id
 */
 exports.likePost = (req, res, next) => {
-  console.log(req.params.id)
-  console.log(req.body.likes);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (req.body.likes === 1 && !post.usersLiked.includes(req.body.userId)) {

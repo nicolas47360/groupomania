@@ -2,11 +2,8 @@
   <section id="all-container">
     <article v-for="post in allPosts" :key="post.id" id="container-posts">
       <div class="container-post">
-        <div id="user-info" v-if="post.pseudo != null">
-          <span class="user-pseudo" v-if="post.pseudo != ''">
-            {{ post.pseudo }}
-          </span>
-          <span class="user-pseudo" v-else>
+        <div id="user-info">
+          <span class="user-pseudo">
             {{ post.firstname }}
             {{ post.lastname }}
           </span>
@@ -22,9 +19,6 @@
             alt="photo-par-default"
             class="profil-picture"
           />
-        </div>
-        <div id="no-info" v-else>
-          <h1>L'utilisateur à supprimer son compte</h1>
         </div>
         <div id="post-info">
           <span id="title-message"> {{ post.title }}</span>
@@ -43,23 +37,20 @@
             <fa
               id="fa-icon-like"
               icon="thumbs-up"
-              @click.prevent="likePost(post._id)"
+              @click="likePost(post._id)"
               v-if="post.likes > 0"
             />
             <fa
               id="fa-icon-none"
               icon="thumbs-up"
-              @click.prevent="likePost(post._id)"
+              @click="likePost(post._id)"
               v-else
             />
             <span v-if="post.likes > 0"> {{ post.likes }}</span>
           </div>
         </div>
         <div class="link-comment">
-          <div
-            class="link-page"
-            v-if="this.isAdmin != 'True' && post.pseudo != null"
-          >
+          <div class="link-page" v-if="this.isAdmin != 'True'">
             <button
               class="button-comment"
               @click.prevent="goTocomment(post._id)"
@@ -133,6 +124,7 @@ export default {
     this.getUsers();
     this.getPostsUser();
     this.getAllComment();
+    this.getCommentForPost();
   },
 
   methods: {
@@ -194,7 +186,6 @@ return a array allComments
         })
         .then((response) => {
           this.allComments = response.data.comments;
-          // console.log(this.allComments);
           this.getCommentForPost();
         })
         .catch((error) => {

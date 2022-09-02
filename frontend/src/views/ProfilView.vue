@@ -15,59 +15,53 @@
         </div>
         <div class="modify-profil" v-if="this.userprofil != null">
           <section id="modify-container">
-            <div id="container-user" v-for="user in allUsers" :key="user._id">
-              <div id="user-info" v-if="user.userId === this.userId">
-                <span>Pseudo: {{ user.pseudo }}</span>
-                <span>Nom: {{ user.firstname }}</span>
-                <span>Prénom: {{ user.lastname }}</span>
-                <img :src="user.imageUrl" alt="photo de profil" />
-              </div>
-              <div id="container-form" v-if="user.userId === this.userId">
-                <form @submit.prevent="modifyProfil" class="profil-form">
-                  <label for="pseudo">Pseudo</label>
-                  <input
-                    class="input-profil"
-                    v-model="pseudo"
-                    type="text"
-                    :placeholder="user.pseudo"
-                    required
-                  />
-                  <label for="firstname">Nom</label>
-                  <input
-                    class="input-profil"
-                    v-model="firstname"
-                    type="text"
-                    :placeholder="user.firstname"
-                    required
-                  />
-                  <label for="lastname">Prénom</label>
-                  <input
-                    class="input-profil"
-                    v-model="lastname"
-                    type="text"
-                    :placeholder="user.lastname"
-                    required
-                  />
-                  <label for="image">Image de profil</label>
-                  <input
-                    class="input-profil"
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    ref="image"
-                    @change="filePictureToUpload"
-                    id="image"
-                  />
-                  <button id="profil-button" type="submit">MODIFIER</button>
-                  <button
-                    id="profil-button"
-                    type="submit"
-                    @click.prevent="deleteAccount()"
-                  >
-                    SUPPRIMER
-                  </button>
-                </form>
-              </div>
+            <div id="user-info" v-if="userprofil.userId === this.userId">
+              <span>Nom: {{ userprofil.firstname }}</span>
+              <span>Prénom: {{ userprofil.lastname }}</span>
+              <img
+                :src="userprofil.imageUrl"
+                alt="photo de profil"
+                v-if="userprofil.imageUrl != null"
+              />
+              <img src="/image/profil.png" alt="avatar" v-else />
+            </div>
+            <div id="container-form" v-if="userprofil.userId === this.userId">
+              <form @submit.prevent="modifyProfil" class="profil-form">
+                <label for="firstname">Nom</label>
+                <input
+                  class="input-profil"
+                  v-model="firstname"
+                  type="text"
+                  :placeholder="userprofil.firstname"
+                  required
+                />
+                <label for="lastname">Prénom</label>
+                <input
+                  class="input-profil"
+                  v-model="lastname"
+                  type="text"
+                  :placeholder="userprofil.lastname"
+                  required
+                />
+                <label for="image">Image de profil</label>
+                <input
+                  class="input-profil"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  ref="image"
+                  @change="filePictureToUpload"
+                  id="image"
+                />
+                <button id="profil-button" type="submit">MODIFIER</button>
+                <button
+                  id="profil-button"
+                  type="submit"
+                  @click.prevent="deleteAccount()"
+                >
+                  SUPPRIMER
+                </button>
+              </form>
             </div>
           </section>
         </div>
@@ -88,22 +82,19 @@ export default {
     CreateProfil,
   },
   data() {
-    return {
-      allUsers: [],
+    return {     
       userprofil: "",
       user: "",
       mode: "create",
       userId: localStorage.getItem("userId"),
       token: localStorage.getItem("token"),
-      email: localStorage.getItem("email"),
-      pseudo: "",
+      email: localStorage.getItem("email"),      
       lastname: "",
       firstname: "",
     };
   },
   created() {
-    this.getUser();
-    this.getUsers();
+    this.getUser();    
   },
 
   methods: {
@@ -118,8 +109,7 @@ export default {
             Authorization: "bearer " + this.token,
           },
         })
-        .then((response) => {
-          console.log(response.data);
+        .then((response) => {          
           this.userprofil = response.data;
         })
         .catch((error) => {
@@ -134,8 +124,7 @@ return to the homepage
       const formData = new FormData();
       if (this.FILE != null) {
         formData.append("image", this.FILE, this.FILE.name);
-      }
-      formData.append("pseudo", this.pseudo);
+      }      
       formData.append("firstname", this.firstname);
       formData.append("lastname", this.lastname);
       formData.append("userId", this.userId);
@@ -159,24 +148,7 @@ allows you to upload a picture
         this.FILE = e.target.files[0];
       }
     },
-      /*
-allows you to get all users in the DB and return a array allUsers
-*/  
-    getUsers() {
-      axios
-        .get("http://localhost:5000/api/user", {
-          headers: {
-            Authorization: "bearer " + this.token,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          this.allUsers = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  
       /*
 allows you to delete profil by the userId
 */  
@@ -209,11 +181,43 @@ clear the localstorage and return to the account page
           console.log(response);
           alert(response.data.message);
           this.deleteProfil();
+          this.deletePosts();
+          
           localStorage.clear();
           this.$router.push("/");
         })
         .catch((error) => {
           console.log(error.data);
+        });
+    },
+
+    deletePosts() {
+      axios
+        .delete("http://localhost:5000/api/post/all/" + this.userId, {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then(() => {          
+          this.deleteComments();                    
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteComments() {
+      axios
+        .delete("http://localhost:5000/api/comment/userId/" + this.userId, {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
@@ -245,26 +249,21 @@ clear the localstorage and return to the account page
       @include flspa;
       @media (max-width: 750px) {
         @include flcecol;
-      }
-      #container-user {
-        @include flspa;
-        @media (max-width: 750px) {
-          @include flcecol;
+      }      
+      #user-info {
+        @include flcecol;
+        align-items: center;
+        span {
+          font-size: 18px;
+          color: $tertiary-color;
+          margin: 20px 0 20px 0;
         }
-        #user-info {
-          @include flcecol;
-          align-items: center;
-          span {
-            font-size: 18px;
-            color: $tertiary-color;
-            margin: 20px 0 20px 0;
-          }
-          img {
-            width: 55%;
-            margin-top: 50px;
-          }
+        img {
+          width: 55%;
+          margin-top: 50px;
         }
       }
+      
       #container-form {
         width: 80%;
         @media (max-width: 750px) {

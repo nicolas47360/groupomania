@@ -245,10 +245,7 @@ return to the create profil page
         margin: 20px;
         cursor: pointer;
         padding: 5px;
-        width: 40%;
-        @media (max-width: 900px) {
-          width: 60%;
-        }
+        width: 60%;        
         @media (max-width: 550px) {
         font-size: 16px;
       }

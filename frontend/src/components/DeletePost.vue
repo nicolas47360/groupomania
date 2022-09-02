@@ -126,7 +126,7 @@ allows you to delete all comments for a post in the DB by the post _id,
 */
     deleteComments(id) {
       axios
-        .delete("http://localhost:5000/api/comment/all/" + id, {
+        .delete("http://localhost:5000/api/comment/postId/" + id, {
           headers: {
             Authorization: "bearer " + this.token,
           },
