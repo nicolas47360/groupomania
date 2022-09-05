@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     /*
-allows you to create comment in the DB and return in to homepage
+allows you to create comment in the DB, remove item postId to the localstorage and return in to homepage
 */
     createComment() {
       axios

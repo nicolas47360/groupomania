@@ -35,6 +35,7 @@
                   :placeholder="userprofil.firstname"
                   required
                 />
+                {{ userprofil.firstname }}
                 <label for="lastname">Prénom</label>
                 <input
                   class="input-profil"
@@ -101,7 +102,9 @@ export default {
     switchtoCreateProfil() {
       this.mode = "create";
     },
-
+    /*
+    allows you to get a user and return the data of the user
+*/
     getUser() {
       axios
         .get("http://localhost:5000/api/user/" + this.userId, {
@@ -167,7 +170,7 @@ allows you to delete profil by the userId
         });
     },
     /*
-allows you delete the account and the profil user in a same time
+allows you delete the account, the profile user, the posts and comment at a user
 clear the localstorage and return to the account page
 */
     deleteAccount() {
@@ -190,7 +193,9 @@ clear the localstorage and return to the account page
           console.log(error.data);
         });
     },
-
+    /*
+    allows you to delete all the post and the associate comments at a user 
+    */
     deletePosts() {
       axios
         .delete("http://localhost:5000/api/post/all/" + this.userId, {
@@ -205,7 +210,9 @@ clear the localstorage and return to the account page
           console.log(error);
         });
     },
-
+     /*
+    allows you to delete all comments at a user 
+    */
     deleteComments() {
       axios
         .delete("http://localhost:5000/api/comment/userId/" + this.userId, {

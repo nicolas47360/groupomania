@@ -1,35 +1,40 @@
-# Groupomania
+# Créez un réseau social d'entrsprise.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Pré-requis:
 
-## Recommended IDE Setup
+* Ce projet requiert l'utilisation de NodeJs veuillez télécharger et installer la derniére version sur:
+    * https://nodejs.org/fr/
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+* Clonez le repository à l'adresse suivante:
+    * https://github.com/nicolas47360/projet-6.git 
 
-## Customize configuration
+* Veuillez vous créer un compte et une base de donnée sur MongoDB:
+    * https://www.mongodb.com/fr-fr/cloud/atlas/efficiency
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Utilisation:
+* Pour la création d'un compte Groupomania veuillez pour le mot de passe rentrer 8 caractéres minimum et une majuscule.
 
-## Project Setup
+### Frontend:
+* Dans le terminal veuillez vous mettre sur le dossier frontend:
+    * `cd frontend`
 
-```sh
-npm install
-```
+* Installez les modules:
+    * `npm install`
 
-### Compile and Hot-Reload for Development
+* Lancer le frontend:
+    * `npm run dev`
+    * `npm run build`
 
-```sh
-npm run dev
-```
+### Backend:
 
-### Compile and Minify for Production
+* Dans le terminal veuillez vous mettre sur le dossier backend:
+    * `cd backend`
 
-```sh
-npm run build
-```
+* Installez les modules:
+    * `npm install`
 
-### Lint with [ESLint](https://eslint.org/)
+* Veuillez créer un fichier `.env` dans le dossier backend et regarder le fichier `.env.examples` pour les explications
 
-```sh
-npm run lint
-```
+
+* Lancer le serveur:
+    * `npm start `

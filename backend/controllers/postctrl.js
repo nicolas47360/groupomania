@@ -59,7 +59,9 @@ exports.deletePost = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+/*
+allows you to delete a post in the DB by the userId
+*/
 exports.deletePostsByUserId = (req, res, next) => {
   Post.find({ userId: req.params.id })
     .then((posts) => {

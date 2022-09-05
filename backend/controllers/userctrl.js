@@ -11,7 +11,7 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 /*
-allows you to get one user in the DB by the user ID
+allows you to get one user in the DB by the userID
 */
 exports.getUser = (req, res, next) => {
   User.findOne({ userId: req.params.id })
@@ -24,7 +24,6 @@ exports.getUser = (req, res, next) => {
 allows you to create a user in the DB
 */
 exports.createUser = (req, res, next) => {
-  // console.log(req.body);
   const userObject = req.body;
   delete userObject._id;
   let user = '';
@@ -33,17 +32,14 @@ exports.createUser = (req, res, next) => {
       ...userObject,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     });
-    console.log(user);
   } else {
     user = new User({
       ...userObject,
     });
-    console.log(user);
   }
   user.save()
     .then(() => {
       res.status(201).json({ message: "Votre profil a bien été créé" });
-      console.log(user);
     })
     .catch(() => res.status(400).json({ message: "un erreur c'est produite" }));
 };

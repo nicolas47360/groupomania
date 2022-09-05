@@ -265,6 +265,9 @@ allows you to put a like on a post and return to the homepage
           console.log(error.response.data);
         });
     },
+    /* 
+allows you to to get the first comment for a post and return a array of that
+*/
     getCommentForPost() {
       let commentaires = [];
       let newcomment = [];
