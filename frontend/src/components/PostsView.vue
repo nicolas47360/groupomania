@@ -262,7 +262,7 @@ allows you to put a like on a post and return to the homepage
         )
         .then((response) => {
           console.log(response.data);
-          // this.$router.go(0);
+          this.$router.go(0);
         })
         .catch((error) => {
           console.log(error.response.data);

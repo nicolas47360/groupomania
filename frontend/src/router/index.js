@@ -18,6 +18,9 @@ const routes = [
         path: "/home",
         name: "Home",
         component: Home,
+        meta: {
+            requiresAuth: true,
+        }
     },
     {
         path: "/profil",
@@ -60,5 +63,11 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
+// router.beforeEach((to) => {
+//     if (to.meta.requiresAuth) {
+//         return { name: 'Home' }
+//     }
+// })
 
 export default router;
