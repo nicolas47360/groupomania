@@ -2,13 +2,15 @@
   <div id="nav-home" v-if="this.isAdmin != 'True'">
     <ul id="nav-list">
       <li class="nav-component">
-        <router-link to="/profil">Gérer votre profil</router-link>
+        <router-link :to="{ name: 'Profil' }">Gérer votre profil</router-link>
       </li>
       <li class="nav-component" v-if="this.userId != null">
-        <router-link to="/post/delete">Gérer vos posts</router-link>
+        <router-link :to="{ name: 'deletePost' }">Gérer vos posts</router-link>
       </li>
       <li class="nav-component" v-if="this.userId != null">
-        <router-link to="/comment">Gérer vos commentaires</router-link>
+        <router-link :to="{ name: 'comment' }">
+          Gérer vos commentaires
+        </router-link>
       </li>
     </ul>
   </div>

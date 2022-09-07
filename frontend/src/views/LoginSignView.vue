@@ -14,6 +14,11 @@ import SignUp from "../components/SignUp.vue";
 
 export default {
   name: "LoginSign",
+  data() {
+    return {
+      userId: localStorage.getItem("userId"),
+    };
+  },
   components: {
     SignUp,
   },

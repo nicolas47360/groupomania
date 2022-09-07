@@ -73,7 +73,7 @@ allows you to create users in the DB and return in to homepage
         .then((response) => {
           console.log(response.data);
           alert(response.data.message);
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         })
         .catch((err) => {
           console.log(err.response.data);

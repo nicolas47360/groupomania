@@ -2,13 +2,13 @@
   <div class="navbar">
     <img src="../assets/icon.png" alt="logo groupomania" id="logo" />
     <div id="router">
-      <router-link to="/home" @click="removePostId()">
+      <router-link :to="{ name: 'Home' }" @click="removePostId()">
         <div class="back-login">
           <span class="nav-text">HOME</span>
           <fa icon="rotate-left" class="bracket"/>
         </div>
       </router-link>
-      <router-link to="/" @click="clearStorage()">
+      <router-link :to="{ name: 'Registration' }" @click="clearStorage()">
         <div class="back-login">
           <span class="nav-text">Se Déconnecter</span>
           <fa icon="right-to-bracket" class="bracket" />

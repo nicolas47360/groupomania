@@ -121,7 +121,7 @@ delete item postId if his exist in the localstorage and return in to the homepag
             localStorage.removeItem("postId");
           }
           alert(response.data.message);
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         })
         .catch((error) => {
           console.log(error);

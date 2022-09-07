@@ -8,7 +8,7 @@
     <div class="login-switch" v-if="mode == 'login'">
       Vous n'avez pas encore de compte
       <button class="switch-button" @click="SwitchtoCreateAccount()">
-        Créer un compte
+        S'inscrire
       </button>
     </div>
     <div class="login-switch" v-else>
@@ -112,7 +112,7 @@ return to homepage
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
-          this.$router.push("/home");
+          this.$router.push({name: 'Home'});
         })
         .catch((err) => {
           console.log(err.response.data);
@@ -240,7 +240,7 @@ return to the create profil page
         @include border(2px, 15px, 0 0 0 15px);
         background-color: $primary-color;
         color: $text-color;
-        font-size: 22px;
+        font-size: 18px;
         @include box-shadow;
         margin: 20px;
         cursor: pointer;

@@ -84,7 +84,7 @@ delete the item commentId in the local storage and return to the homepage
           console.log(response.data);
           localStorage.removeItem("commentId");
           alert(response.data.message);
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         })
         .catch((err) => console.log(err));
     },

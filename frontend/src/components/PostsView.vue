@@ -33,7 +33,7 @@
         </div>
         <div id="time-like">
           <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
-          <div v-if="this.isAdmin != 'True' && post.pseudo != null">
+          <div v-if="this.isAdmin != 'True'">
             <fa
               id="fa-icon-like"
               icon="thumbs-up"
@@ -125,8 +125,11 @@ export default {
     this.getPostsUser();
     this.getAllComment();
     this.getCommentForPost();
+    this.likePost();
   },
-
+  updated() {
+    this.getUsers();
+  },
   methods: {
     /*
 allows you to transform the format date for the display
@@ -213,7 +216,7 @@ send the item postId in the loacalstorage
 */
     goToTrash(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("/post/delete");
+      this.$router.push({ name: "deletePost" });
     },
     /*
 allows you to go to the post modify page 
@@ -221,7 +224,7 @@ send the item postId in the loacalstorage
 */
     goToModify(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("/post/modify");
+      this.$router.push({ name: "modifyPost" });
     },
     /*
 allows you to go to the comment show page 
@@ -229,7 +232,7 @@ send the item postId in the loacalstorage
 */
     goToShowComment(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("/comment/show");
+      this.$router.push({ name: "commentshow" });
     },
     /*
 allows you to go to the comment page 
@@ -237,7 +240,7 @@ send the item postId in the loacalstorage
 */
     goTocomment(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("/comment");
+      this.$router.push({ name: "comment" });
     },
     /*
 allows you to put a like on a post and return to the homepage 
@@ -259,7 +262,7 @@ allows you to put a like on a post and return to the homepage
         )
         .then((response) => {
           console.log(response.data);
-          this.$router.go(0);
+          // this.$router.go(0);
         })
         .catch((error) => {
           console.log(error.response.data);

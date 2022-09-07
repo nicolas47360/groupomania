@@ -16,8 +16,8 @@
         <div class="modify-profil" v-if="this.userprofil != null">
           <section id="modify-container">
             <div id="user-info" v-if="userprofil.userId === this.userId">
-              <span>Nom: {{ userprofil.firstname }}</span>
-              <span>Prénom: {{ userprofil.lastname }}</span>
+              <span id="name">Nom: {{ userprofil.firstname }}</span>
+              <span id="prenom">Prénom: {{ userprofil.lastname }}</span>
               <img
                 :src="userprofil.imageUrl"
                 alt="photo de profil"
@@ -35,7 +35,6 @@
                   :placeholder="userprofil.firstname"
                   required
                 />
-                {{ userprofil.firstname }}
                 <label for="lastname">Prénom</label>
                 <input
                   class="input-profil"
@@ -140,7 +139,7 @@ return to the homepage
         .then((response) => {
           console.log(response);
           alert(response.data.message);
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         });
     },
     /*
@@ -187,7 +186,7 @@ clear the localstorage and return to the account page
           this.deletePosts();
           
           localStorage.clear();
-          this.$router.push("/");
+          this.$router.push({ name: "Registration" });
         })
         .catch((error) => {
           console.log(error.data);
@@ -260,15 +259,37 @@ clear the localstorage and return to the account page
       #user-info {
         @include flcecol;
         align-items: center;
-        span {
+        width: 40%;
+        margin: 0 15px 0 15px;
+        @media (max-width: 750px) {
+          width: auto;
+      } 
+        #name {
           font-size: 18px;
           color: $tertiary-color;
-          margin: 20px 0 20px 0;
-        }
+          margin: 0 20px 65px 20px;
+          @media (max-width: 750px) {
+          margin: 10px 0 10px 0;
+      } 
+        }     
+        #prenom {
+          font-size: 18px;
+          color: $tertiary-color;
+          margin: 0 20px 45px 20px;
+          @media (max-width: 750px) {
+          margin: 10px 0 10px 0;
+        }           
+      }
+      
         img {
           width: 55%;
           margin-top: 50px;
+          @media (max-width: 750px) {
+          margin-top: 5px;
+          width: 35%;
+      } 
         }
+       
       }
       
       #container-form {

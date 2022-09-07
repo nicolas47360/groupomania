@@ -114,7 +114,7 @@ Display
           this.deleteComments(id);
           this.message = response.data.message;
           setTimeout(() => {
-            this.$router.push("/home");
+            this.$router.push({ name: "Home" });
           }, 1000);
         })
         .catch((error) => {

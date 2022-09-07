@@ -70,7 +70,7 @@ allows you to create post in the DB and return in to homepage
         })
         .then((response) => {
           alert(response.data.message);
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         });
     },
     /*

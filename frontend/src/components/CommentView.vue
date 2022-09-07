@@ -97,7 +97,7 @@ allows you to delete comment with the comment _id in the DB
         .then((response) => {
           console.log(response);
           alert("commentaire supprimé");
-          this.$router.push("/home");
+          this.$router.push({ name: "Home" });
         })
         .catch((error) => {
           console.log(error);
