@@ -283,12 +283,11 @@ allows you to to get the first comment for a post and return a array of that
         newcomment.push(trie);
       });
       newcomment.forEach((sort) => {
-        if (sort != undefined ) {
+        if (sort != undefined) {
           sortcomment.push(sort);
         }
       });
       this.sortComments = sortcomment;
-      console.log(this.sortComments); 
     },
   },
 };

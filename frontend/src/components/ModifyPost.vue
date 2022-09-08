@@ -1,6 +1,9 @@
 <template>
   <NavBarVue />
   <section id="modify">
+    <span v-if="this.messagedata" class="message-back">
+      {{ this.messagedata }}
+    </span>
     <h1 class="delete-text">Modifier votre Post</h1>
     <article class="container">
       <div id="modify-one" v-for="post in allPosts" :key="post.id">
@@ -90,6 +93,7 @@ export default {
       imageUrl: "",
       likes: 0,
       allPosts: [],
+      messagedata: "",
     };
   },
   created() {
@@ -120,8 +124,10 @@ delete item postId if his exist in the localstorage and return in to the homepag
           if (this.postId != null) {
             localStorage.removeItem("postId");
           }
-          alert(response.data.message);
-          this.$router.push({ name: "Home" });
+          this.messagedata = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);
@@ -163,6 +169,19 @@ allows you to get all posts in DB and return a reverse array allPosts
 #modify {
   @include flcecol;
   align-items: center;
+  .message-back {
+    font-size: 25px;
+    color: $text-alert;
+    margin: 45px 0 45px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    text-align: center;
+    @include flcecol;
+  }
   .delete-text {
     color: $text-alert;
     font-weight: bold;

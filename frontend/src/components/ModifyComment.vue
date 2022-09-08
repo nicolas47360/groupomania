@@ -1,5 +1,8 @@
 <template>
   <NavBar />
+  <span v-if="this.messagedata" class="message-back">
+    {{ this.messagedata }}
+  </span>
   <section id="modify-comment" v-for="comment in allComments" :key="comment.id">
     <div id="comment-show" v-if="comment._id == this.commentId">
       <span id="border-comment">Votre commentaire</span>
@@ -47,6 +50,7 @@ export default {
       message: "",
       likes: 0,
       allComments: [],
+      messagedata: "",
     };
   },
   created() {
@@ -83,8 +87,10 @@ delete the item commentId in the local storage and return to the homepage
         .then((response) => {
           console.log(response.data);
           localStorage.removeItem("commentId");
-          alert(response.data.message);
-          this.$router.push({ name: "Home" });
+          this.messagedata = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         })
         .catch((err) => console.log(err));
     },
@@ -113,6 +119,19 @@ allows you to get all comments in the DB and return a reverse array allcomments
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
+.message-back {
+  font-size: 25px;
+  color: $text-alert;
+  margin: 45px 0 45px 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  text-align: center;
+  @include flcecol;
+}
 #modify-comment {
   @include flcecol;
   align-items: center;

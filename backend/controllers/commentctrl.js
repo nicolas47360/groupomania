@@ -30,7 +30,7 @@ exports.createComment = (req, res, next) => {
   });
   comment
     .save()
-    .then(() => res.status(201).json({ message: "le commentaire a été enregistrée" }))
+    .then(() => res.status(201).json({ message: "le commentaire a été ajouté" }))
     .catch((error) => res.status(400).json({ error }));
 };
 

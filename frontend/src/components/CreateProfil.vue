@@ -1,4 +1,7 @@
 <template>
+  <span v-if="this.message" class="message-back">
+    {{ this.message }}
+  </span>
   <section id="container-create">
     <form @submit.prevent="createProfil" class="profil-form">
       <label for="firstname">Nom</label>
@@ -49,6 +52,7 @@ export default {
       firstname: "",
       lastname: "",
       imageUrl: "",
+      message: "",
     };
   },
   methods: {
@@ -71,9 +75,10 @@ allows you to create users in the DB and return in to homepage
           },
         })
         .then((response) => {
-          console.log(response.data);
-          alert(response.data.message);
-          this.$router.push({ name: "Home" });
+          this.message = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         })
         .catch((err) => {
           console.log(err.response.data);
@@ -95,6 +100,19 @@ allows you to upload picture
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
+.message-back {
+  font-size: 25px;
+  color: $text-alert;
+  margin: 45px 0 45px 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  text-align: center;
+  @include flcecol;
+}
 #container {
   .profil-form {
     @include flcecol;

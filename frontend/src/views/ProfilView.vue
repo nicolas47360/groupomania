@@ -1,6 +1,9 @@
 <template>
   <NavBar />
   <section id="global">
+    <span v-if="this.message" class="message-back">
+      {{ this.message }}
+    </span>
     <h1 v-if="mode == 'create' && this.userprofil == null">
       Créer votre profil
     </h1>
@@ -91,6 +94,7 @@ export default {
       email: localStorage.getItem("email"),      
       lastname: "",
       firstname: "",
+      message: "",
     };
   },
   created() {
@@ -138,8 +142,10 @@ return to the homepage
         })
         .then((response) => {
           console.log(response);
-          alert(response.data.message);
-          this.$router.push({ name: "Home" });
+          this.message = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         });
     },
     /*
@@ -179,14 +185,15 @@ clear the localstorage and return to the account page
             Authorization: "bearer " + this.token,
           },
         })
-        .then((response) => {
-          console.log(response);
-          alert(response.data.message);
+        .then((response) => {         
           this.deleteProfil();
-          this.deletePosts();
-          
+          this.deletePosts();          
           localStorage.clear();
-          this.$router.push({ name: "Registration" });
+          this.message = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Registration" });
+          }, 1000);
+          
         })
         .catch((error) => {
           console.log(error.data);
@@ -236,6 +243,19 @@ clear the localstorage and return to the account page
 #global {
   @include flcecol;
   align-items: center;
+  .message-back {
+    font-size: 25px;
+    color: $text-alert;
+    margin: 45px 0 45px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    text-align: center;
+    @include flcecol;
+  }
   h1 {
     color: $primary-color;
     text-align: center;

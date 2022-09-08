@@ -1,4 +1,7 @@
 <template>
+  <span v-if="this.messagedata" class="message-back">
+    {{ this.messagedata }}
+  </span>
   <section id="create-container">
     <form @submit.prevent="createPost" class="create-form">
       <label for="title">Titre</label>
@@ -47,6 +50,7 @@ export default {
       message: "",
       imageUrl: "",
       likes: 0,
+      messagedata: "",
     };
   },
   methods: {
@@ -69,8 +73,10 @@ allows you to create post in the DB and return in to homepage
           },
         })
         .then((response) => {
-          alert(response.data.message);
-          this.$router.push({ name: "Home" });
+          this.messagedata = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         });
     },
     /*
@@ -88,6 +94,19 @@ allows you to upload the picture
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
+.message-back {
+  font-size: 25px;
+  color: $text-alert;
+  margin: 45px 0 45px 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  text-align: center;
+  @include flcecol;
+}
 #create-container {
   @include flce;
   .create-form {

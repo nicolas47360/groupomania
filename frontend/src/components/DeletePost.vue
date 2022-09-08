@@ -202,8 +202,6 @@ allows you to go to the post modify page
     left: 0;
     right: 0;
     background-color: black;
-    opacity: 2;
-    width: 100%;
     text-align: center;
     @include flcecol;
   }

@@ -1,5 +1,8 @@
 <template>
   <section id="create-container">
+    <span v-if="this.messagedata" class="message-back">
+      {{ this.messagedata }}
+    </span>
     <div class="create-comment" v-if="mode == 'create'">
       <form class="comment-form" action="">
         <label for="message">Votre commentaire</label>
@@ -36,6 +39,7 @@ export default {
       mode: "create",
       message: "",
       likes: 0,
+      messagedata: "",
     };
   },
   methods: {
@@ -60,8 +64,10 @@ allows you to create comment in the DB, remove item postId to the localstorage a
         )
         .then((response) => {
           localStorage.removeItem("postId");
-          alert(response.data.message);
-          this.$router.push("/home");
+          this.messagedata = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         })
         .catch((err) => console.log(err.response.data));
     },
@@ -74,7 +80,19 @@ allows you to create comment in the DB, remove item postId to the localstorage a
 @import "../styles/utils/__variables.scss";
 #create-container {
   @include flce;
-  // width: 60vw;
+  .message-back {
+    font-size: 25px;
+    color: $text-alert;
+    margin: 45px 0 45px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    text-align: center;
+    @include flcecol;
+  }
   .comment-form {
     @include flcecol;
     align-items: center;

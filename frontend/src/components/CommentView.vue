@@ -1,6 +1,9 @@
 <template>
   <NavBar />
   <section id="container">
+    <span v-if="this.message" class="message-back">
+      {{ this.message }}
+    </span>
     <h1 class="comment-switch" v-if="mode == 'create' && this.postId == null">
       Modifier ou supprimer votre commentaire
     </h1>
@@ -96,8 +99,10 @@ allows you to delete comment with the comment _id in the DB
         })
         .then((response) => {
           console.log(response);
-          alert("commentaire supprimé");
-          this.$router.push({ name: "Home" });
+          this.message = response.data.message;
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);
@@ -153,7 +158,19 @@ allows you to go to the comment modify page and send the item commentId in the l
 #container {
   @include flcecol;
   align-items: center;
-  // flex-wrap: wrap;
+  .message-back {
+    font-size: 25px;
+    color: $text-alert;
+    margin: 45px 0 45px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    text-align: center;
+    @include flcecol;
+  }
   h1 {
     color: $primary-color;
     font-size: 24px;
