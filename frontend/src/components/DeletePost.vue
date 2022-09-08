@@ -196,6 +196,16 @@ allows you to go to the post modify page
     font-size: 25px;
     color: $text-alert;
     margin: 45px 0 45px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 2;
+    width: 100%;
+    text-align: center;
+    @include flcecol;
   }
   #delete-one {
     @include flcecol;

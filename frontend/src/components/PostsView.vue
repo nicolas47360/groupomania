@@ -32,7 +32,7 @@
           <img v-else id="none" />
         </div>
         <div id="time-like">
-          <span id="date">Publier le {{ format_date(post.createdAt) }}</span>
+          <span id="date">Publié le {{ format_date(post.createdAt) }}</span>
           <div v-if="this.isAdmin != 'True'">
             <fa
               id="fa-icon-like"
@@ -63,10 +63,8 @@
             <button
               class="button-comment"
               @click.prevent="goToShowComment(post._id)"
-              v-for="comment in sortComments"
-              :key="comment"
             >
-              <div class="link-icon" v-if="post._id == comment.postId">
+              <div class="link-icon">
                 <p>Voir les commentaires</p>
                 <fa icon="comment" />
               </div>
@@ -125,11 +123,8 @@ export default {
     this.getPostsUser();
     this.getAllComment();
     this.getCommentForPost();
-    this.likePost();
   },
-  updated() {
-    this.getUsers();
-  },
+
   methods: {
     /*
 allows you to transform the format date for the display
@@ -158,6 +153,7 @@ return a reverse array allPosts
           console.log(error);
         });
     },
+
     /*
 allows you to get all users in the DB
 return a array allPosts 
@@ -240,7 +236,7 @@ send the item postId in the loacalstorage
 */
     goTocomment(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push({ name: "comment" });
+      this.$router.push("/comment");
     },
     /*
 allows you to put a like on a post and return to the homepage 
@@ -287,11 +283,12 @@ allows you to to get the first comment for a post and return a array of that
         newcomment.push(trie);
       });
       newcomment.forEach((sort) => {
-        if (sort != undefined) {
+        if (sort != undefined ) {
           sortcomment.push(sort);
         }
       });
       this.sortComments = sortcomment;
+      console.log(this.sortComments); 
     },
   },
 };

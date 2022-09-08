@@ -4,6 +4,7 @@ const commentCtrl = require("../controllers/commentctrl");
 const authuser = require("../middelware/authuser");
 
 router.get("/", authuser, commentCtrl.getAllComments);
+router.get("/:id", authuser, commentCtrl.getCommentsByPostId)
 router.post("/", authuser, commentCtrl.createComment);
 router.put("/:id", authuser, commentCtrl.updateComment);
 router.delete("/:id", authuser, commentCtrl.deleteComment);

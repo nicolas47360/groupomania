@@ -112,7 +112,8 @@ return to homepage
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
-          this.$router.push({name: 'Home'});
+          // localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
+          this.$router.push("/home").catch(() => {});
         })
         .catch((err) => {
           console.log(err.response.data);

@@ -46,12 +46,19 @@ export default {
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       postId: localStorage.getItem("postId"),
+      comment: "",
     };
   },
   created() {
-    this.getComments();
+    this.getComment();
     this.getPosts();
   },
+
+  updated() {
+    this.allPosts;
+    this.allComments;
+  },
+
   methods: {
     /*
 allows you to transform the format date for the display
@@ -62,18 +69,18 @@ allows you to transform the format date for the display
       }
     },
     /*
-allows you to get all comments in the DB and return a reverse array allComments
+allows you to get all comments in for a postId  the DB and return a reverse array allComments
 */
-    getComments() {
+    getComment() {
       axios
-        .get("http://localhost:5000/api/comment", {
+        .get("http://localhost:5000/api/comment/" + this.postId, {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
           console.log(response.data);
-          this.allComments = response.data.comments.reverse();
+          this.allComments = response.data.reverse();
         })
         .catch((error) => {
           console.log(error);

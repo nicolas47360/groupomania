@@ -8,6 +8,16 @@ exports.getAllComments = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 /*
+allows you to get all comment for a postId in the DB 
+*/
+exports.getCommentsByPostId = (req, res, next) => {
+  Comment.find({ postId: req.params.id })
+    .then((user) => {
+      res.status(200).json(user)
+    })
+    .catch((error) => res.status(400).json({ error }));
+}
+/*
 allows you to create a comment in the DB 
 */
 exports.createComment = (req, res, next) => {
@@ -46,7 +56,9 @@ exports.deleteCommentsByPostId = (req, res, next) => {
     )
     .catch((error) => res.status(400).json({ error }));
 }
-
+/*
+allows you to delete a like a comment in the DB by the userId
+*/
 exports.deleteCommentsByUserId = (req, res, next) => {
   Comment.find({ userId: req.params.id });
   Comment.deleteMany({ userId: req.params.id })
