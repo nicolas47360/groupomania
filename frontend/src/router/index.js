@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import { isLoggedIn } from "../utils/auth";
 import LoginSign from "../views/LoginSignView.vue";
 import Home from "../views/HomeView.vue";
 import Profil from "../views/ProfilView.vue";
@@ -11,73 +12,53 @@ import ModifyComment from "../components/ModifyComment.vue";
 
 const routes = [
     {
-        path: "/",
+        path: "/login",
         name: "Registration",
         component: LoginSign,
+        meta: {
+            allowAnonymous: true
+        }
     },
     {
-        path: "/home",
+        path: "/",
         name: "Home",
         component: Home,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/profil",
         name: "Profil",
         component: Profil,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/post",
         name: "Post",
         component: Post,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/post/modify",
         name: "modifyPost",
         component: ModifyPost,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/post/delete",
         name: "deletePost",
         component: DeletePost,
-        meta: {
-            requiresAuth: true,
-        }
+
     },
     {
         path: "/comment",
         name: "comment",
         component: CommentPost,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/comment/show",
         name: "commentshow",
         component: CommentShow,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: "/comment/modify",
         name: "commentmodify",
         component: ModifyComment,
-        meta: {
-            requiresAuth: true,
-        }
     },
 ];
 
@@ -86,28 +67,18 @@ const router = createRouter({
     routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//     const userId = localStorage.getItem("userId");
-//     if (to.meta.requiresAuth && !userId) {
-//         next({ name: 'Home' });
-//     }
-//     else { next({ name: 'Registration' }); }
-
-// })
-
-// router.beforeEach((to, from, next) => {
-//     const userId = localStorage.getItem("userId")
-//     if (to.matched.some(record => record.meta.requiresAuth)) {
-//         // this route requires auth, check if logged in
-//         // if not, redirect to login page.
-//         if (userId != null) {
-//             next({ name: 'Home' })
-//         } else {
-//             next({ name: 'Registarion' }) // go to wherever I'm going
-//         }
-//     } else {
-//         next() // does not require auth, make sure to always call next()!
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.name == 'Registration' && isLoggedIn()) {
+        next({ path: '/' })
+    }
+    else if (!to.meta.allowAnonymous && !isLoggedIn()) {
+        next({
+            path: '/login',
+        })
+    }
+    else {
+        next()
+    }
+})
 
 export default router;

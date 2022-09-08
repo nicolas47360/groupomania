@@ -111,9 +111,8 @@ return to homepage
           localStorage.setItem("email", this.email);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
-          localStorage.setItem("isAdmin", response.data.isAdmin);
-          // localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
-          this.$router.push("/home").catch(() => {});
+          localStorage.setItem("isAdmin", response.data.isAdmin);         
+          this.$router.push({name: "Home"}).catch(() => {});
         })
         .catch((err) => {
           console.log(err.response.data);
@@ -138,7 +137,7 @@ return to the create profil page
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("isAdmin", response.data.isAdmin);
-          this.$router.push("/profil");
+          this.$router.push({name: "Profil"});
         })
         .catch((err) => {
           console.log(err.response.data);
