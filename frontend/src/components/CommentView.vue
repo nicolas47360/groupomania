@@ -120,7 +120,6 @@ allows you to get all comments for a user in the DB and return a reverse array a
           },
         })
         .then((response) => {
-          console.log(response.data);
           let comments = response.data.comments;
           comments.forEach((comment) => {
             if (comment.userId == this.userId) {

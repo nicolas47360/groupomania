@@ -106,7 +106,7 @@ export default {
       allPosts: [],
       allUsers: [],
       allComments: [],
-      sortComments: [],
+      // sortComments: [],
       commentPostId: "",
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
@@ -122,7 +122,7 @@ export default {
     this.getUsers();
     this.getPostsUser();
     this.getAllComment();
-    this.getCommentForPost();
+    // this.getCommentForPost();
   },
 
   methods: {
@@ -134,26 +134,6 @@ allows you to transform the format date for the display
         return moment(String(value)).format("DD/MM/YYYY hh:mm");
       }
     },
-    /*
-allows you to get all users and the all post in teh DB and merge the both
-return a reverse array allPosts 
-*/
-    getPostsUser() {
-      axios
-        .get("http://localhost:5000/api/post", {
-          headers: {
-            Authorization: "bearer " + this.token,
-          },
-        })
-        .then((response) => {
-          this.allPosts = response.data.reverse();
-          this.mergeUsersAndPosts();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
     /*
 allows you to get all users in the DB
 return a array allPosts 
@@ -173,6 +153,27 @@ return a array allPosts
         });
     },
     /*
+allows you to get all users and the all post in teh DB and merge the both
+return a reverse array allPosts 
+*/
+    getPostsUser() {
+      axios
+        .get("http://localhost:5000/api/post", {
+          headers: {
+            Authorization: "bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          this.allPosts = response.data.reverse();
+          // this.getUsers();
+          this.mergeUsersAndPosts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    /*
 allows you to get all comments in the DB
 return a array allComments
 */
@@ -185,7 +186,7 @@ return a array allComments
         })
         .then((response) => {
           this.allComments = response.data.comments;
-          this.getCommentForPost();
+          // this.getCommentForPost();
         })
         .catch((error) => {
           console.log(error);
@@ -236,7 +237,7 @@ send the item postId in the loacalstorage
 */
     goTocomment(postId) {
       localStorage.setItem("postId", postId);
-      this.$router.push("/comment");
+      this.$router.push({ name: "comment" });
     },
     /*
 allows you to put a like on a post and return to the homepage 
@@ -267,28 +268,28 @@ allows you to put a like on a post and return to the homepage
     /* 
 allows you to to get the first comment for a post and return a array of that
 */
-    getCommentForPost() {
-      let commentaires = [];
-      let newcomment = [];
-      let sortcomment = [];
-      this.allPosts.forEach((post) => {
-        this.allComments.forEach((comment) => {
-          if (post._id == comment.postId) {
-            commentaires.push(comment);
-          }
-        });
-        let trie = commentaires.find(
-          (commentaire) => post._id == commentaire.postId
-        );
-        newcomment.push(trie);
-      });
-      newcomment.forEach((sort) => {
-        if (sort != undefined) {
-          sortcomment.push(sort);
-        }
-      });
-      this.sortComments = sortcomment;
-    },
+    // getCommentForPost() {
+    //   let commentaires = [];
+    //   let newcomment = [];
+    //   let sortcomment = [];
+    //   this.allPosts.forEach((post) => {
+    //     this.allComments.forEach((comment) => {
+    //       if (post._id == comment.postId) {
+    //         commentaires.push(comment);
+    //       }
+    //     });
+    //     let trie = commentaires.find(
+    //       (commentaire) => post._id == commentaire.postId
+    //     );
+    //     newcomment.push(trie);
+    //   });
+    //   newcomment.forEach((sort) => {
+    //     if (sort != undefined) {
+    //       sortcomment.push(sort);
+    //     }
+    //   });
+    //   this.sortComments = sortcomment;
+    // },
   },
 };
 </script>
