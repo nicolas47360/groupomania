@@ -78,20 +78,22 @@ allows you to create comment in the DB, remove item postId to the localstorage a
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
+@import "../styles/utils/_keyframes";
 #create-container {
   @include flce;
   .message-back {
     font-size: 25px;
     color: $text-alert;
-    margin: 45px 0 45px 0;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 25%;
+    bottom: 25%;
+    left: 25%;
     right: 0;
     background-color: black;
     text-align: center;
     @include flcecol;
+    width: 50%;
+    animation: message 1s ease-in-out;
   }
   .comment-form {
     @include flcecol;

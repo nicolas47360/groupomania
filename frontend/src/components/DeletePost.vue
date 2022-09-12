@@ -189,21 +189,23 @@ allows you to go to the post modify page
 <style lang="scss" scoped>
 @import "../styles/utils/__mixin.scss";
 @import "../styles/utils/__variables.scss";
+@import "../styles/utils/_keyframes";
 #delete {
   @include flcecol;
   align-items: center;
   .message-back {
     font-size: 25px;
     color: $text-alert;
-    margin: 45px 0 45px 0;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 25%;
+    bottom: 25%;
+    left: 25%;
     right: 0;
     background-color: black;
     text-align: center;
     @include flcecol;
+    width: 50%;
+    animation: message 1s ease-in-out;
   }
   #delete-one {
     @include flcecol;
