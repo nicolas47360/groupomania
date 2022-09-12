@@ -106,7 +106,7 @@ export default {
       allPosts: [],
       allUsers: [],
       allComments: [],
-      // sortComments: [],
+      sortComments: [],
       commentPostId: "",
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
@@ -122,7 +122,6 @@ export default {
     this.getUsers();
     this.getPostsUser();
     this.getAllComment();
-    // this.getCommentForPost();
   },
 
   methods: {
@@ -138,8 +137,8 @@ allows you to transform the format date for the display
 allows you to get all users in the DB
 return a array allPosts 
 */
-    getUsers() {
-      axios
+    async getUsers() {
+      await axios
         .get("http://localhost:5000/api/user", {
           headers: {
             Authorization: "bearer " + this.token,
@@ -147,6 +146,7 @@ return a array allPosts
         })
         .then((response) => {
           this.allUsers = response.data;
+          this.getPostsUser();
         })
         .catch((error) => {
           console.log(error);
@@ -165,7 +165,7 @@ return a reverse array allPosts
         })
         .then((response) => {
           this.allPosts = response.data.reverse();
-          // this.getUsers();
+          this.getUsers();
           this.mergeUsersAndPosts();
         })
         .catch((error) => {
@@ -242,9 +242,8 @@ send the item postId in the loacalstorage
     /*
 allows you to put a like on a post and return to the homepage 
 */
-    likePost(postId) {
-      console.log(postId);
-      axios
+    async likePost(postId) {
+      await axios
         .put(
           "http://localhost:5000/api/post/" + postId + "/like",
           {
@@ -259,7 +258,6 @@ allows you to put a like on a post and return to the homepage
         )
         .then((response) => {
           console.log(response.data);
-          this.$router.go(0);
         })
         .catch((error) => {
           console.log(error.response.data);
