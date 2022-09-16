@@ -68,6 +68,9 @@
       </section>
     </article>
   </section>
+  <div class="button-up" @click="goUp()">
+    <fa id="arrow" icon="arrow-up" />
+  </div>
 </template>
 
 <script>
@@ -181,6 +184,14 @@ allows you to go to the post modify page
     goToModify(postId) {
       localStorage.setItem("postId", postId);
       this.$router.replace({ path: "/post/modify" });
+    },
+
+    goUp() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     },
   },
 };
@@ -320,6 +331,29 @@ allows you to go to the post modify page
         }
       }
     }
+  }
+}
+.button-up {
+  width: 50px;
+  height: 50px;
+  background: $primary-color;
+  border-radius: 50%;
+  @include flce;
+  align-items: center;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  @media (max-width: 550px) {
+    width: 30px;
+    height: 30px;
+    @media (max-width: 400px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  #arrow {
+    color: $text-color;
   }
 }
 </style>

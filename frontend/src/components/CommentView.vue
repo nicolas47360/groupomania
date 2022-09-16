@@ -47,6 +47,9 @@
       </article>
     </section>
   </section>
+  <div class="button-up" @click="goUp()">
+    <fa id="arrow" icon="arrow-up" />
+  </div>
 </template>
 
 <script>
@@ -146,6 +149,14 @@ allows you to go to the comment modify page and send the item commentId in the l
     goToModify(commentId) {
       localStorage.setItem("commentId", commentId);
       this.$router.push("comment/modify");
+    },
+
+    goUp() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     },
   },
 };
@@ -250,6 +261,30 @@ allows you to go to the comment modify page and send the item commentId in the l
         @include flcecol;
       }
     }
+  }
+}
+
+.button-up {
+  width: 50px;
+  height: 50px;
+  background: $primary-color;
+  border-radius: 50%;
+  @include flce;
+  align-items: center;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  @media (max-width: 550px) {
+    width: 30px;
+    height: 30px;
+    @media (max-width: 400px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  #arrow {
+    color: $text-color;
   }
 }
 </style>

@@ -27,6 +27,9 @@
       </div>
     </article>
   </section>
+  <div class="button-up" @click="goUp()">
+    <fa id="arrow" icon="arrow-up" />
+  </div>
 </template>
 
 <script>
@@ -104,6 +107,14 @@ allows you to get all posts in the DB and return a array allPosts
           console.log(error);
         });
     },
+
+    goUp() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    },
   },
 };
 </script>
@@ -136,7 +147,7 @@ allows you to get all posts in the DB and return a array allPosts
             @include box-shadow;
             background-color: $primary-color;
             color: $secondary-color;
-            width: 60%;
+            width: 40%;
             text-align: center;
             height: 10px;
             @media (max-width: 600px) {
@@ -175,6 +186,29 @@ allows you to get all posts in the DB and return a array allPosts
         }
       }
     }
+  }
+}
+.button-up {
+  width: 50px;
+  height: 50px;
+  background: $primary-color;
+  border-radius: 50%;
+  @include flce;
+  align-items: center;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  @media (max-width: 550px) {
+    width: 30px;
+    height: 30px;
+    @media (max-width: 400px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  #arrow {
+    color: $text-color;
   }
 }
 </style>
