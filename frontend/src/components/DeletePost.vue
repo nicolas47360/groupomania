@@ -12,7 +12,7 @@
             class="delete-message"
             v-if="
               (post.userId == this.userId && post._id == this.postId) ||
-              (this.isAdmin === 'True' && post._id == this.postId)
+              (this.isAdmin === 'true' && post._id == this.postId)
             "
           >
             <span id="title-message"> {{ post.title }}</span>

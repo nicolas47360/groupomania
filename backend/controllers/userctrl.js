@@ -47,8 +47,6 @@ exports.createUser = (req, res, next) => {
 allows you to update a user in the DB by the user Id
 */
 exports.updateUser = (req, res, next) => {
-  console.log(req.body);
-  console.log(req.file);
   const userObject = req.file ?
     {
       ...req.body.user,
@@ -64,13 +62,10 @@ exports.updateUser = (req, res, next) => {
 allows you to delete a user in the DB by thr user ID
 */
 exports.deleteUser = (req, res, next) => {
-  console.log(req.params);
   User.findOne({ userId: req.params.id })
     .then((user) => {
       if (user.imageUrl !== null) {
-        console.log(user);
         const filename = user.imageUrl.split("/images")[1];
-        console.log(filename);
         fs.unlink(`images/${filename}`, () => {
           User.deleteOne({ userId: req.params.id })
             .then(() =>

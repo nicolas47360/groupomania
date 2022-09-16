@@ -2,7 +2,7 @@
   <div id="homepage">
     <NavBar />
     <navHome />
-    <div id="post" v-if="this.isAdmin != 'True'">
+    <div id="post" v-if="this.isAdmin != 'true'">
       <div id="gopost" @click="goToPost()">
         <span>Rédiger un nouveau Post</span>
         <fa icon="plus" id="plus" />

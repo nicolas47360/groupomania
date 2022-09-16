@@ -33,7 +33,7 @@
         </div>
         <div id="time-like">
           <span id="date">Publié le {{ format_date(post.createdAt) }}</span>
-          <div v-if="this.isAdmin != 'True'">
+          <div v-if="this.isAdmin != 'true'">
             <fa
               id="fa-icon-like"
               icon="thumbs-up"
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="link-comment">
-          <div class="link-page" v-if="this.isAdmin != 'True'">
+          <div class="link-page" v-if="this.isAdmin != 'true'">
             <button
               class="button-comment"
               @click.prevent="goTocomment(post._id)"
@@ -63,8 +63,10 @@
             <button
               class="button-comment"
               @click.prevent="goToShowComment(post._id)"
+              v-for="comment in sortComments"
+              :key="comment.id"
             >
-              <div class="link-icon">
+              <div class="link-icon" v-if="comment.postId == post._id">
                 <p>Voir les commentaires</p>
                 <fa icon="comment" />
               </div>
@@ -73,7 +75,7 @@
           <div class="link-page">
             <button
               class="go"
-              v-if="post.userId == this.userId || this.isAdmin === 'True'"
+              v-if="post.userId == this.userId || this.isAdmin === 'true'"
               @click.prevent="goToTrash(post._id)"
             >
               <div class="link-icon">
@@ -83,7 +85,7 @@
             </button>
             <button
               class="go"
-              v-if="post.userId == this.userId || this.isAdmin === 'True'"
+              v-if="post.userId == this.userId || this.isAdmin === 'true'"
               @click.prevent="goToModify(post._id)"
             >
               <fa icon="circle" />
@@ -97,12 +99,13 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import moment from "moment";
 export default {
   name: "HomeView",
   data() {
-    return {
+    return {           
       allPosts: [],
       allUsers: [],
       allComments: [],
@@ -121,7 +124,7 @@ export default {
   created() {
     this.getUsers();
     this.getPostsUser();
-    this.getAllComment();
+    this.getAllComment();       
   },
 
   methods: {
@@ -156,29 +159,32 @@ return a array allPosts
 allows you to get all users and the all post in teh DB and merge the both
 return a reverse array allPosts 
 */
-    getPostsUser() {
-      axios
+    async getPostsUser() {
+      this.loading = true,
+      await axios
         .get("http://localhost:5000/api/post", {
           headers: {
             Authorization: "bearer " + this.token,
           },
         })
         .then((response) => {
+          this.data = response.data;
           this.allPosts = response.data.reverse();
           this.getUsers();
+          this.getCommentForPost();
           this.mergeUsersAndPosts();
         })
         .catch((error) => {
           console.log(error);
-        });
+        })       
     },
 
     /*
 allows you to get all comments in the DB
 return a array allComments
 */
-    getAllComment() {
-      axios
+    async getAllComment() {
+      await axios
         .get("http://localhost:5000/api/comment", {
           headers: {
             Authorization: "bearer " + this.token,
@@ -186,7 +192,6 @@ return a array allComments
         })
         .then((response) => {
           this.allComments = response.data.comments;
-          // this.getCommentForPost();
         })
         .catch((error) => {
           console.log(error);
@@ -266,28 +271,28 @@ allows you to put a like on a post and return to the homepage
     /* 
 allows you to to get the first comment for a post and return a array of that
 */
-    // getCommentForPost() {
-    //   let commentaires = [];
-    //   let newcomment = [];
-    //   let sortcomment = [];
-    //   this.allPosts.forEach((post) => {
-    //     this.allComments.forEach((comment) => {
-    //       if (post._id == comment.postId) {
-    //         commentaires.push(comment);
-    //       }
-    //     });
-    //     let trie = commentaires.find(
-    //       (commentaire) => post._id == commentaire.postId
-    //     );
-    //     newcomment.push(trie);
-    //   });
-    //   newcomment.forEach((sort) => {
-    //     if (sort != undefined) {
-    //       sortcomment.push(sort);
-    //     }
-    //   });
-    //   this.sortComments = sortcomment;
-    // },
+    getCommentForPost() {
+      let commentaires = [];
+      let newcomment = [];
+      let sortcomment = [];
+      this.allPosts.forEach((post) => {
+        this.allComments.forEach((comment) => {
+          if (post._id == comment.postId) {
+            commentaires.push(comment);
+          }
+        });
+        let trie = commentaires.find(
+          (commentaire) => post._id == commentaire.postId
+        );
+        newcomment.push(trie);
+      });
+      newcomment.forEach((sort) => {
+        if (sort != undefined) {
+          sortcomment.push(sort);
+        }
+      });
+      this.sortComments = sortcomment;
+    },
   },
 };
 </script>

@@ -11,7 +11,7 @@
           class="container-modify"
           v-if="
             (post.userId == this.userId && post._id == this.postId) ||
-            (post._id == this.postId && this.isAdmin === 'True')
+            (post._id == this.postId && this.isAdmin === 'true')
           "
         >
           <div class="container-info">
@@ -28,7 +28,7 @@
             class="post-form"
             v-if="
               (post.userId == this.userId && post._id == this.postId) ||
-              (post._id == this.postId && this.isAdmin === 'True')
+              (post._id == this.postId && this.isAdmin === 'true')
             "
           >
             <label for="title">Titre</label>

@@ -63,7 +63,7 @@ exports.deleteAccount = (req, res, next) => {
   auth
     .findOne({ email: req.params.id })
     .deleteOne({ email: req.params.id })
-    .then(() => res.status(201).json({ message: " Votre compte va être supprimé" }))
+    .then(() => res.status(201).json({ message: " Votre compte, votre profil ainsi que l'ensemble de vos posts vont être supprimé " }))
     .catch((error) => res.status(401).json({ error }));
 }
 
