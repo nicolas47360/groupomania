@@ -22,8 +22,9 @@
     * `npm install`
 
 * Lancer le frontend:
-    * `npm run dev`
-    * `npm run build`
+    * `npm run dev` et cliquer sur 
+  > Local: http://localhost:3000/
+    
 
 ### Backend:
 
