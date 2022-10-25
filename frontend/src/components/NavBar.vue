@@ -5,7 +5,7 @@
       <router-link :to="{ name: 'Home' }" @click="removePostId()">
         <div class="back-login">
           <span class="nav-text">HOME</span>
-          <fa icon="rotate-left" class="bracket"/>
+          <fa icon="rotate-left" class="bracket" />
         </div>
       </router-link>
       <router-link :to="{ name: 'Registration' }" @click="clearStorage()">
